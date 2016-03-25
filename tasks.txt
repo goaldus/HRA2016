@@ -1,0 +1,23 @@
+Lokalizace: EN
+
+Úkoly
+=======
+Nauèit se pravidla reversi
+Udìlat vzor pro doxygen
+
+
+Tøídy
+======
+Player
+GameBoard
+Square
+Save
+State - scores, positions of stones
+Stone
+AI
+Move
+Turn
+
+
+
+
