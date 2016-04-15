@@ -1,4 +1,5 @@
 #include<iostream>
+#include<conio.h>
 
 using namespace std;
 
@@ -115,6 +116,16 @@ int main() {
 
 	print_map();
 
+	cout << "\nPro ukonceni zmackni esc.\n";
+
+	while (1) {
+		if (kbhit()) {
+			if (getch() == 27) {
+				cout << "koncim...\n";
+				exit(0);
+			}
+		}
+	}
 
 	return 0;
 }
