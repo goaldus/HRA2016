@@ -4,18 +4,19 @@ using namespace std;
 
 
 class GameBoard {
-    short int rght = 1;
-    short int lft = -1;
-    short int rghtop = -7;
-    short int lftop = -9;
-    short int top = -8;
-    short int bot = 8;
-    short int lfbot = 7;
-    short int rghbot = 9;
-    short int mid = 8 - 1 * 8 / 2; // to get position from which I can initialize stones
+    short int rght;
+    short int lft;
+    short int rghtop;
+    short int lftop;
+    short int top;
+    short int bot;
+    short int lfbot;
+    short int rghbot;
+	short int mid;
 
 public:
-	short int size = 8;
+	short int size;
+	bool BlackOnTurn;
 	GameBoard();
 	GameBoard(short int val);
 	void printSides();
@@ -23,11 +24,22 @@ public:
 
 //Default Gameboard constructor
 GameBoard::GameBoard() {
-	// empty
+	BlackOnTurn = true;
+	size = 8;
+	rght = 1;
+	lft = -1;
+	rghtop = -7;
+	lftop = -9;
+	top = -8,
+	bot = 8;
+	lfbot = 7;
+	rghbot = 9;
+	mid = 4; // to get position from which I can initialize stones
 }
 
 //Overloaded Gameboard constructor with input size(val)
 GameBoard::GameBoard(short int val) {
+	BlackOnTurn = true;
 	size = val;
 	rght = 1;
 	lft = -1;
@@ -55,6 +67,7 @@ void GameBoard::printSides() {
 //Properties of squares
 class Square {
 	short int owner;
+	bool available;  // stone can be placed here
 
 public:
 	Square();
@@ -72,6 +85,9 @@ Square::Square() {
 @brief gameboard print
 */
 void printGameBoard(GameBoard gb, Square sq) {
+
+	cout << "\n    Turn: " << ((gb.BlackOnTurn) ? "Black" : "White");
+	cout << "\t\tScore: " << "Black " << 127 << " | White " << 57 << endl; //@todo replace PH values for score
 
 	cout << "\n      ";
 	for (short int i = 0; i < gb.size; ++i) {
