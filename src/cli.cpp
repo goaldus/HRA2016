@@ -15,7 +15,7 @@ using namespace std;
 @todo add score, active player, ...
 @brief gameboard print
 */
-void printGameBoard(GameBoard * gb, Square * sq[]) {
+void printGameBoard(GameBoard * gb, Square ** sq) {
 
 	int white = 0, black = 0, b_score, w_score;
 
@@ -163,16 +163,21 @@ int main() {
 			int coord1 = -1, coord2 = -1;
 
 			// only coords have been detected (example: 4 5)
-			if (is_digits(command) && is_digits(arg1)) {
+			if (is_digits(command) && is_digits(arg1) && arg1 != "") {
 				// convert to integer
 				coord1 += stoi(command);
 				coord2 += stoi(arg1);
 			}
 			// command example: put 4 5 || p 4 5
-			else if (is_digits(arg1) && is_digits(arg2)) {
+			else if (is_digits(arg1) && is_digits(arg2) && arg1 != "" && arg2 != "") {
 				// convert to integer
 				coord1 += stoi(arg1);
 				coord2 += stoi(arg2);
+			}
+			else {
+				cout << "\n\tZadan put bez souradnic. pro napovedu: help\n";
+				cout << "\nZadejte prikaz:  \b";
+				continue;
 			}
 			// out of bounds control
 			if ((coord1 * gb->size + coord2) < 0 || (coord1 * gb->size + coord2) >= (gb->size*gb->size)) {
