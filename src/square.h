@@ -2,9 +2,10 @@
 
 ///Properties of squares
 class Square {
-	short int owner;
+	//short int owner;
 	bool available;  // stone can be placed here
 
 public:
 	Square();
+	short int owner;
 };

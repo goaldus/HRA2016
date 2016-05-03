@@ -10,7 +10,19 @@ using namespace std;
 @todo add score, active player, ...
 @brief gameboard print
 */
-void printGameBoard(GameBoard gb, Square sq) {
+void printGameBoard(GameBoard gb, Square sq[]) {
+
+	int white = 0, black = 0, b_score, w_score;
+
+	// "osetreni" deleni nulou  
+	if (white == 0) white = 1;
+	if (black == 0) black = 1;
+
+	/*
+	*  vypocet skore // @todo add score calculation to the core - any class
+	*/
+	b_score = black * 100 / white;
+	w_score = white * 100 / black;
 
 	cout << "\n    Turn: " << ((gb.BlackOnTurn) ? "Black" : "White");
 	cout << "\t\tScore: " << "Black " << 127 << " | White " << 57 << endl; //@todo replace PH values for score
@@ -23,21 +35,25 @@ void printGameBoard(GameBoard gb, Square sq) {
 			cout << i + 1 << "  ";
 	}
 		
-	for (short int j = 0; j < gb.size; ++j) {
+	for (short int k = 0; k < gb.size; ++k) {
 		cout << "\n    +";
 		for (int i = 0; i < gb.size; ++i)
 			cout << "---+";
 
-		if (j < 9)
-			cout << "\n  " << j + 1 << " |";
+		if (k < 9)
+			cout << "\n  " << k + 1 << " |";
 		else 
-			cout << "\n " << j + 1 << " |";
+			cout << "\n " << k + 1 << " |";
 
-		for (int j = 0; j < gb.size; ++j) { // @todo add character for stone if square[index].owner = 1;
-			/*if (sq.owner != 0) 
-				cout << " " << ((sq.owner == 1) ? "O" : "X") << " |";
-			else*/
-				cout << "   |";
+
+		for (int j = 0; j < gb.size; ++j) { 
+			if (sq[k*gb.size + j].owner != 0)
+				if (sq[k*gb.size + j].owner != 3)
+					cout << " " << ((sq[k*gb.size + j].owner == 1) ? "O" : "X") << " |";
+				else
+					cout << " " << "!" << " |";    // owner = 3 is placeable position
+			else
+				cout << "   |";   
 		}
 
 	}
@@ -73,8 +89,12 @@ int main() {
     Square squares[64]; // @todo change "64" to "gb.size*gb.size" 
     cout << "Velikost pole: " << gb.size << "x" << gb.size << endl;
     gb.printSides();
+	// test
+	squares[5].owner = 1;
+	squares[6].owner = 2;
+	squares[63].owner = 3;
 
-	printGameBoard(gb, squares[5]);
+	printGameBoard(gb, squares);
 	
     return 0;
 }
