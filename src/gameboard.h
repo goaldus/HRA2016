@@ -32,8 +32,10 @@ class GameBoard {
 public:
 	short int size;
 	bool BlackOnTurn;
+	bool enemyAI;
+	short int AItype;
 	GameBoard();
-	GameBoard(short int val);
+	GameBoard(short int size, short int AItype);
 };
 
 /*** End of file gameboard.h ***/

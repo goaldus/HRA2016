@@ -25,6 +25,8 @@ using namespace std;
 //Default Gameboard constructor
 GameBoard::GameBoard() {
 	BlackOnTurn = true;
+	enemyAI = false;
+	AItype = 0;
 	size = 8;
 	rght = 1;
 	lft = -1;
@@ -38,18 +40,20 @@ GameBoard::GameBoard() {
 }
 
 //Overloaded Gameboard constructor with input size(val)
-GameBoard::GameBoard(short int val) {
+GameBoard::GameBoard(short int size, short int AItype) {
 	BlackOnTurn = true;
-	size = val;
+	enemyAI = (AItype != 0) ? true : false;
+	this->AItype = AItype;
+	this->size = size;
 	rght = 1;
 	lft = -1;
-	rghtop = -val + 1;
-	lftop = -val - 1;
-	top = -val,
-	bot = val;
-	lfbot = val - 1;
-	rghbot = val + 1;
-	mid = val - 1 * val / 2; // to get position from which I can initialize stones
+	rghtop = -size + 1;
+	lftop = -size - 1;
+	top = -size,
+	bot = size;
+	lfbot = size - 1;
+	rghbot = size + 1;
+	mid = size - 1 * size / 2; // to get position from which I can initialize stones
 }
 
 /*** End of file gameboard.cpp ***/

@@ -80,21 +80,26 @@ int main() {
 			// command is alone, using default new game settings
 			if (arg1 == "") {
 				// deafault sizes
-				gb = new GameBoard(STDSIZE);
+				gb = new GameBoard(STDSIZE, 0);
 				// again using deafult size
 				squares = new Square*[STD_SQ_ARR];
 				for (int i = 0; i < STD_SQ_ARR; ++i)
 					squares[i] = new Square;
 			}
-			else if (is_digits(arg1)) {
-				int gbsize = stoi(arg1);
+			else if (is_digits(arg1) || is_digits(arg2)) {
+				int AItype = 0;
+				if (is_digits(arg1))
+					arg2 = arg1;
+				else
+					(arg1 == "easy") ? AItype = 1 : AItype = 2;
+				int gbsize = stoi(arg2);
 				// allow only these sizes
 				if (gbsize != 6 && gbsize != 8 && gbsize != 10 && gbsize != 12) {
 					inface->error("Nepovolena velikost herniho pole. Povolene jsou: 6, 8, 10, 12.");
 					continue;
 				}
 				int arrsize = gbsize * gbsize;
-				gb = new GameBoard(gbsize);
+				gb = new GameBoard(gbsize, AItype);
 				// allocate memory for array of squares
 				squares = new Square*[arrsize];
 				for (int i = 0; i < arrsize; ++i)
