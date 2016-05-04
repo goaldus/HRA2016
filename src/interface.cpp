@@ -44,7 +44,13 @@ void Interface::printBoard(GameBoard * gb, Square ** sq) {
 	w_score = white * 100 / black;
 
 	cout << "\n    Turn: " << ((gb->BlackOnTurn) ? "Black" : "White");
-	cout << "\t\tScore: " << "Black " << 127 << " | White " << 57 << endl; //@todo replace PH values for score
+	cout << "\t\tScore: " << "Black " << 127 << " | White " << 57; //@todo replace PH values for score
+	if (gb->AItype == 1)
+		cout << "\t\tAI: easy\n";
+	else if (gb->AItype == 2)
+		cout << "\t\tAI: hard\n";
+	else 
+		cout << endl;
 
 	cout << "\n      ";
 	for (short int i = 0; i < gb->size; ++i) {

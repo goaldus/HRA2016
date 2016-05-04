@@ -35,7 +35,7 @@ public:
 	bool enemyAI;
 	short int AItype;
 	GameBoard();
-	GameBoard(short int size, short int AItype);
+	GameBoard(short int, short int);
 };
 
 /*** End of file gameboard.h ***/

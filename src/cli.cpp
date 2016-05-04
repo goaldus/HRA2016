@@ -89,8 +89,10 @@ int main() {
 				int AItype = 0;
 				if (is_digits(arg1))
 					arg2 = arg1;
-				else
+				else {
 					(arg1 == "easy") ? AItype = 1 : AItype = 2;
+					arg2 = "8";
+				}
 				int gbsize = stoi(arg2);
 				// allow only these sizes
 				if (gbsize != 6 && gbsize != 8 && gbsize != 10 && gbsize != 12) {
