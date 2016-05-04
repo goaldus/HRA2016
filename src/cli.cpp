@@ -26,7 +26,6 @@
 
 using namespace std;
 
-#define STDSIZE 8
 #define STD_SQ_ARR 64
 
 #ifdef _WIN32
@@ -80,7 +79,7 @@ int main() {
 			// command is alone, using default new game settings
 			if (arg1 == "") {
 				// deafault sizes
-				gb = new GameBoard(STDSIZE, 0);
+				gb = new GameBoard;
 				// again using deafult size
 				squares = new Square*[STD_SQ_ARR];
 				for (int i = 0; i < STD_SQ_ARR; ++i)
