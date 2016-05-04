@@ -56,4 +56,12 @@ GameBoard::GameBoard(short int size, short int AItype) {
 	mid = size - 1 * size / 2; // to get position from which I can initialize stones
 }
 
+/*
+@brief Returns AIType number
+*/
+short int GameBoard::getAIType()
+{
+	return AItype;
+}
+
 /*** End of file gameboard.cpp ***/

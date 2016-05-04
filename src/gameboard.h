@@ -28,14 +28,15 @@ class GameBoard {
 	short int lfbot;
 	short int rghbot;
 	short int mid;
+	short int AItype;
 
 public:
 	short int size;
 	bool BlackOnTurn;
 	bool enemyAI;
-	short int AItype;
 	GameBoard();
 	GameBoard(short int, short int);
+	short int getAIType();
 };
 
 /*** End of file gameboard.h ***/
