@@ -1,3 +1,21 @@
+/*************************************************************
+* Project name: HRA2016
+* File: gameboard.cpp
+* Last change: 04.05.2016 17:38
+*
+* Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
+*			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
+*
+* Description: Reversi game (othello).
+*
+***********************************************************/
+/**
+* @file gameboard.cpp
+*
+* @brief Gameboard settings.
+* @author Vilem Jelen, Ondrej Molnar
+*/
+
 #include <iostream>
 
 #include "gameboard.h"
@@ -34,14 +52,4 @@ GameBoard::GameBoard(short int val) {
 	mid = val - 1 * val / 2; // to get position from which I can initialize stones
 }
 
-//Only for directions check
-void GameBoard::printSides() {
-	cout << "posun vlevo o: " << lft << endl;
-	cout << "posun vpravo o: " << rght << endl;
-	cout << "posun vlevo nahoru o: " << lftop << endl;
-	cout << "posun vpravo nahoru o: " << rghtop << endl;
-	cout << "posun dolu o: " << bot << endl;
-	cout << "posun nahoru o: " << top << endl;
-	cout << "posun vlevo dolu o: " << lfbot << endl;
-	cout << "posun vpravo dolu o: " << rghbot << endl;
-}
+/*** End of file gameboard.cpp ***/

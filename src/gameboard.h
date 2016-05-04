@@ -1,6 +1,23 @@
+/*************************************************************
+* Project name: HRA2016
+* File: gameboard.h
+* Last change: 04.05.2016 17:38
+*
+* Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
+*			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
+*
+* Description: Reversi game (othello).
+*
+***********************************************************/
+/**
+* @file gameboard.h
+*
+* @brief Header file for command line main.
+* @author Vilem Jelen, Ondrej Molnar
+*/
+
 #pragma once
 
-/// gameboard description
 class GameBoard {
 	short int rght;
 	short int lft;
@@ -17,5 +34,6 @@ public:
 	bool BlackOnTurn;
 	GameBoard();
 	GameBoard(short int val);
-	void printSides();
 };
+
+/*** End of file gameboard.h ***/

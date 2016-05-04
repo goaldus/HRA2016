@@ -1,6 +1,6 @@
 /*************************************************************
 * Project name: HRA2016
-* File: square.h
+* File: interface.h
 * Last change: 04.05.2016 17:38
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
@@ -10,22 +10,24 @@
 *
 ***********************************************************/
 /**
-* @file square.h
+* @file interface.h
 *
-* @brief Header file for squares in gameboard.
+* @brief Header file for command line interface.
 * @author Vilem Jelen, Ondrej Molnar
 */
 
 #pragma once
 
-///Properties of squares
-class Square {
-	//short int owner;
-	bool available;  // stone can be placed here
+using namespace std;
 
+class Interface 
+{
 public:
-	Square();
-	short int owner;
+	Interface();
+	void printBoard(GameBoard *, Square **);
+	void printHelp();
+	void parseCmd(string, string &, string &, string &);
+	void error(string);
 };
 
-/*** End of file square.h ***/
+/*** End of file interface.h ***/
