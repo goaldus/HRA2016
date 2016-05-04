@@ -90,8 +90,15 @@ int main() {
 				if (is_digits(arg1))
 					arg2 = arg1;
 				else {
-					(arg1 == "easy") ? AItype = 1 : AItype = 2;
-					arg2 = "8";
+					if (arg1 == "easy")
+						AItype = 1;
+					else if (arg1 == "hard")
+						AItype = 2;
+					else {
+						inface->error("Chybna obtiznost AI. Dostupne jsou: easy a hard.");
+						continue;
+					}
+					if (arg2 == "") arg2 = "8";
 				}
 				int gbsize = stoi(arg2);
 				// allow only these sizes
