@@ -101,7 +101,18 @@ Interface::Interface()
 */
 void Interface::printHelp()
 {
-	cout << "\n    Zde se zavola napoveda\n";
+	cout << "\n  new [easy|hard] [6|8|10|12] - vytvori novou hru\n"
+		<< "\tvolitelne parametry jsou obtiznost AI a velikost herniho pole\n"
+		<< "\tbez parametru je velikost pole 8 a protihracem clovek\n"
+		<< "\n  [put|p] x y                 - polozi disk na souradnice x, y\n"
+		<< "\n  open                        - otevre hru v novem okne\n"
+		<< "\n  save [nazev_hry]            - ulozi hru s volitelnym nazvem\n"
+		<< "\n  load [nazev_hry]            - nacte hru \"nazev_hry\"\n"
+		<< "\tbez parametru vypise seznam ulozenych her\n"
+		<< "\n  n | next                    - posune se dopredu v historii\n"
+		<< "\n  b | back                    - posune se zpet v historii\n"
+		<< "\n  help                        - zobrazi napovedu\n"
+		<< "\n  exit                        - ukonci program\n\n\n\n\n\n\n\n\n";
 }
 
 /*
