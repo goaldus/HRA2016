@@ -18,6 +18,7 @@
 
 #include <iostream>
 
+#include "square.h"
 #include "gameboard.h"
 
 using namespace std;
@@ -62,6 +63,19 @@ GameBoard::GameBoard(short int size, short int AItype) {
 short int GameBoard::getAIType()
 {
 	return AItype;
+}
+
+/*
+@brief Sets first stones to gameboard (game preparation)
+*/
+void GameBoard::Init(Square ** sq)
+{
+	short int offset = mid * (size - 1);
+	
+	sq[offset - 1]->owner = 1;
+	sq[offset]->owner = 2;
+	sq[offset + size]->owner = 1;
+	sq[offset + size - 1]->owner = 2;
 }
 
 /*** End of file gameboard.cpp ***/

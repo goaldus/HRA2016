@@ -24,6 +24,7 @@ class Square {
 public:
 	Square();
 	short int owner;
+
 };
 
 /*** End of file square.h ***/

@@ -18,7 +18,6 @@
 
 #include <iostream>
 #include <string>
-#include <algorithm>
 
 #include "square.h"
 #include "gameboard.h"

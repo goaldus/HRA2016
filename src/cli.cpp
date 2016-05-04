@@ -20,8 +20,8 @@
 #include <string>
 #include <algorithm>
 
-#include "gameboard.h"
 #include "square.h"
+#include "gameboard.h"
 #include "interface.h"
 
 using namespace std;
@@ -114,10 +114,7 @@ int main() {
 					squares[i] = new Square;
 			}
 			// initial stone formation for any board size
-			squares[((gb->size / 2) - 1) * gb->size + ((gb->size / 2) - 1)]->owner = 1;
-			squares[(gb->size / 2) * gb->size + (gb->size / 2)]->owner = 1;
-			squares[((gb->size / 2) - 1) * gb->size + (gb->size / 2)]->owner = 2;
-			squares[(gb->size / 2) * gb->size + ((gb->size / 2) - 1)]->owner = 2;
+			gb->Init(squares);
 			// print current state of the game
 			inface->printBoard(gb, squares);
 		}

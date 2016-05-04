@@ -37,6 +37,7 @@ public:
 	GameBoard();
 	GameBoard(short int, short int);
 	short int getAIType();
+	void Init(Square **);
 };
 
 /*** End of file gameboard.h ***/
