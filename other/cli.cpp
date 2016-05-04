@@ -209,7 +209,8 @@ int main() {
 				continue;
 			}
 			// out of bounds control
-			if ((coord1 * gb->size + coord2) < 0 || (coord1 * gb->size + coord2) >= (gb->size*gb->size)) {
+			if ((coord1 * gb->size + coord2) < 0 || (coord1 * gb->size + coord2) >= (gb->size*gb->size)
+				|| coord1 < 1 || coord1 > gb->size || coord2 < 1 || coord2 > gb->size) {
 				cout << "\n\tSouradnice mimo herni plochu, nelze polozit kamen.\n";
 				cout << "\nZadejte prikaz:  \b";
 				continue;
