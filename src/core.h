@@ -20,16 +20,13 @@
 
 using namespace std;
 
-#define STD_SQ_SIZE 64
-
 
 class Core {
-	int sqSize;
 
 public:
 	Core();
-	tuple<GameBoard *, Square **> Core::alloc(GameBoard *, Square **, int, short int);
-	tuple<GameBoard *, Square **> Core::destroy(GameBoard *, Square **);
+	GameBoard * Core::alloc(GameBoard *, int, short int);
+	GameBoard * Core::destroy(GameBoard *);
 };
 
 /*** End of file core.h ***/

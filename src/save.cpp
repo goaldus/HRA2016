@@ -19,7 +19,6 @@
 #include <iostream>
 #include <tuple>
 
-#include "square.h"
 #include "gameboard.h"
 #include "save.h"
 

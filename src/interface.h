@@ -24,7 +24,7 @@ class Interface
 {
 public:
 	Interface();
-	void printBoard(GameBoard *, Square **);
+	void printBoard(GameBoard *);
 	void printHelp();
 	tuple<string, string, string> Interface::parseCmd(string cmd);
 	void msg(string);

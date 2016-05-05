@@ -19,16 +19,22 @@
 #include <vector>
 #include <iostream>
 
-#include "square.h"
 #include "gameboard.h"
 
 using namespace std;
+
 
 //Default Gameboard constructor
 GameBoard::GameBoard() {
 	BlackOnTurn = true;
 	enemyAI = false;
 	size = 8;
+	/*Grid*/
+	int arrsize = size*size; 
+	grid = new short int[arrsize];
+	for (int i = 0; i < arrsize; ++i)
+		grid[i] = NONE;
+	/*Directions*/
 	rght = 1;
 	lft = -1;
 	rghtop = -7;
@@ -41,6 +47,18 @@ GameBoard::GameBoard() {
 	whites.reserve(7 * size);
 	blacks.reserve(7 * size);
 	available.reserve(10);
+	/* Initialize disk positions */
+	short int offset = mid * (size - 1);
+
+	grid[offset - 1] = WHITE;
+	grid[offset] = BLACK;
+	grid[offset + size] = WHITE;
+	grid[offset + size - 1] = BLACK;
+
+	whites.push_back(offset - 1);
+	whites.push_back(offset + size);
+	blacks.push_back(offset);
+	blacks.push_back(offset + size - 1);
 }
 
 //Overloaded Gameboard constructor with input size(val)
@@ -49,6 +67,11 @@ GameBoard::GameBoard(short int size, short int AItype) {
 	enemyAI = (AItype != 0) ? true : false;
 	this->AItype = AItype;
 	this->size = size;
+	/*Grid*/
+	int arrsize = size*size;
+	grid = new short int[arrsize];
+	for (int i = 0; i < arrsize; ++i)
+		grid[i] = NONE;
 	/*Directions*/
 	rght = 1;
 	lft = -1;
@@ -63,6 +86,18 @@ GameBoard::GameBoard(short int size, short int AItype) {
 	whites.reserve(7 * size);
 	blacks.reserve(7 * size);
 	available.reserve(10);
+	/* Initialize disk positions */
+	short int offset = mid * (size - 1);
+
+	grid[offset - 1] = WHITE;
+	grid[offset] = BLACK;
+	grid[offset + size] = WHITE;
+	grid[offset + size - 1] = BLACK;
+
+	whites.push_back(offset - 1);
+	whites.push_back(offset + size);
+	blacks.push_back(offset);
+	blacks.push_back(offset + size - 1);
 }
 
 /*
@@ -73,39 +108,21 @@ short int GameBoard::getAIType()
 	return AItype;
 }
 
-/*
-@brief Sets first stones to gameboard (game preparation)
-*/
-void GameBoard::Init(Square ** sq)
-{
-	short int offset = mid * (size - 1);
-	
-	sq[offset - 1]->owner = 1;
-	sq[offset]->owner = 2;
-	sq[offset + size]->owner = 1;
-	sq[offset + size - 1]->owner = 2;
-
-	whites.push_back(offset - 1);
-	whites.push_back(offset + size);
-	blacks.push_back(offset);
-	blacks.push_back(offset + size - 1);
-
-}
 
 /*
 @brief Function places stone to gameboard's square and adds index to vector so I can work only with selected color
 */
-void GameBoard::placeStone(Square *sq, int num)
+void GameBoard::placeStone(int index)
 {
 	if (BlackOnTurn)
 	{
-		sq->owner = 2;
-		blacks.push_back(num);
+		grid[index] = BLACK;
+		blacks.push_back(index);
 	}
 	else
 	{ 
-		sq->owner = 1;
-		whites.push_back(num);
+		grid[index] = WHITE;
+		whites.push_back(index);
 	}
 }
 
@@ -120,27 +137,27 @@ void GameBoard::nextTurn()
 /*
 @brief Checks square and if he is empty than show user that he can plant there
 */
-void GameBoard::checkPlace(short int pos, short int dir, Square **sq, short int enemy, short int me)
+void GameBoard::checkPlace(short int pos, short int dir, short int enemy, short int me)
 {
 	short int index = pos + dir;
 
-	if (index >= size*size || sq[index]->owner == me) return;
+	if (index >= size*size || grid[index] == me) return;
 	else
 	{
-		if (sq[index]->owner == 0)
+		if (grid[index] == NONE)
 		{
-			sq[index]->owner = 3;
+			grid[index] = AVAIL;
 			available.push_back(index);
 		}
 		else
-			checkPlace(index, dir, sq, enemy, me);
+			checkPlace(index, dir, enemy, me);
 	}
 }
 
 /*
 @brief This function checks possibilities to end and then calls function checkPlace()
 */
-void GameBoard::pes(short int pos, short int dir, Square **sq)
+void GameBoard::pes(short int pos, short int dir)
 {
 	short int index = pos + dir;
 	short int enemy;
@@ -148,39 +165,40 @@ void GameBoard::pes(short int pos, short int dir, Square **sq)
 
 	if (BlackOnTurn)
 	{
-		enemy = 1;
-		me = 2;
+		enemy = WHITE;
+		me = BLACK;
 	}
 	else
 	{
-		enemy = 2;
-		me = 1;
+		enemy = BLACK;
+		me = WHITE;
 	}
-	if (index >= size*size || sq[index]->owner == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
+	if (index >= size*size || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
 	else
-		if (sq[index]->owner == 0 || sq[index]->owner == 3) return; // IS FIRST SQUARE EMPTY? THEN END MAN!
+		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY? THEN END MAN!
 		else //NOT EMPTY AND NOT MINE SO GO FOR TESTING
-		checkPlace(index, dir, sq, enemy, me);
+		checkPlace(index, dir, enemy, me);
 }
 
-void GameBoard::neco(short int pos, Square**squares)
+void GameBoard::neco(short int pos)
 {
-	pes(pos, top, squares);
-	pes(pos, rghtop, squares);
-	pes(pos, rght, squares);
-	pes(pos, rghbot, squares);
-	pes(pos, bot, squares);
-	pes(pos, lfbot, squares);
-	pes(pos, lft, squares);
-	pes(pos, lftop, squares);
+	pes(pos, top);
+	pes(pos, rghtop);
+	pes(pos, rght);
+	pes(pos, rghbot);
+	pes(pos, bot);
+	pes(pos, lfbot);
+	pes(pos, lft);
+	pes(pos, lftop);
 }
 
-void GameBoard::setAvailables(Square **squares)
+void GameBoard::setAvailables()
 {
+	// reset available squares
 	for (int i = 0; i < available.size(); i++)
 	{
-		if (squares[available[i]]->owner == 3)
-		squares[available[i]]->owner = 0;
+		if (grid[available[i]] == AVAIL)
+		grid[available[i]] = NONE;
 	}
 		
 	available.clear();
@@ -191,7 +209,7 @@ void GameBoard::setAvailables(Square **squares)
 		vecptr = &whites;
 
 	for (int i = 0; i < (*vecptr).size(); i++)
-		neco((*vecptr)[i], squares);
+		neco((*vecptr)[i]);
 }
 
 /*** End of file gameboard.cpp ***/

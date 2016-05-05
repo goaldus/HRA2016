@@ -19,7 +19,6 @@
 #include <iostream>
 #include <tuple>
 
-#include "square.h"
 #include "gameboard.h"
 #include "core.h"
 
@@ -35,40 +34,27 @@ Core::Core() {
 /*
 @brief allocates memory for other classes
 */
-tuple<GameBoard *, Square **> Core::alloc(GameBoard * gb, Square ** sq, int size, short int AI) {
+GameBoard * Core::alloc(GameBoard * gb, int size, short int AI) {
 	// use default constructor
-	if (size == 0) {
-		sqSize = STD_SQ_SIZE;
+	if (size == 0) 
 		gb = new GameBoard;
-	}
-	else {
-		sqSize = size * size;
+	else 
 		gb = new GameBoard(size, AI);
-	}
-	// allocate memory for array of squares
-	sq = new Square*[sqSize];
-	for (int i = 0; i < sqSize; ++i)
-		sq[i] = new Square;
 
-	return make_tuple(gb, sq);	
+	return gb;	
 }
 
 /*
 @brief Deletes game classes
 */
-tuple<GameBoard *, Square **> Core::destroy(GameBoard * gb, Square ** sq) {
+GameBoard * Core::destroy(GameBoard * gb) {
 	// delete only existing objects
 	if (gb != NULL) {
 		delete gb;
-
-		for (int i = 0; i < sqSize; ++i)
-			delete sq[i];
-		delete[] sq;
-
-		gb = NULL;
-		sq = NULL;
+		gb = NULL;	
 	}
-	return make_tuple(gb, sq);
+
+	return gb;
 }
 
 /*** End of file gameboard.cpp ***/

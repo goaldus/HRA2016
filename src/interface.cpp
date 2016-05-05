@@ -20,7 +20,6 @@
 #include <string>
 #include <tuple>
 
-#include "square.h"
 #include "gameboard.h"
 #include "interface.h"
 
@@ -29,9 +28,10 @@ using namespace std;
 /*
 @brief Function prints gameboard.
 */
-void Interface::printBoard(GameBoard * gb, Square ** sq) {
+void Interface::printBoard(GameBoard * gb) {
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
 	int white = 0, black = 0, b_score, w_score;
+	int index;
 
 	// "osetreni" deleni nulou  
 	if (white == 0) white = 1;
@@ -72,11 +72,12 @@ void Interface::printBoard(GameBoard * gb, Square ** sq) {
 
 
 		for (int j = 0; j < gb->size; ++j) {
-			if (sq[k*gb->size + j]->owner != 0)
-				if (sq[k*gb->size + j]->owner != 3)
-					cout << " " << ((sq[k*gb->size + j]->owner == 1) ? "O" : "X") << " |";
+			index = k*gb->size + j;
+			if (gb->grid[index] != NONE)
+				if (gb->grid[index] != AVAIL)
+					cout << " " << ((gb->grid[index] == WHITE) ? "O" : "X") << " |";
 				else
-					cout << " " << "!" << " |";    // owner = 3 is placeable position
+					cout << " " << "_" << " |";    // position is available
 			else
 				cout << "   |";
 		}

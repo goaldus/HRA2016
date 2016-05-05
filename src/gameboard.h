@@ -20,6 +20,12 @@
 
 #include <vector>
 
+/* grid square states  */
+#define NONE  0
+#define WHITE 1
+#define BLACK 2
+#define AVAIL 3
+
 class GameBoard {
 	short int rght;
 	short int lft;
@@ -37,19 +43,19 @@ class GameBoard {
 
 public:
 	short int size;
+	short int * grid;
 	bool BlackOnTurn;
 	bool enemyAI;
 	GameBoard();
 	GameBoard(short int, short int);
 	short int getAIType();
-	void Init(Square **);
 
-	void placeStone(Square *, int);
+	void placeStone(int);
 	void nextTurn();
-	void checkPlace(short int, short int, Square **, short int, short int);
-	void neco(short int, Square**);
-	void pes(short int, short int, Square **);
-	void setAvailables(Square **);
+	void checkPlace(short int, short int, short int, short int);
+	void neco(short int);
+	void pes(short int, short int);
+	void setAvailables();
 
 	//~GameBoard() { std::cout << "Gameboard destroyed\n"; }
 
