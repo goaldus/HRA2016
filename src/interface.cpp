@@ -107,12 +107,11 @@ void Interface::printHelp()
 		<< "\n  [put|p] x y                 - polozi disk na souradnice x, y\n"
 		<< "\n  open                        - otevre hru v novem okne\n"
 		<< "\n  save [nazev_hry]            - ulozi hru s volitelnym nazvem\n"
-		<< "\n  load [nazev_hry]            - nacte hru \"nazev_hry\"\n"
-		<< "\tbez parametru vypise seznam ulozenych her\n"
+		<< "\n  load nazev_hry              - nacte hru \"nazev_hry\"\n"
 		<< "\n  n | next                    - posune se dopredu v historii\n"
 		<< "\n  b | back                    - posune se zpet v historii\n"
 		<< "\n  help                        - zobrazi napovedu\n"
-		<< "\n  exit                        - ukonci program\n\n\n\n\n\n\n\n\n";
+		<< "\n  exit                        - ukonci program\n\n\n\n\n\n\n\n\n\n";
 }
 
 /*
@@ -144,7 +143,7 @@ void Interface::parseCmd(string cmd, string &first, string &second, string &thir
 /*
 @brief Prints an error to commandline
 */
-void Interface::error(string msg)
+void Interface::msg(string msg)
 {
 	cout << "\n\t" << msg << "\n";
 	cout << "\nZadejte prikaz:  \b";

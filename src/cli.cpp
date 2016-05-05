@@ -50,9 +50,11 @@ void SetWindow(int Width, int Height)
 }
 #endif
 
-bool is_digits(const std::string &str)
+bool is_digits(const string &str)
 {
-	return all_of(str.begin(), str.end(), ::isdigit); // C++11
+	if (str.empty())
+		return false;
+	return all_of(str.begin(), str.end(), ::isdigit); 
 }
 
 int main() {
@@ -83,10 +85,10 @@ int main() {
 			// delete game in progress before creating new
 			tie(gb, squares) = Core->destroy(gb, squares);
 			// command is alone, using default new game settings
-			if (arg1 == "") {
+			if (arg1.empty()) {
 				tie(gb, squares) = Core->alloc(gb, squares, 0, 0);				
 			}
-			else if (is_digits(arg1) || is_digits(arg2)) {
+			else if (is_digits(arg1) || is_digits(arg2) || !arg1.empty()) {
 				int AItype = 0;
 				if (is_digits(arg1))
 					arg2 = arg1;
@@ -96,15 +98,15 @@ int main() {
 					else if (arg1 == "hard")
 						AItype = 2;
 					else {
-						inface->error("Chybna obtiznost AI. Dostupne jsou: easy a hard.");
+						inface->msg("Chybna obtiznost AI. Dostupne jsou: easy a hard.");
 						continue;
 					}
-					if (arg2 == "") arg2 = "8";
+					if (arg2.empty()) arg2 = "8";
 				}
 				int gbsize = stoi(arg2);
 				// allow only these sizes
 				if (gbsize != 6 && gbsize != 8 && gbsize != 10 && gbsize != 12) {
-					inface->error("Nepovolena velikost herniho pole. Povolene jsou: 6, 8, 10, 12.");
+					inface->msg("Nepovolena velikost herniho pole. Povolene jsou: 6, 8, 10, 12.");
 					continue;
 				}
 				tie(gb, squares) = Core->alloc(gb, squares, gbsize, AItype);
@@ -117,32 +119,32 @@ int main() {
 		/******		put		******/
 		else if (command == "put" || command == "p" || is_digits(command)) {
 			if (gb == NULL) {
-				inface->error("Neprobiha zadna hra, nelze polozit kamen.");
+				inface->msg("Neprobiha zadna hra, nelze polozit disk.");
 				continue;
 			}
 
 			int coord1 = -1, coord2 = -1;
 
 			// only coords have been detected (example: 4 5)
-			if (is_digits(command) && is_digits(arg1) && arg1 != "") {
+			if (is_digits(command) && is_digits(arg1)) {
 				// convert to integer
 				coord1 += stoi(command);
 				coord2 += stoi(arg1);
 			}
 			// command example: put 4 5 || p 4 5
-			else if (is_digits(arg1) && is_digits(arg2) && arg1 != "" && arg2 != "") {
+			else if (is_digits(arg1) && is_digits(arg2)) {
 				// convert to integer
 				coord1 += stoi(arg1);
 				coord2 += stoi(arg2);
 			}
 			else {
-				inface->error("Zadan put bez souradnic. pro napovedu: help");
+				inface->msg("Zadan put bez souradnic. pro napovedu: help");
 				continue;
 			}
 			// out of bounds control
 			if ((coord1 * gb->size + coord2) < 0 || (coord1 * gb->size + coord2) >= (gb->size*gb->size)
 				|| coord1 < 0 || coord1 > gb->size || coord2 < 0 || coord2 > gb->size) {
-				inface->error("Souradnice mimo herni plochu, nelze polozit kamen.");
+				inface->msg("Souradnice mimo herni plochu, nelze polozit disk.");
 				continue;
 			}
 			// empty square, puts stone and changes turn
@@ -154,9 +156,57 @@ int main() {
 				inface->printBoard(gb, squares);
 			}
 			else {
-				cout << "\n\tNelze polozit, uz zde lezi kamen.\n";
+				inface->msg("Nelze polozit, uz zde lezi disk.");
+				continue;
 			}
 		}
+		/******		open		******/
+		else if (command == "open") {
+			// should open game in new terminal window
+		}
+		/******		save		******/
+		else if (command == "save" || command == "s") {
+			if (gb == NULL) {
+				inface->msg("Neprobiha zadna hra, nelze ulozit hru.");
+				continue;
+			}
+			// arg1 is name for saved game
+			if (!arg1.empty()) {
+				// save game history into file: "saves/arg1"
+			}
+			else {
+				// save game into file: "saves/number_of_save"
+			}
+		}
+		/******		load		******/
+		else if (command == "load" || command == "l") {
+			if (!arg1.empty()) {
+				// load game history from file: "saves/arg1"
+			}
+			else {
+				inface->msg("Nebyl zadan nazev ulozene hry.");
+				continue;
+			}
+		}
+		/******		next		******/
+		else if (command == "next" || command == "n") {
+			if (gb == NULL) {
+				inface->msg("Neprobiha zadna hra, nelze jit kupredu.");
+				continue;
+			}
+			// one step further in game history
+			// next method of class state 
+		}
+		/******		back		******/
+		else if (command == "back" || command == "b") {
+			if (gb == NULL) {
+				inface->msg("Neprobiha zadna hra, nelze se vratit zpet.");
+				continue;
+			}
+			// one step back in game history
+			// back method of class state 
+		}
+		/******		unknown	command		******/
 		else {
 			cout << "\n\tNeznamy prikaz\n";
 		}
@@ -165,7 +215,7 @@ int main() {
 		cout << "\nZadejte prikaz:  \b";
 	}
 
-	// delete remaining objects
+	// delete objects
 	tie(gb, squares) = Core->destroy(gb, squares);
 	delete Core;
 	delete inface;

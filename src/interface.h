@@ -27,7 +27,7 @@ public:
 	void printBoard(GameBoard *, Square **);
 	void printHelp();
 	void parseCmd(string, string &, string &, string &);
-	void error(string);
+	void msg(string);
 };
 
 /*** End of file interface.h ***/
