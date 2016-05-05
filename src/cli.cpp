@@ -63,7 +63,7 @@ int main() {
 	SetWindow(80, 31);
 #endif
 
-	string input, command;
+	string input, command = "";
 	string arg1 = "", arg2 = "";
 	GameBoard * gb = NULL;
 	Square ** squares = NULL;
@@ -71,7 +71,7 @@ int main() {
 	Interface *inface = new Interface();
 
 	while (getline(cin, input)) {
-		inface->parseCmd(input, command, arg1, arg2);
+		tie(command, arg1, arg2) = inface->parseCmd(input);
 
 		if (command == "exit") {
 			cout << "\nKoncim . . . ";
@@ -142,8 +142,7 @@ int main() {
 				continue;
 			}
 			// out of bounds control
-			if ((coord1 * gb->size + coord2) < 0 || (coord1 * gb->size + coord2) >= (gb->size*gb->size)
-				|| coord1 < 0 || coord1 > gb->size || coord2 < 0 || coord2 > gb->size) {
+			if (coord1 < 0 || coord1 >= gb->size || coord2 < 0 || coord2 >= gb->size) {
 				inface->msg("Souradnice mimo herni plochu, nelze polozit disk.");
 				continue;
 			}

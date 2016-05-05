@@ -26,7 +26,7 @@ public:
 	Interface();
 	void printBoard(GameBoard *, Square **);
 	void printHelp();
-	void parseCmd(string, string &, string &, string &);
+	tuple<string, string, string> Interface::parseCmd(string cmd);
 	void msg(string);
 };
 

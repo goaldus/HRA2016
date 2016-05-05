@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <string>
+#include <tuple>
 
 #include "square.h"
 #include "gameboard.h"
@@ -117,27 +118,22 @@ void Interface::printHelp()
 /*
 * @brief Parse command with up to 3 parts
 */
-void Interface::parseCmd(string cmd, string &first, string &second, string &third) {
+tuple<string, string, string> Interface::parseCmd(string cmd) {
 	size_t index = 0;
+	string s[3];
 
-	if ((index = cmd.find(" ")) != string::npos) {
-		first = cmd.substr(0, index);
-		cmd.erase(0, index + strlen(" "));
+	for (short int i = 0; i < 3; ++i) {
 		if ((index = cmd.find(" ")) != string::npos) {
-			second = cmd.substr(0, index);
-			cmd.erase(0, index + strlen(" "));
-			if ((index = cmd.find(" ")) != string::npos) {
-				third = cmd.substr(0, index);
-				cmd.erase(0, index + strlen(" "));
-			}
-			else
-				third = cmd;
+			s[i] = cmd.substr(0, index);
+			cmd.erase(0, index + 1);
 		}
-		else
-			second = cmd;
+		else {
+			s[i] = cmd;
+			break;
+		}		
 	}
-	else
-		first = cmd;
+
+	return make_tuple(s[0], s[1], s[2]);
 }
 
 /*
