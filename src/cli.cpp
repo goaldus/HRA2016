@@ -25,6 +25,7 @@
 #include "gameboard.h"
 #include "interface.h"
 #include "core.h"
+#include "save.h"
 
 using namespace std;
 
@@ -32,21 +33,20 @@ using namespace std;
 
 #ifdef _WIN32
 #include <Windows.h>
-void SetWindow(int Width, int Height) 
-{
+void SetWindowSize(int width, int height) {
 	_COORD coord;
-	coord.X = Width;
-	coord.Y = Height;
+	coord.X = width;
+	coord.Y = height;
 
-	_SMALL_RECT Rect;
-	Rect.Top = 0;
-	Rect.Left = 0;
-	Rect.Bottom = Height - 1;
-	Rect.Right = Width - 1;
+	_SMALL_RECT rect;
+	rect.Top = 0;
+	rect.Left = 0;
+	rect.Bottom = height - 1;
+	rect.Right = width - 1;
 
-	HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle 
-	SetConsoleScreenBufferSize(Handle, coord);            // Set Buffer Size 
-	SetConsoleWindowInfo(Handle, TRUE, &Rect);            // Set Window Size 
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);      
+	SetConsoleScreenBufferSize(handle, coord);             
+	SetConsoleWindowInfo(handle, TRUE, &rect);             
 }
 #endif
 
@@ -59,16 +59,17 @@ bool is_digits(const string &str)
 
 int main() {
 
-#ifdef _WIN32
-	SetWindow(80, 31);
-#endif
+	#ifdef _WIN32
+	SetWindowSize(80, 31);
+	#endif
 
 	string input, command = "";
 	string arg1 = "", arg2 = "";
 	GameBoard * gb = NULL;
 	Square ** squares = NULL;
-	core *Core = new core();
+	Core *core = new Core();
 	Interface *inface = new Interface();
+	Save * save = NULL;
 
 	while (getline(cin, input)) {
 		tie(command, arg1, arg2) = inface->parseCmd(input);
@@ -83,10 +84,10 @@ int main() {
 		/******		new		******/	
 		else if (command == "new") {
 			// delete game in progress before creating new
-			tie(gb, squares) = Core->destroy(gb, squares);
+			tie(gb, squares) = core->destroy(gb, squares);
 			// command is alone, using default new game settings
 			if (arg1.empty()) {
-				tie(gb, squares) = Core->alloc(gb, squares, 0, 0);				
+				tie(gb, squares) = core->alloc(gb, squares, 0, 0);				
 			}
 			else if (is_digits(arg1) || is_digits(arg2) || !arg1.empty()) {
 				int AItype = 0;
@@ -109,7 +110,7 @@ int main() {
 					inface->msg("Nepovolena velikost herniho pole. Povolene jsou: 6, 8, 10, 12.");
 					continue;
 				}
-				tie(gb, squares) = Core->alloc(gb, squares, gbsize, AItype);
+				tie(gb, squares) = core->alloc(gb, squares, gbsize, AItype);
 			}
 			// initial stone formation for any board size
 			gb->Init(squares);
@@ -215,9 +216,10 @@ int main() {
 	}
 
 	// delete objects
-	tie(gb, squares) = Core->destroy(gb, squares);
-	delete Core;
+	tie(gb, squares) = core->destroy(gb, squares);
+	delete core;
 	delete inface;
+	delete save;
 	return 0;
 
 }

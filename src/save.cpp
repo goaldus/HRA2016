@@ -1,6 +1,6 @@
 /*************************************************************
 * Project name: HRA2016
-* File: core.h
+* File: save.cpp
 * Last change: 04.05.2016 17:38
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
@@ -10,26 +10,28 @@
 *
 ***********************************************************/
 /**
-* @file core.h
+* @file save.cpp
 *
-* @brief Header file for core class.
+* @brief Save class
 * @author Vilem Jelen, Ondrej Molnar
 */
 
-#pragma once
+#include <iostream>
+#include <tuple>
+
+#include "square.h"
+#include "gameboard.h"
+#include "save.h"
 
 using namespace std;
 
-#define STD_SQ_SIZE 64
+/*
+@brief default constructor
+*/
+Save::Save() {
+
+}
 
 
-class Core {
-	int sqSize;
 
-public:
-	Core();
-	tuple<GameBoard *, Square **> Core::alloc(GameBoard *, Square **, int, short int);
-	tuple<GameBoard *, Square **> Core::destroy(GameBoard *, Square **);
-};
-
-/*** End of file core.h ***/
+/*** End of file save.cpp ***/

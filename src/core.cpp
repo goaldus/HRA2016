@@ -10,7 +10,7 @@
 *
 ***********************************************************/
 /**
-* @file gameboard.cpp
+* @file core.cpp
 *
 * @brief Core class
 * @author Vilem Jelen, Ondrej Molnar
@@ -25,15 +25,17 @@
 
 using namespace std;
 
-//Default constructor
-core::core() {
+/*
+@brief default constructor
+*/
+Core::Core() {
 	
 }
 
 /*
-@brief Constructs game classes
+@brief allocates memory for other classes
 */
-tuple<GameBoard *, Square **> core::alloc(GameBoard * gb, Square ** sq, int size, short int AI) {
+tuple<GameBoard *, Square **> Core::alloc(GameBoard * gb, Square ** sq, int size, short int AI) {
 	// use default constructor
 	if (size == 0) {
 		sqSize = STD_SQ_SIZE;
@@ -54,7 +56,7 @@ tuple<GameBoard *, Square **> core::alloc(GameBoard * gb, Square ** sq, int size
 /*
 @brief Deletes game classes
 */
-tuple<GameBoard *, Square **> core::destroy(GameBoard * gb, Square ** sq) {
+tuple<GameBoard *, Square **> Core::destroy(GameBoard * gb, Square ** sq) {
 	// delete only existing objects
 	if (gb != NULL) {
 		delete gb;
