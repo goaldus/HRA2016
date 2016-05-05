@@ -18,6 +18,7 @@
 
 #include <vector>
 #include <iostream>
+#include <tuple>
 
 #include "gameboard.h"
 
@@ -195,7 +196,7 @@ void GameBoard::neco(short int pos)
 void GameBoard::setAvailables()
 {
 	// reset available squares
-	for (int i = 0; i < available.size(); i++)
+	for (unsigned i = 0; i < available.size(); i++)
 	{
 		if (grid[available[i]] == AVAIL)
 		grid[available[i]] = NONE;
@@ -208,8 +209,23 @@ void GameBoard::setAvailables()
 	else
 		vecptr = &whites;
 
-	for (int i = 0; i < (*vecptr).size(); i++)
+	for (unsigned i = 0; i < (*vecptr).size(); i++)
 		neco((*vecptr)[i]);
+}
+
+/*
+@brief Returns score for both players.
+*/
+void GameBoard::calcScore(int &b_score, int &w_score) {
+	int white_count = whites.size();
+	int	black_count = blacks.size();
+
+	// bevare of division by 0 
+	if (white_count == 0) white_count = 1;
+	if (black_count == 0) black_count = 1;
+
+	b_score = black_count * 100 / white_count;
+	w_score = white_count * 100 / black_count;
 }
 
 /*** End of file gameboard.cpp ***/

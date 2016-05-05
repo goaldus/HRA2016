@@ -30,21 +30,14 @@ using namespace std;
 */
 void Interface::printBoard(GameBoard * gb) {
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
-	int white = 0, black = 0, b_score, w_score;
+	int b_score, w_score;
 	int index;
 
-	// "osetreni" deleni nulou  
-	if (white == 0) white = 1;
-	if (black == 0) black = 1;
-
-	/*
-	*  vypocet skore // @todo add score calculation to the core - any class
-	*/
-	b_score = black * 100 / white;
-	w_score = white * 100 / black;
+	// get score
+	gb->calcScore(b_score, w_score);
 
 	cout << "\n    Turn: " << ((gb->BlackOnTurn) ? "Black" : "White");
-	cout << "\t\tScore: " << "Black " << 127 << " | White " << 57; //@todo replace PH values for score
+	cout << "\t\tScore: " << "Black " << b_score << " | White " << w_score; 
 	if (gb->getAIType() == 1)
 		cout << "\t\tAI: easy\n";
 	else if (gb->getAIType() == 2)

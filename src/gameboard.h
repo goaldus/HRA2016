@@ -56,6 +56,7 @@ public:
 	void neco(short int);
 	void pes(short int, short int);
 	void setAvailables();
+	void calcScore(int &, int &);
 
 	//~GameBoard() { std::cout << "Gameboard destroyed\n"; }
 
