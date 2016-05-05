@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include <vector>
+
 class GameBoard {
 	short int rght;
 	short int lft;
@@ -29,6 +31,9 @@ class GameBoard {
 	short int rghbot;
 	short int mid;
 	short int AItype;
+	std::vector<short int> whites;
+	std::vector<short int> blacks;
+	std::vector<short int> available;
 
 public:
 	short int size;
@@ -38,6 +43,12 @@ public:
 	GameBoard(short int, short int);
 	short int getAIType();
 	void Init(Square **);
+	void placeStone(Square *, int);
+	void nextTurn();
+	void checkPlace(short int, short int, Square **, short int, short int);
+	void neco(short int, Square**);
+	void pes(short int, short int, Square **);
+	void setAvailables(Square **);
 };
 
 /*** End of file gameboard.h ***/
