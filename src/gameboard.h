@@ -43,16 +43,16 @@ public:
 	GameBoard(short int, short int);
 	short int getAIType();
 	void Init(Square **);
-<<<<<<< HEAD
+
 	void placeStone(Square *, int);
 	void nextTurn();
 	void checkPlace(short int, short int, Square **, short int, short int);
 	void neco(short int, Square**);
 	void pes(short int, short int, Square **);
 	void setAvailables(Square **);
-=======
+
 	//~GameBoard() { std::cout << "Gameboard destroyed\n"; }
->>>>>>> origin/master
+
 };
 
 /*** End of file gameboard.h ***/
