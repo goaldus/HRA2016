@@ -19,10 +19,12 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <tuple>
 
 #include "square.h"
 #include "gameboard.h"
 #include "interface.h"
+#include "core.h"
 
 using namespace std;
 
@@ -63,6 +65,7 @@ int main() {
 	string arg1 = "", arg2 = "";
 	GameBoard * gb = NULL;
 	Square ** squares = NULL;
+	core *Core = new core();
 	Interface *inface = new Interface();
 
 	while (getline(cin, input)) {
@@ -75,15 +78,13 @@ int main() {
 		else if (command == "help") {
 			inface->printHelp();
 		}
+		/******		new		******/	
 		else if (command == "new") {
+			// delete game in progress before creating new
+			tie(gb, squares) = Core->destroy(gb, squares);
 			// command is alone, using default new game settings
 			if (arg1 == "") {
-				// deafault sizes
-				gb = new GameBoard;
-				// again using deafult size
-				squares = new Square*[STD_SQ_ARR];
-				for (int i = 0; i < STD_SQ_ARR; ++i)
-					squares[i] = new Square;
+				tie(gb, squares) = Core->alloc(gb, squares, 0, 0);				
 			}
 			else if (is_digits(arg1) || is_digits(arg2)) {
 				int AItype = 0;
@@ -106,18 +107,14 @@ int main() {
 					inface->error("Nepovolena velikost herniho pole. Povolene jsou: 6, 8, 10, 12.");
 					continue;
 				}
-				int arrsize = gbsize * gbsize;
-				gb = new GameBoard(gbsize, AItype);
-				// allocate memory for array of squares
-				squares = new Square*[arrsize];
-				for (int i = 0; i < arrsize; ++i)
-					squares[i] = new Square;
+				tie(gb, squares) = Core->alloc(gb, squares, gbsize, AItype);
 			}
 			// initial stone formation for any board size
 			gb->Init(squares);
 			// print current state of the game
 			inface->printBoard(gb, squares);
 		}
+		/******		put		******/
 		else if (command == "put" || command == "p" || is_digits(command)) {
 			if (gb == NULL) {
 				inface->error("Neprobiha zadna hra, nelze polozit kamen.");
@@ -168,8 +165,10 @@ int main() {
 		cout << "\nZadejte prikaz:  \b";
 	}
 
-	// mela by se provest dealokace objektu, neco jako squares delete[]; 
-	
+	// delete remaining objects
+	tie(gb, squares) = Core->destroy(gb, squares);
+	delete Core;
+	delete inface;
 	return 0;
 
 }

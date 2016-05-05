@@ -38,6 +38,7 @@ public:
 	GameBoard(short int, short int);
 	short int getAIType();
 	void Init(Square **);
+	//~GameBoard() { std::cout << "Gameboard destroyed\n"; }
 };
 
 /*** End of file gameboard.h ***/
