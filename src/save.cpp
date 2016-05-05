@@ -1,6 +1,6 @@
 /*************************************************************
 * Project name: HRA2016
-* File: interface.h
+* File: save.cpp
 * Last change: 04.05.2016 17:38
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
@@ -10,24 +10,28 @@
 *
 ***********************************************************/
 /**
-* @file interface.h
+* @file save.cpp
 *
-* @brief Header file for command line interface.
+* @brief Save class
 * @author Vilem Jelen, Ondrej Molnar
 */
 
-#pragma once
+#include <iostream>
+#include <tuple>
+
+#include "square.h"
+#include "gameboard.h"
+#include "save.h"
 
 using namespace std;
 
-class Interface 
-{
-public:
-	Interface();
-	void printBoard(GameBoard *, Square **);
-	void printHelp();
-	tuple<string, string, string> Interface::parseCmd(string cmd);
-	void msg(string);
-};
+/*
+@brief default constructor
+*/
+Save::Save() {
 
-/*** End of file interface.h ***/
+}
+
+
+
+/*** End of file save.cpp ***/

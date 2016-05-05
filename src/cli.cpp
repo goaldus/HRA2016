@@ -33,9 +33,12 @@ using namespace std;
 
 #ifdef _WIN32
 #include <Windows.h>
+<<<<<<< HEAD
 /*
 @brief Function is called only in windows and sets command line resolution
 */
+=======
+>>>>>>> origin/master
 void SetWindowSize(int width, int height) {
 	_COORD coord;
 	coord.X = width;
@@ -47,6 +50,7 @@ void SetWindowSize(int width, int height) {
 	rect.Bottom = height - 1;
 	rect.Right = width - 1;
 
+<<<<<<< HEAD
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleScreenBufferSize(handle, coord);
 	SetConsoleWindowInfo(handle, TRUE, &rect);
@@ -57,18 +61,36 @@ void SetWindowSize(int width, int height) {
 @brief Checks if string is a number
 @return true or false
 */
+=======
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);      
+	SetConsoleScreenBufferSize(handle, coord);             
+	SetConsoleWindowInfo(handle, TRUE, &rect);             
+}
+#endif
+
+>>>>>>> origin/master
 bool is_digits(const string &str)
 {
 	if (str.empty())
 		return false;
+<<<<<<< HEAD
 	return all_of(str.begin(), str.end(), ::isdigit);
+=======
+	return all_of(str.begin(), str.end(), ::isdigit); 
+>>>>>>> origin/master
 }
 
 int main() {
 
+<<<<<<< HEAD
 #ifdef _WIN32
 	SetWindowSize(80, 31);
 #endif
+=======
+	#ifdef _WIN32
+	SetWindowSize(80, 31);
+	#endif
+>>>>>>> origin/master
 
 	string input, command = "";
 	string arg1 = "", arg2 = "";
@@ -88,13 +110,21 @@ int main() {
 		else if (command == "help") {
 			inface->printHelp();
 		}
+<<<<<<< HEAD
 		/******		new		******/
+=======
+		/******		new		******/	
+>>>>>>> origin/master
 		else if (command == "new") {
 			// delete game in progress before creating new
 			tie(gb, squares) = core->destroy(gb, squares);
 			// command is alone, using default new game settings
 			if (arg1.empty()) {
+<<<<<<< HEAD
 				tie(gb, squares) = core->alloc(gb, squares, 0, 0);
+=======
+				tie(gb, squares) = core->alloc(gb, squares, 0, 0);				
+>>>>>>> origin/master
 			}
 			else if (is_digits(arg1) || is_digits(arg2) || !arg1.empty()) {
 				int AItype = 0;

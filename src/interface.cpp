@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <string>
+#include <tuple>
 
 #include "square.h"
 #include "gameboard.h"
@@ -101,39 +102,44 @@ Interface::Interface()
 */
 void Interface::printHelp()
 {
-	cout << "\n    Zde se zavola napoveda\n";
+	cout << "\n  new [easy|hard] [6|8|10|12] - vytvori novou hru\n"
+		<< "\tvolitelne parametry jsou obtiznost AI a velikost herniho pole\n"
+		<< "\tbez parametru je velikost pole 8 a protihracem clovek\n"
+		<< "\n  [put|p] x y                 - polozi disk na souradnice x, y\n"
+		<< "\n  open                        - otevre hru v novem okne\n"
+		<< "\n  save [nazev_hry]            - ulozi hru s volitelnym nazvem\n"
+		<< "\n  load nazev_hry              - nacte hru \"nazev_hry\"\n"
+		<< "\n  n | next                    - posune se dopredu v historii\n"
+		<< "\n  b | back                    - posune se zpet v historii\n"
+		<< "\n  help                        - zobrazi napovedu\n"
+		<< "\n  exit                        - ukonci program\n\n\n\n\n\n\n\n\n\n";
 }
 
 /*
 * @brief Parse command with up to 3 parts
 */
-void Interface::parseCmd(string cmd, string &first, string &second, string &third) {
+tuple<string, string, string> Interface::parseCmd(string cmd) {
 	size_t index = 0;
+	string s[3];
 
-	if ((index = cmd.find(" ")) != string::npos) {
-		first = cmd.substr(0, index);
-		cmd.erase(0, index + strlen(" "));
+	for (short int i = 0; i < 3; ++i) {
 		if ((index = cmd.find(" ")) != string::npos) {
-			second = cmd.substr(0, index);
-			cmd.erase(0, index + strlen(" "));
-			if ((index = cmd.find(" ")) != string::npos) {
-				third = cmd.substr(0, index);
-				cmd.erase(0, index + strlen(" "));
-			}
-			else
-				third = cmd;
+			s[i] = cmd.substr(0, index);
+			cmd.erase(0, index + 1);
 		}
-		else
-			second = cmd;
+		else {
+			s[i] = cmd;
+			break;
+		}		
 	}
-	else
-		first = cmd;
+
+	return make_tuple(s[0], s[1], s[2]);
 }
 
 /*
 @brief Prints an error to commandline
 */
-void Interface::error(string msg)
+void Interface::msg(string msg)
 {
 	cout << "\n\t" << msg << "\n";
 	cout << "\nZadejte prikaz:  \b";

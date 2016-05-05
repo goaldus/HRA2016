@@ -1,6 +1,6 @@
 /*************************************************************
 * Project name: HRA2016
-* File: interface.h
+* File: core.h
 * Last change: 04.05.2016 17:38
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
@@ -10,9 +10,9 @@
 *
 ***********************************************************/
 /**
-* @file interface.h
+* @file core.h
 *
-* @brief Header file for command line interface.
+* @brief Header file for core class.
 * @author Vilem Jelen, Ondrej Molnar
 */
 
@@ -20,14 +20,16 @@
 
 using namespace std;
 
-class Interface 
-{
+#define STD_SQ_SIZE 64
+
+
+class Core {
+	int sqSize;
+
 public:
-	Interface();
-	void printBoard(GameBoard *, Square **);
-	void printHelp();
-	tuple<string, string, string> Interface::parseCmd(string cmd);
-	void msg(string);
+	Core();
+	tuple<GameBoard *, Square **> Core::alloc(GameBoard *, Square **, int, short int);
+	tuple<GameBoard *, Square **> Core::destroy(GameBoard *, Square **);
 };
 
-/*** End of file interface.h ***/
+/*** End of file core.h ***/
