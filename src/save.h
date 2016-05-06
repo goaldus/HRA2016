@@ -32,6 +32,7 @@ public:
 	void setupSave(GameBoard *);
 	bool toFile(string);
 	inline bool notAvail(string);
+	void addState();
 	
 };
 
