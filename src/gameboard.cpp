@@ -18,6 +18,7 @@
 
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include <tuple>
 
 #include "gameboard.h"
@@ -106,6 +107,7 @@ void GameBoard::placeStone(int index)
 		grid[index] = WHITE;
 		whites.push_back(index);
 	}
+	remfromVec(available, index);
 
 	nextTurn();
 }
@@ -125,7 +127,7 @@ void GameBoard::checkPlace(short int pos, short int dir, short int enemy, short 
 {
 	short int index = pos + dir;
 
-	if (index >= size*size || isBorder(dir, pos) ||index < 0 || grid[index] == me) return;
+	if (index >= size*size || isBorder(dir, pos) ||index < 0 || grid[index] == me || grid[index] == AVAIL) return;
 	else
 	{
 		if (grid[index] == NONE)
@@ -184,10 +186,7 @@ void GameBoard::setAvailables()
 {
 	// reset available squares
 	for (unsigned i = 0; i < available.size(); i++)
-	{
-		if (grid[available[i]] == AVAIL)
 		grid[available[i]] = NONE;
-	}
 		
 	available.clear();
 	vector<short int> *vecptr;
@@ -220,6 +219,13 @@ void GameBoard::calcScore(int &b_score, int &w_score) {
 */
 GameBoard::~GameBoard() {
 	delete[] grid;
+}
+
+void GameBoard::remfromVec(vector<short int> &vec, int index)
+{
+	vector<short int>::iterator pos = find(vec.begin(), vec.end(), index);
+	if (pos != vec.end()) // == myVector.end() means the element was not found
+		vec.erase(pos);
 }
 
 
