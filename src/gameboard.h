@@ -51,9 +51,9 @@ public:
 
 	void placeStone(int);
 	void nextTurn();
-	void checkPlace(short int, short int, short int, short int);
-	void neco(short int);
-	void pes(short int, short int);
+	void checkNextSq(short int, short int, short int, short int);
+	void checkDirections(short int);
+	void checkSq(short int, short int);
 	void setAvailables();
 	void calcScore(int &, int &);
 	bool isBorder(short int, short int);

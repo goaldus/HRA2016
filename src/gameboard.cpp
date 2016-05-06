@@ -57,15 +57,12 @@ GameBoard::GameBoard(short int size, short int AItype) {
 	grid[offset] = BLACK;
 	grid[offset + size] = WHITE;
 	grid[offset + size - 1] = BLACK;
-	grid[5] = BLACK;
-	grid[6] = WHITE;
 
 	whites.push_back(offset - 1);
 	whites.push_back(offset + size);
 	blacks.push_back(offset);
 	blacks.push_back(offset + size - 1);
-	whites.push_back(6);
-	blacks.push_back(5);
+
 
 }
 
@@ -123,7 +120,7 @@ void GameBoard::nextTurn()
 /*
 @brief Checks square and if it is empty than show user that he can plant there
 */
-void GameBoard::checkPlace(short int pos, short int dir, short int enemy, short int me)
+void GameBoard::checkNextSq(short int pos, short int dir, short int enemy, short int me)
 {
 	short int index = pos + dir;
 
@@ -136,14 +133,14 @@ void GameBoard::checkPlace(short int pos, short int dir, short int enemy, short 
 			available.push_back(index);
 		}
 		else
-			checkPlace(index, dir, enemy, me);
+			checkNextSq(index, dir, enemy, me);
 	}
 }
 
 /*
-@brief This function checks possibilities to end and then calls function checkPlace()
+@brief This function checks possibilities to end and then calls function checkNextSq()
 */
-void GameBoard::pes(short int pos, short int dir)
+void GameBoard::checkSq(short int pos, short int dir)
 {
 	short int index = pos + dir;
 	short int enemy;
@@ -164,19 +161,19 @@ void GameBoard::pes(short int pos, short int dir)
 	else
 		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY? THEN QUIT MAN!
 		else //NOT EMPTY AND NOT MINE SO GO FOR TESTING
-		checkPlace(index, dir, enemy, me);
+		checkNextSq(index, dir, enemy, me);
 }
 
-void GameBoard::neco(short int pos)
+void GameBoard::checkDirections(short int pos)
 {
-	pes(pos, top);
-	pes(pos, rghtop);
-	pes(pos, rght);
-	pes(pos, rghbot);
-	pes(pos, bot);
-	pes(pos, lfbot);
-	pes(pos, lft);
-	pes(pos, lftop);
+	checkSq(pos, top);
+	checkSq(pos, rghtop);
+	checkSq(pos, rght);
+	checkSq(pos, rghbot);
+	checkSq(pos, bot);
+	checkSq(pos, lfbot);
+	checkSq(pos, lft);
+	checkSq(pos, lftop);
 }
 
 /*
@@ -187,8 +184,8 @@ void GameBoard::setAvailables()
 	// reset available squares
 	for (unsigned i = 0; i < available.size(); i++)
 		grid[available[i]] = NONE;
-		
 	available.clear();
+
 	vector<short int> *vecptr;
 	if (BlackOnTurn)
 		vecptr = &blacks;
@@ -196,7 +193,7 @@ void GameBoard::setAvailables()
 		vecptr = &whites;
 
 	for (unsigned i = 0; i < (*vecptr).size(); i++)
-		neco((*vecptr)[i]);
+		checkDirections((*vecptr)[i]);
 }
 
 /*
