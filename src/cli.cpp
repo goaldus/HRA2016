@@ -162,6 +162,7 @@ int main() {
 			// empty square, puts stone and changes turn
 			if (gb->grid[index] == AVAIL) {
 				gb->placeStone(index);
+				save->addState(gb);
 				gb->setAvailables();
 				inface->printBoard(gb);
 			}

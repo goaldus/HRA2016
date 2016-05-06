@@ -37,6 +37,7 @@ using namespace std;
 */
 Save::Save() {
 	step = 0;
+	arrsize = 0;
 	filename = "saves\\";
 	data = NULL;
 }
@@ -48,6 +49,7 @@ void Save::clear() {
 	// save contains something
 	if (data != NULL) {
 		step = 0;
+		arrsize = 0;
 		filename = "saves\\";
 		delete[] data;
 	}
@@ -60,27 +62,63 @@ void Save::setupSave(GameBoard * gb) {
 	// clear save
 	clear();
 	// set initial values 
-	int arrsize = gb->size * gb->size;
+	arrsize = gb->size * gb->size;
 	data = new string[arrsize];
-
+	// add size and AItype information
 	data[step] = to_string(gb->size) + " " + to_string(gb->getAIType()) + "\n";
-	step++; // shift to next line
+	// add first state
+	addState(gb);
+}
+
+/*
+@brief Adds new state of game to save data
+*/
+void Save::addState(GameBoard * gb) {
+	step++;
+
+	data[step].clear(); // if there was some step changing
 
 	for (int i = 0; i < arrsize; ++i) {
 		if (i != arrsize - 1)
 			data[step] += to_string(gb->grid[i]) + " ";
 		else
 			data[step] += to_string(gb->grid[i]) + "\n";
-	}
-	step++;
+	}	
 }
 
 /*
-@brief Adds new state of game to save data
+@brief Load next or previous state
 */
-void Save::addState() {
+tuple<GameBoard *, bool> Save::loadState(GameBoard * gb, bool next) {
+	short int val = 0;
 
+	if (next) {
+		step++;
+		if (data[step].empty()) {
+			step--;
+			return make_tuple(gb, false);
+		}
+	}
+	else { // load previous state
+		step--;
+		if (step < 1) {
+			step++;
+			return make_tuple(gb, false);
+		}
+	}
+	
+	// clear blacks and whites
+
+	for (int i = 0; i < arrsize; ++i) {
+		val = atoi(data[step].substr(i*2, 1).data());
+		// set grid
+		gb->grid[i] = val;
+		// add to blacks or whites
+	}
+
+	return make_tuple(gb, true);
 }
+
 
 /*
 @brief Checks if the name for save is not available.
@@ -119,7 +157,7 @@ bool Save::toFile(string name) {
 	// write to file
 	ofstream f(filename.data());
 	if (f.is_open())
-		for (int i = 0; i < step; ++i) {
+		for (int i = 0; i <= step; ++i) {
 			f << data[i];
 		}
 	else

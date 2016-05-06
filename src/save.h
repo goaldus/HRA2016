@@ -25,11 +25,14 @@ class Save {
 	string filename;
 	string * data;
 	int step;  // index of state in data (0 is for size and ai info)
+	int arrsize; // gb->size * gb->size
 
 public:
 	Save();
 	void clear();
 	void setupSave(GameBoard *);
+	void addState(GameBoard *);
+	tuple<GameBoard *, bool> Save::loadState(GameBoard *, bool);
 	bool toFile(string);
 	inline bool notAvail(string);
 	void addState();
