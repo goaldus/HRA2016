@@ -35,11 +35,7 @@ Core::Core() {
 @brief allocates memory for other classes
 */
 GameBoard * Core::alloc(GameBoard * gb, int size, short int AI) {
-	// use default constructor
-	if (size == 0) 
-		gb = new GameBoard;
-	else 
-		gb = new GameBoard(size, AI);
+	gb = new GameBoard(size, AI);
 
 	return gb;	
 }

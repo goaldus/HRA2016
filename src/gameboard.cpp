@@ -24,57 +24,6 @@
 
 using namespace std;
 
-
-bool checkDirections(short int dir, bool invert)
-{
-	if (invert)
-		dir = -dir;
-	switch (dir)
-	{
-	case -5: return true;
-	case 1: return true;
-	case 7: return true;
-	}
-	return false;
-}
-
-//Default Gameboard constructor
-GameBoard::GameBoard() {
-	BlackOnTurn = true;
-	enemyAI = false;
-	size = 8;
-	/*Grid*/
-	int arrsize = size*size; 
-	grid = new short int[arrsize];
-	for (int i = 0; i < arrsize; ++i)
-		grid[i] = NONE;
-	/*Directions*/
-	rght = 1;
-	lft = -1;
-	rghtop = -7;
-	lftop = -9;
-	top = -8,
-	bot = 8;
-	lfbot = 7;
-	rghbot = 9;
-	mid = 4; // to get position from which I can initialize stones
-	whites.reserve(7 * size);
-	blacks.reserve(7 * size);
-	available.reserve(10);
-	/* Initialize disk positions */
-	short int offset = mid * (size - 1);
-
-	grid[offset - 1] = WHITE;
-	grid[offset] = BLACK;
-	grid[offset + size] = WHITE;
-	grid[offset + size - 1] = BLACK;
-
-	whites.push_back(offset - 1);
-	whites.push_back(offset + size);
-	blacks.push_back(offset);
-	blacks.push_back(offset + size - 1);
-}
-
 //Overloaded Gameboard constructor with input size(val)
 GameBoard::GameBoard(short int size, short int AItype) {
 	BlackOnTurn = true;
@@ -161,7 +110,7 @@ void GameBoard::checkPlace(short int pos, short int dir, short int enemy, short 
 	if (index % size == 0)
 		invert = true;
 
-	if (index >= size*size || checkDirections(dir, invert) || grid[index] == me) return;
+	if (index >= size*size || grid[index] == me) return;
 	else
 	{
 		if (grid[index] == NONE)
@@ -198,7 +147,7 @@ void GameBoard::pes(short int pos, short int dir)
 	if (index % size == 0)
 		invert = true;
 
-	if (index >= size*size || checkDirections(dir, invert)  || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
+	if (index >= size*size || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
 	else
 		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY? THEN END MAN!
 		else //NOT EMPTY AND NOT MINE SO GO FOR TESTING
@@ -254,5 +203,27 @@ void GameBoard::calcScore(int &b_score, int &w_score) {
 	b_score = black_count * 100 / white_count;
 	w_score = white_count * 100 / black_count;
 }
+
+/*
+@brief gameboard destructor
+*/
+GameBoard::~GameBoard() {
+	//std::cout << "Gameboard destroyed\n"; 
+	delete[] grid;
+}
+
+bool checkDirections(short int dir, bool invert)
+{
+	if (invert)
+		dir = -dir;
+	switch (dir)
+	{
+	case -5: return true;
+	case 1: return true;
+	case 7: return true;
+	}
+	return false;
+}
+
 
 /*** End of file gameboard.cpp ***/

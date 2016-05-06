@@ -46,7 +46,6 @@ public:
 	short int * grid;
 	bool BlackOnTurn;
 	bool enemyAI;
-	GameBoard();
 	GameBoard(short int, short int);
 	short int getAIType();
 
@@ -57,8 +56,7 @@ public:
 	void pes(short int, short int);
 	void setAvailables();
 	void calcScore(int &, int &);
-
-	//~GameBoard() { std::cout << "Gameboard destroyed\n"; }
+	~GameBoard();
 
 };
 

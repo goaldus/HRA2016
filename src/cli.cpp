@@ -89,15 +89,16 @@ int main() {
 		}
 		/******		new		******/
 		else if (command == "new") {
+			int AItype = 0;
+			int size = 8;
 			// delete game in progress before creating new
 			gb = core->destroy(gb);
 			// command is alone, using default new game settings
 			if (arg1.empty()) {
-				gb = core->alloc(gb, 0, 0);
+				gb = core->alloc(gb, size, AItype);
 
 			}
 			else if (is_digits(arg1) || is_digits(arg2) || !arg1.empty()) {
-				int AItype = 0;
 				if (is_digits(arg1))
 					arg2 = arg1;
 				else {
@@ -111,13 +112,13 @@ int main() {
 					}
 					if (arg2.empty()) arg2 = "8";
 				}
-				int gbsize = stoi(arg2);
+				size = stoi(arg2);
 				// allow only these sizes
-				if (gbsize != 6 && gbsize != 8 && gbsize != 10 && gbsize != 12) {
+				if (size != 6 && size != 8 && size != 10 && size != 12) {
 					inface->msg("Nepovolena velikost herniho pole. Povolene jsou: 6, 8, 10, 12.");
 					continue;
 				}
-				gb = core->alloc(gb, gbsize, AItype);
+				gb = core->alloc(gb, size, AItype);
 			}
 			// initial stone formation for any board size
 			gb->setAvailables();
