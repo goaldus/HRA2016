@@ -32,11 +32,10 @@ public:
 	void clear();
 	void setupSave(GameBoard *);
 	void addState(GameBoard *);
-	tuple<GameBoard *, bool> Save::loadState(GameBoard *, bool);
+	tuple<GameBoard *, bool> loadState(GameBoard *, bool);
 	bool toFile(string);
+	tuple<GameBoard *, bool> fromFile(GameBoard *, string);
 	inline bool notAvail(string);
-	void addState();
-	
 };
 
 /*** End of file save.h ***/

@@ -196,7 +196,18 @@ int main() {
 		/******		load		******/
 		else if (command == "load" || command == "l") {
 			if (!arg1.empty()) {
-				// load game history from file: "saves/arg1"
+				// delete actual game if it exists
+				gb = core->destroy(gb);
+				// create new game and load data from file=arg1
+				tie(gb, loadResult) = save->fromFile(gb, arg1);
+				if (!loadResult) {
+					inface->msg("Nepodarilo se nacist hru.");
+					continue;
+				}
+				else {
+					gb->setAvailables();
+					inface->printBoard(gb);
+				}
 			}
 			else {
 				inface->msg("Nebyl zadan nazev ulozene hry.");

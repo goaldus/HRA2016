@@ -43,7 +43,7 @@ Save::Save() {
 }
 
 /*
-@breif clears save for new use
+@brief clears save for new use
 */
 void Save::clear() {
 	// save contains something
@@ -79,7 +79,7 @@ void Save::addState(GameBoard * gb) {
 
 	// if there was some step changing
 	for (int i = step; i < arrsize; ++i)
-		data[step].clear();
+		data[i].clear();
 
 	for (int i = 0; i < arrsize; ++i) {
 		val = gb->grid[i];
@@ -112,7 +112,7 @@ tuple<GameBoard *, bool> Save::loadState(GameBoard * gb, bool next) {
 		}
 	}
 	
-	// clear blacks, whites and availables
+	// clear blacks and whites
 	gb->clearVectors();
 
 	if (step % 2 == 0)
@@ -133,7 +133,6 @@ tuple<GameBoard *, bool> Save::loadState(GameBoard * gb, bool next) {
 
 	return make_tuple(gb, true);
 }
-
 
 /*
 @brief Checks if the name for save is not available.
@@ -167,7 +166,7 @@ bool Save::toFile(string name) {
 #ifdef _WIN32
 	_mkdir("saves");
 #else 
-	mkdir("saves", 0777); // notice that 777 is different than 0777
+	mkdir("saves", 0777); 
 #endif
 	// write to file
 	ofstream f(filename.data());
@@ -180,6 +179,56 @@ bool Save::toFile(string name) {
 
 	return true;
 }
+
+/*
+@brief Load game from file
+*/
+tuple<GameBoard *, bool> Save::fromFile(GameBoard * gb, string name) {
+	// clear save
+	clear();
+	// set save from file
+	filename += name;
+	ifstream f(filename.data());
+	if (f.is_open()) {
+		string line = "";
+		getline(f, line);
+		int size = atoi(line.substr(0, 2).data());
+		// set arrsize and new data
+		arrsize = size * size;
+		data = new string[arrsize];
+		// save first line of file
+		data[step] = line;
+		// get AItype
+		int val = atoi(line.substr(2).data());
+		// alloc new gameboard
+		gb = new GameBoard(size, val);
+		// load rest of file into data
+		while (getline(f, line)) {
+			data[++step] = line;
+		}
+		// load data from last line into GameBoard
+		if (step % 2 == 0)
+			gb->BlackOnTurn = false;
+		else
+			gb->BlackOnTurn = true;
+
+		for (int i = 0; i < arrsize; ++i) {
+			val = atoi(data[step].substr(i * 2, 1).data());
+			// set grid
+			gb->grid[i] = val;
+			// add to blacks or whites
+			if (val == WHITE)
+				gb->pushToVector(true, i);
+			else if (val == BLACK)
+				gb->pushToVector(false, i);
+		}
+
+		return make_tuple(gb, true);
+	}
+	else 
+		return make_tuple(gb, false);
+}
+
 
 
 /*** End of file save.cpp ***/
