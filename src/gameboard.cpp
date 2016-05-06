@@ -56,11 +56,30 @@ GameBoard::GameBoard(short int size, short int AItype) {
 	grid[offset] = BLACK;
 	grid[offset + size] = WHITE;
 	grid[offset + size - 1] = BLACK;
+	grid[5] = BLACK;
+	grid[6] = WHITE;
 
 	whites.push_back(offset - 1);
 	whites.push_back(offset + size);
 	blacks.push_back(offset);
 	blacks.push_back(offset + size - 1);
+	whites.push_back(6);
+	blacks.push_back(5);
+
+}
+
+bool GameBoard::isBorder(short int dir, short int pos)
+{
+	//PRAVY OKRAJ
+	if (pos % size == size - 1)
+		dir = -dir;
+	//LEVY OKRAJ
+	else if (pos % size != 0)
+		return false;
+
+	if (dir == rghtop) return true;
+	if (dir == rght) return true;
+	if (dir == rghbot) return true;
 }
 
 /*
@@ -105,12 +124,8 @@ void GameBoard::nextTurn()
 void GameBoard::checkPlace(short int pos, short int dir, short int enemy, short int me)
 {
 	short int index = pos + dir;
-	bool invert = false;
 
-	if (index % size == 0)
-		invert = true;
-
-	if (index >= size*size || grid[index] == me) return;
+	if (index >= size*size || isBorder(dir, pos) ||index < 0 || grid[index] == me) return;
 	else
 	{
 		if (grid[index] == NONE)
@@ -131,7 +146,6 @@ void GameBoard::pes(short int pos, short int dir)
 	short int index = pos + dir;
 	short int enemy;
 	short int me;
-	bool invert = false;
 
 	if (BlackOnTurn)
 	{
@@ -142,14 +156,11 @@ void GameBoard::pes(short int pos, short int dir)
 	{
 		enemy = BLACK;
 		me = WHITE;
-	}
+	}	
 
-	if (index % size == 0)
-		invert = true;
-
-	if (index >= size*size || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
+	if (index >= size*size || index < 0 || isBorder(dir, pos) || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
 	else
-		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY? THEN END MAN!
+		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY? THEN QUIT MAN!
 		else //NOT EMPTY AND NOT MINE SO GO FOR TESTING
 		checkPlace(index, dir, enemy, me);
 }
@@ -208,22 +219,10 @@ void GameBoard::calcScore(int &b_score, int &w_score) {
 @brief gameboard destructor
 */
 GameBoard::~GameBoard() {
-	//std::cout << "Gameboard destroyed\n"; 
 	delete[] grid;
 }
 
-bool checkDirections(short int dir, bool invert)
-{
-	if (invert)
-		dir = -dir;
-	switch (dir)
-	{
-	case -5: return true;
-	case 1: return true;
-	case 7: return true;
-	}
-	return false;
-}
+
 
 
 /*** End of file gameboard.cpp ***/

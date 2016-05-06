@@ -56,6 +56,7 @@ public:
 	void pes(short int, short int);
 	void setAvailables();
 	void calcScore(int &, int &);
+	bool isBorder(short int, short int);
 	~GameBoard();
 
 };
