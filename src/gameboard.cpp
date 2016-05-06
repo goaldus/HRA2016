@@ -25,6 +25,19 @@
 using namespace std;
 
 
+bool checkDirections(short int dir, bool invert)
+{
+	if (invert)
+		dir = -dir;
+	switch (dir)
+	{
+	case -5: return true;
+	case 1: return true;
+	case 7: return true;
+	}
+	return false;
+}
+
 //Default Gameboard constructor
 GameBoard::GameBoard() {
 	BlackOnTurn = true;
@@ -125,6 +138,8 @@ void GameBoard::placeStone(int index)
 		grid[index] = WHITE;
 		whites.push_back(index);
 	}
+
+	nextTurn();
 }
 
 /*
@@ -136,13 +151,17 @@ void GameBoard::nextTurn()
 }
 
 /*
-@brief Checks square and if he is empty than show user that he can plant there
+@brief Checks square and if it is empty than show user that he can plant there
 */
 void GameBoard::checkPlace(short int pos, short int dir, short int enemy, short int me)
 {
 	short int index = pos + dir;
+	bool invert = false;
 
-	if (index >= size*size || grid[index] == me) return;
+	if (index % size == 0)
+		invert = true;
+
+	if (index >= size*size || checkDirections(dir, invert) || grid[index] == me) return;
 	else
 	{
 		if (grid[index] == NONE)
@@ -163,6 +182,7 @@ void GameBoard::pes(short int pos, short int dir)
 	short int index = pos + dir;
 	short int enemy;
 	short int me;
+	bool invert = false;
 
 	if (BlackOnTurn)
 	{
@@ -174,7 +194,11 @@ void GameBoard::pes(short int pos, short int dir)
 		enemy = BLACK;
 		me = WHITE;
 	}
-	if (index >= size*size || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
+
+	if (index % size == 0)
+		invert = true;
+
+	if (index >= size*size || checkDirections(dir, invert)  || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
 	else
 		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY? THEN END MAN!
 		else //NOT EMPTY AND NOT MINE SO GO FOR TESTING
@@ -193,6 +217,9 @@ void GameBoard::neco(short int pos)
 	pes(pos, lftop);
 }
 
+/*
+@brief Function sets possible places to indicate square availability to user
+*/
 void GameBoard::setAvailables()
 {
 	// reset available squares

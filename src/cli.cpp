@@ -159,10 +159,7 @@ int main() {
 			// empty square, puts stone and changes turn
 			if (gb->grid[index] == AVAIL) {
 				gb->placeStone(index);
-				// change turn
-				gb->nextTurn();
 				gb->setAvailables();
-				// tisk stavu
 				inface->printBoard(gb);
 			}
 			else {
