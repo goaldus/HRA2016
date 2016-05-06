@@ -128,19 +128,22 @@ void GameBoard::checkNextSq(short int pos, short int dir, short int enemy, short
 	else
 	{
 		if (grid[index] == NONE)
-		{
+		{	/*SEND DIRECTION AND LAST POSITION SO IF HE PLANTS HE CAN GO FROM AVAILABLE POS TO HIS DISC*/
 			grid[index] = AVAIL;
 			available.push_back(index);
 		}
-		else
-			checkNextSq(index, dir, enemy, me);
+		/*else if (grid[index] == AVAIL)
+		{
+
+		}*/
+		else	checkNextSq(index, dir, enemy, me);
 	}
 }
 
 /*
 @brief This function checks possibilities to end and then calls function checkNextSq()
 */
-void GameBoard::checkSq(short int pos, short int dir)
+void GameBoard::checkFirstSq(short int pos, short int dir)
 {
 	short int index = pos + dir;
 	short int enemy;
@@ -159,21 +162,21 @@ void GameBoard::checkSq(short int pos, short int dir)
 
 	if (index >= size*size || index < 0 || isBorder(dir, pos) || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
 	else
-		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY? THEN QUIT MAN!
+		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY OR IS ALREADY SET ON AVAIL? THEN QUIT MAN!
 		else //NOT EMPTY AND NOT MINE SO GO FOR TESTING
 		checkNextSq(index, dir, enemy, me);
 }
 
 void GameBoard::checkDirections(short int pos)
 {
-	checkSq(pos, top);
-	checkSq(pos, rghtop);
-	checkSq(pos, rght);
-	checkSq(pos, rghbot);
-	checkSq(pos, bot);
-	checkSq(pos, lfbot);
-	checkSq(pos, lft);
-	checkSq(pos, lftop);
+	checkFirstSq(pos, top);
+	checkFirstSq(pos, rghtop);
+	checkFirstSq(pos, rght);
+	checkFirstSq(pos, rghbot);
+	checkFirstSq(pos, bot);
+	checkFirstSq(pos, lfbot);
+	checkFirstSq(pos, lft);
+	checkFirstSq(pos, lftop);
 }
 
 /*
@@ -223,6 +226,22 @@ void GameBoard::remfromVec(vector<short int> &vec, int index)
 	vector<short int>::iterator pos = find(vec.begin(), vec.end(), index);
 	if (pos != vec.end()) // == myVector.end() means the element was not found
 		vec.erase(pos);
+}
+
+void GameBoard::pushToVector(bool white, short int num)
+{
+	if (white)
+		whites.push_back(num);
+	else
+		blacks.push_back(num);
+}
+
+void GameBoard::clearVector(bool white)
+{
+	if (white)
+		whites.clear();
+	else
+		blacks.clear();
 }
 
 

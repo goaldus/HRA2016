@@ -53,11 +53,13 @@ public:
 	void nextTurn();
 	void checkNextSq(short int, short int, short int, short int);
 	void checkDirections(short int);
-	void checkSq(short int, short int);
+	void checkFirstSq(short int, short int);
 	void setAvailables();
 	void calcScore(int &, int &);
 	bool isBorder(short int, short int);
 	void remfromVec(std::vector<short int> &, int);
+	void clearVector(bool);
+	void pushToVector(bool, short int);
 	~GameBoard();
 
 };
