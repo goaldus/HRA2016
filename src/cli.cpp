@@ -75,7 +75,7 @@ int main() {
 	GameBoard * gb = NULL;
 	Core *core = new Core();
 	Interface *inface = new Interface();
-	Save * save = NULL;
+	Save * save = new Save();
 
 	while (getline(cin, input)) {
 		tie(command, arg1, arg2) = inface->parseCmd(input);
@@ -120,7 +120,9 @@ int main() {
 				}
 				gb = core->alloc(gb, size, AItype);
 			}
-			// initial stone formation for any board size
+			// init save data
+			save->setupSave(gb);
+			// set available places
 			gb->setAvailables();
 			// print current state of the game
 			inface->printBoard(gb);
@@ -178,13 +180,16 @@ int main() {
 				inface->msg("Neprobiha zadna hra, nelze ulozit hru.");
 				continue;
 			}
-			// arg1 is name for saved game
-			if (!arg1.empty()) {
-				// save game history into file: "saves/arg1"
+			// save to file with standard or custom name
+			if (!save->toFile(arg1)) {
+				inface->msg("Ulozena hra s timto nazvem uz existuje.");
+				continue;
 			}
 			else {
-				// save game into file: "saves/number_of_save"
+				inface->msg("Hra byla uspesne ulozena.");
+				continue;
 			}
+
 		}
 		/******		load		******/
 		else if (command == "load" || command == "l") {

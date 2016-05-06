@@ -30,6 +30,8 @@ public:
 	Save();
 	void clear();
 	void setupSave(GameBoard *);
+	bool toFile(string);
+	inline bool notAvail(string);
 	
 };
 
