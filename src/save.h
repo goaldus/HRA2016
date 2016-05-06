@@ -24,10 +24,12 @@ using namespace std;
 class Save {
 	string filename;
 	string * data;
-	bool empty = true;
+	int step;  // index of state in data (0 is for size and ai info)
 
 public:
 	Save();
+	void clear();
+	void setupSave(GameBoard *);
 	
 };
 

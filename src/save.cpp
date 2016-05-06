@@ -28,9 +28,27 @@ using namespace std;
 @brief default constructor
 */
 Save::Save() {
-
+	step = 0;
+	filename = "";
+	data = NULL;
 }
 
+/*
+@breif clears save for new use
+*/
+void Save::clear() {
+	// save contains something
+	if (data != NULL) {
+		delete[] data;
+	}
+}
+
+/*
+@brief sets values for save when new game is created
+*/
+void Save::setupSave(GameBoard * gb) {
+	
+}
 
 
 /*** End of file save.cpp ***/

@@ -25,44 +25,7 @@
 using namespace std;
 
 
-//Default Gameboard constructor
-GameBoard::GameBoard() {
-	BlackOnTurn = true;
-	enemyAI = false;
-	size = 8;
-	/*Grid*/
-	int arrsize = size*size; 
-	grid = new short int[arrsize];
-	for (int i = 0; i < arrsize; ++i)
-		grid[i] = NONE;
-	/*Directions*/
-	rght = 1;
-	lft = -1;
-	rghtop = -7;
-	lftop = -9;
-	top = -8,
-	bot = 8;
-	lfbot = 7;
-	rghbot = 9;
-	mid = 4; // to get position from which I can initialize stones
-	whites.reserve(7 * size);
-	blacks.reserve(7 * size);
-	available.reserve(10);
-	/* Initialize disk positions */
-	short int offset = mid * (size - 1);
-
-	grid[offset - 1] = WHITE;
-	grid[offset] = BLACK;
-	grid[offset + size] = WHITE;
-	grid[offset + size - 1] = BLACK;
-
-	whites.push_back(offset - 1);
-	whites.push_back(offset + size);
-	blacks.push_back(offset);
-	blacks.push_back(offset + size - 1);
-}
-
-//Overloaded Gameboard constructor with input size(val)
+//Overloaded Gameboard constructor with input size
 GameBoard::GameBoard(short int size, short int AItype) {
 	BlackOnTurn = true;
 	enemyAI = (AItype != 0) ? true : false;
@@ -227,5 +190,14 @@ void GameBoard::calcScore(int &b_score, int &w_score) {
 	b_score = black_count * 100 / white_count;
 	w_score = white_count * 100 / black_count;
 }
+
+/*
+@brief gameboard destructor
+*/
+GameBoard::~GameBoard() {
+	//std::cout << "Gameboard destroyed\n"; 
+	delete[] grid;
+}
+
 
 /*** End of file gameboard.cpp ***/
