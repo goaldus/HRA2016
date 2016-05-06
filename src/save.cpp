@@ -39,6 +39,8 @@ Save::Save() {
 void Save::clear() {
 	// save contains something
 	if (data != NULL) {
+		step = 0;
+		filename = "";
 		delete[] data;
 	}
 }
@@ -47,7 +49,10 @@ void Save::clear() {
 @brief sets values for save when new game is created
 */
 void Save::setupSave(GameBoard * gb) {
-	
+	// clear save 
+	clear();
+	// set initial values 
+
 }
 
 
