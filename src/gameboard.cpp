@@ -236,12 +236,11 @@ void GameBoard::pushToVector(bool white, short int num)
 		blacks.push_back(num);
 }
 
-void GameBoard::clearVector(bool white)
+void GameBoard::clearVectors()
 {
-	if (white)
-		whites.clear();
-	else
-		blacks.clear();
+	whites.clear();
+	blacks.clear();
+	available.clear();
 }
 
 

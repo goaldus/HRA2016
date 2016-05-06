@@ -75,14 +75,19 @@ void Save::setupSave(GameBoard * gb) {
 */
 void Save::addState(GameBoard * gb) {
 	step++;
+	int val;
 
-	data[step].clear(); // if there was some step changing
+	// if there was some step changing
+	for (int i = step; i < arrsize; ++i)
+		data[step].clear();
 
 	for (int i = 0; i < arrsize; ++i) {
+		val = gb->grid[i];
+		if (val == AVAIL) val = NONE;
 		if (i != arrsize - 1)
-			data[step] += to_string(gb->grid[i]) + " ";
+			data[step] += to_string(val) + " ";
 		else
-			data[step] += to_string(gb->grid[i]) + "\n";
+			data[step] += to_string(val) + "\n";
 	}	
 }
 
@@ -107,13 +112,23 @@ tuple<GameBoard *, bool> Save::loadState(GameBoard * gb, bool next) {
 		}
 	}
 	
-	// clear blacks and whites
+	// clear blacks, whites and availables
+	gb->clearVectors();
+
+	if (step % 2 == 0)
+		gb->BlackOnTurn = false;
+	else
+		gb->BlackOnTurn = true;
 
 	for (int i = 0; i < arrsize; ++i) {
 		val = atoi(data[step].substr(i*2, 1).data());
 		// set grid
 		gb->grid[i] = val;
 		// add to blacks or whites
+		if (val == WHITE)
+			gb->pushToVector(true, i);
+		else if (val == BLACK)
+			gb->pushToVector(false, i);
 	}
 
 	return make_tuple(gb, true);

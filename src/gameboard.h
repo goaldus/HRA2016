@@ -58,7 +58,7 @@ public:
 	void calcScore(int &, int &);
 	bool isBorder(short int, short int);
 	void remfromVec(std::vector<short int> &, int);
-	void clearVector(bool);
+	void clearVectors();
 	void pushToVector(bool, short int);
 	~GameBoard();
 

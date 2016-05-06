@@ -76,6 +76,7 @@ int main() {
 	Core *core = new Core();
 	Interface *inface = new Interface();
 	Save * save = new Save();
+	bool loadResult;
 
 	while (getline(cin, input)) {
 		tie(command, arg1, arg2) = inface->parseCmd(input);
@@ -209,7 +210,13 @@ int main() {
 				continue;
 			}
 			// one step further in game history
-			// next method of class state 
+			tie(gb, loadResult) = save->loadState(gb, true);
+			if (!loadResult) {
+				inface->msg("Nelze jit o tah dopredu.");
+				continue;
+			}
+			gb->setAvailables();
+			inface->printBoard(gb);
 		}
 		/******		back		******/
 		else if (command == "back" || command == "b") {
@@ -218,7 +225,13 @@ int main() {
 				continue;
 			}
 			// one step back in game history
-			// back method of class state 
+			tie(gb, loadResult) = save->loadState(gb, false);
+			if (!loadResult) {
+				inface->msg("Nelze jit o tah zpet.");
+				continue;
+			}
+			gb->setAvailables();
+			inface->printBoard(gb);
 		}
 		/******		unknown	command		******/
 		else {
