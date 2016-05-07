@@ -88,6 +88,19 @@ short int GameBoard::getAIType()
 	return AItype;
 }
 
+/*
+@brief Returns available indexes
+*/
+vector<short int> GameBoard::getVec(short int num) {
+	if (num == WHITE)
+		return whites;
+	else if (num == BLACK)
+		return blacks;
+	else // num == AVAIL, 
+		return available;
+
+}
+
 
 /*
 @brief Function places stone to gameboard's square and adds index to vector so I can work only with selected color

@@ -1,6 +1,6 @@
 /*************************************************************
 * Project name: HRA2016
-* File: core.h
+* File: ai.h
 * Last change: 04.05.2016 17:38
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
@@ -10,9 +10,9 @@
 *
 ***********************************************************/
 /**
-* @file core.h
+* @file ai.h
 *
-* @brief Header file for core class.
+* @brief Header file for AI class.
 * @author Vilem Jelen, Ondrej Molnar
 */
 
@@ -21,12 +21,14 @@
 using namespace std;
 
 
-class Core {
+class AI {
+	short int random(GameBoard *);
+	int genRandom(int, int);
 
 public:
-	Core();
-	tuple<GameBoard *, AI *> Core::alloc(GameBoard *, AI *, int, short int);
-	tuple<GameBoard *, AI *> Core::destroy(GameBoard *, AI *);
+	AI();
+	short int run(GameBoard *);
+	
 };
 
-/*** End of file core.h ***/
+/*** End of file ai.h ***/

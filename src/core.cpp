@@ -20,7 +20,9 @@
 #include <tuple>
 
 #include "gameboard.h"
+#include "ai.h"
 #include "core.h"
+
 
 using namespace std;
 
@@ -34,23 +36,31 @@ Core::Core() {
 /*
 @brief allocates memory for other classes
 */
-GameBoard * Core::alloc(GameBoard * gb, int size, short int AI) {
-	gb = new GameBoard(size, AI);
+tuple<GameBoard *, AI *> Core::alloc(GameBoard * gb, AI * ai, int size, short int AItype) {
+	gb = new GameBoard(size, AItype);
 
-	return gb;	
+	if (gb->enemyAI)
+		ai = new AI();
+
+	return make_tuple(gb, ai);
 }
 
 /*
 @brief Deletes game classes
 */
-GameBoard * Core::destroy(GameBoard * gb) {
+tuple<GameBoard *, AI *> Core::destroy(GameBoard * gb, AI * ai) {
 	// delete only existing objects
 	if (gb != NULL) {
 		delete gb;
 		gb = NULL;	
 	}
 
-	return gb;
+	if (ai != NULL) {
+		delete ai;
+		ai = NULL;
+	}
+
+	return make_tuple(gb, ai); 
 }
 
 /*** End of file gameboard.cpp ***/

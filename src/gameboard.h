@@ -26,6 +26,8 @@
 #define BLACK 2
 #define AVAIL 3
 
+using namespace std;
+
 class GameBoard {
 	short int rght;
 	short int lft;
@@ -48,6 +50,7 @@ public:
 	bool enemyAI;
 	GameBoard(short int, short int);
 	short int getAIType();
+	vector<short int> getVec(short int);
 
 	void placeStone(int);
 	void nextTurn();

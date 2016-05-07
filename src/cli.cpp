@@ -23,8 +23,10 @@
 
 #include "gameboard.h"
 #include "interface.h"
+#include "ai.h"
 #include "core.h"
 #include "save.h"
+
 
 using namespace std;
 
@@ -76,6 +78,7 @@ int main() {
 	Core *core = new Core();
 	Interface *inface = new Interface();
 	Save * save = new Save();
+	AI * ai = NULL;
 	bool loadResult;
 
 	while (getline(cin, input)) {
@@ -93,11 +96,10 @@ int main() {
 			int AItype = 0;
 			int size = 8;
 			// delete game in progress before creating new
-			gb = core->destroy(gb);
+			tie(gb, ai) = core->destroy(gb, ai);
 			// command is alone, using default new game settings
 			if (arg1.empty()) {
-				gb = core->alloc(gb, size, AItype);
-
+				tie(gb, ai) = core->alloc(gb, ai, size, AItype);
 			}
 			else if (is_digits(arg1) || is_digits(arg2) || !arg1.empty()) {
 				if (is_digits(arg1))
@@ -119,7 +121,7 @@ int main() {
 					inface->msg("Nepovolena velikost herniho pole. Povolene jsou: 6, 8, 10, 12.");
 					continue;
 				}
-				gb = core->alloc(gb, size, AItype);
+				tie(gb, ai) = core->alloc(gb, ai, size, AItype);
 			}
 			// init save data
 			save->setupSave(gb);
@@ -166,6 +168,13 @@ int main() {
 				save->addState(gb);
 				gb->setAvailables();
 				inface->printBoard(gb);
+				// AI code here
+				if(gb->enemyAI) {
+					gb->placeStone(ai->run(gb));
+					save->addState(gb);
+					gb->setAvailables();
+					inface->printBoard(gb);
+				}
 			}
 			else {
 				inface->msg("Na tuto pozici nelze polozit disk.");
@@ -197,7 +206,7 @@ int main() {
 		else if (command == "load" || command == "l") {
 			if (!arg1.empty()) {
 				// delete actual game if it exists
-				gb = core->destroy(gb);
+				tie(gb, ai) = core->destroy(gb, ai);
 				// create new game and load data from file=arg1
 				tie(gb, loadResult) = save->fromFile(gb, arg1);
 				if (!loadResult) {
@@ -254,7 +263,7 @@ int main() {
 	}
 
 	// delete objects
-	gb = core->destroy(gb);
+	tie(gb, ai) = core->destroy(gb, ai);
 	delete core;
 	delete inface;
 	delete save;
