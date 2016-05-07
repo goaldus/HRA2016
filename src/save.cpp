@@ -92,11 +92,39 @@ void Save::addState(GameBoard * gb) {
 }
 
 /*
+@brief loads data into gameboard
+*/
+GameBoard * Save::loadData(GameBoard * gb) {
+	short int val = 0;
+
+	// clear blacks and whites
+	gb->clearVectors();
+	// set player on turn
+	if (step % 2 == 0)
+		gb->BlackOnTurn = false;
+	else
+		gb->BlackOnTurn = true;
+
+	for (int i = 0; i < arrsize; ++i) {
+		val = atoi(data[step].substr(i * 2, 1).data());
+		// set grid
+		gb->grid[i] = val;
+		// add to blacks or whites
+		if (val == WHITE)
+			gb->pushToVector(true, i);
+		else if (val == BLACK)
+			gb->pushToVector(false, i);
+	}
+
+	return gb;
+}
+
+
+/*
 @brief Load next or previous state
 */
 tuple<GameBoard *, bool> Save::loadState(GameBoard * gb, bool next) {
-	short int val = 0;
-
+	
 	if (next) {
 		step++;
 		if (data[step].empty()) {
@@ -112,24 +140,7 @@ tuple<GameBoard *, bool> Save::loadState(GameBoard * gb, bool next) {
 		}
 	}
 	
-	// clear blacks and whites
-	gb->clearVectors();
-
-	if (step % 2 == 0)
-		gb->BlackOnTurn = false;
-	else
-		gb->BlackOnTurn = true;
-
-	for (int i = 0; i < arrsize; ++i) {
-		val = atoi(data[step].substr(i*2, 1).data());
-		// set grid
-		gb->grid[i] = val;
-		// add to blacks or whites
-		if (val == WHITE)
-			gb->pushToVector(true, i);
-		else if (val == BLACK)
-			gb->pushToVector(false, i);
-	}
+	gb = loadData(gb);
 
 	return make_tuple(gb, true);
 }
@@ -186,8 +197,9 @@ bool Save::toFile(string name) {
 tuple<GameBoard *, bool> Save::fromFile(GameBoard * gb, string name) {
 	// clear save
 	clear();
-	// set save from file
+	
 	filename += name;
+
 	ifstream f(filename.data());
 	if (f.is_open()) {
 		string line = "";
@@ -206,22 +218,8 @@ tuple<GameBoard *, bool> Save::fromFile(GameBoard * gb, string name) {
 		while (getline(f, line)) {
 			data[++step] = line;
 		}
-		// load data from last line into GameBoard
-		if (step % 2 == 0)
-			gb->BlackOnTurn = false;
-		else
-			gb->BlackOnTurn = true;
 
-		for (int i = 0; i < arrsize; ++i) {
-			val = atoi(data[step].substr(i * 2, 1).data());
-			// set grid
-			gb->grid[i] = val;
-			// add to blacks or whites
-			if (val == WHITE)
-				gb->pushToVector(true, i);
-			else if (val == BLACK)
-				gb->pushToVector(false, i);
-		}
+		gb = loadData(gb);
 
 		return make_tuple(gb, true);
 	}

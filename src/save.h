@@ -36,6 +36,7 @@ public:
 	bool toFile(string);
 	tuple<GameBoard *, bool> fromFile(GameBoard *, string);
 	inline bool notAvail(string);
+	GameBoard * loadData(GameBoard *);
 };
 
 /*** End of file save.h ***/
