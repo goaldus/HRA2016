@@ -203,15 +203,15 @@ void GameBoard::setAvailables()
 @brief Returns score for both players.
 */
 void GameBoard::calcScore(int &b_score, int &w_score) {
-	int white_count = whites.size();
-	int	black_count = blacks.size();
+	w_score = whites.size();
+	b_score = blacks.size();
 
-	// bevare of division by 0 
+	/* bevare of division by 0 
 	if (white_count == 0) white_count = 1;
 	if (black_count == 0) black_count = 1;
 
 	b_score = black_count * 100 / white_count;
-	w_score = white_count * 100 / black_count;
+	w_score = white_count * 100 / black_count;*/
 }
 
 /*
