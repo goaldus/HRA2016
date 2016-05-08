@@ -121,7 +121,7 @@ short int AI::simpleH(GameBoard * gb, Save * save) {
 		pos_val = evalPos(avail[i], gb);
 		gb->placeStone(avail[i]);
 		save->addState(gb);
-		// number of rotated disks
+		// number of gained disks
 		turn_val = (int)(gb->getVec(WHITE).size() - w_count);
 		value.push_back(pos_val * turn_val);
 		// return to previous state
