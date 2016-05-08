@@ -49,12 +49,13 @@ short int AI::run(GameBoard * gb, Save * save) {
 			result = random(gb);
 			break;
 		case 2:
-			result = simpleH(gb, save);
+			//result = simpleH(gb, save);
 			break;
 	}
 
 	return result;
 }
+
 
 /*
 @brief Generate random number in selected range
@@ -73,15 +74,17 @@ int AI::genRandom(int from, int to) {
 @brief Algorithm for choosing random position
 */
 short int AI::random(GameBoard * gb) {
-	vector<short int> avail = gb->getVec(AVAIL);
+	vector <pair <short int, short int> > avail = gb->getAvail();
 	// select random index from vector
-	int index = genRandom(0, avail.size());
+	short int index = genRandom(0, avail.size());
 	// wait 1.2 sec
 	this_thread::sleep_for(chrono::milliseconds(1200));
 
-	return avail[index];
+	it = avail.begin()+index;
 
+	return it->first;
 }
+
 
 /*
 @brief Algorithm with simple heuristic 

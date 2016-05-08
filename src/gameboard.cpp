@@ -20,6 +20,7 @@
 #include <iostream>
 #include <algorithm>
 #include <tuple>
+#include <utility>
 
 #include "gameboard.h"
 
@@ -49,7 +50,7 @@ GameBoard::GameBoard(short int size, short int AItype) {
 	/*Vector reservation*/
 	whites.reserve(7 * size);
 	blacks.reserve(7 * size);
-	available.reserve(10);
+	available.reserve(20);
 	/* Initialize disk positions */
 	short int offset = mid * (size - 1);
 
@@ -68,10 +69,10 @@ GameBoard::GameBoard(short int size, short int AItype) {
 
 bool GameBoard::isBorder(short int dir, short int pos)
 {
-	//PRAVY OKRAJ
+	//LEFT BORDER
 	if (pos % size == size - 1)
 		dir = -dir;
-	//LEVY OKRAJ
+	//RIGHT BORDER
 	else if (pos % size != 0)
 		return false;
 
@@ -96,16 +97,28 @@ vector<short int> GameBoard::getVec(short int num) {
 		return whites;
 	else if (num == BLACK)
 		return blacks;
-	else // num == AVAIL, 
-		return available;
-
 }
+
+vector <pair <short int, short int> > GameBoard::getAvail() 
+{
+	return available;
+}
+
+struct isEqual
+{
+	isEqual(const short int& a_wanted) : wanted(a_wanted) {}
+	short int wanted;
+	bool operator()(const pair<short int, short int>& element)
+	{
+		return element.first == wanted;
+	}
+};
 
 
 /*
 @brief Function places stone to gameboard's square and adds index to vector so I can work only with selected color
 */
-void GameBoard::placeStone(int index)
+void GameBoard::placeStone(short int index)
 {
 	if (BlackOnTurn)
 	{
@@ -113,13 +126,57 @@ void GameBoard::placeStone(int index)
 		blacks.push_back(index);
 	}
 	else
-	{ 
+	{
 		grid[index] = WHITE;
 		whites.push_back(index);
 	}
-	remfromVec(available, index);
+	changeStones(index);
 
 	nextTurn();
+}
+
+void GameBoard::changeStones(short int index)
+{
+	sort(available.begin(), available.end());
+	it = find_if(available.begin(), available.end(), isEqual(index));
+
+	while (it != available.end() && it->first == index)
+	{
+		replaceStones(index, it->second);
+		it = available.erase(it);
+	}
+}
+
+/*
+@brief Function replaces stones till his own stone is found, then function ends
+*/
+void GameBoard::replaceStones(short int index, short int dir)
+{
+	short int next = index - dir;
+	vector<short int> *vToSet;
+	vector<short int> *vToRem;
+	short int color;
+
+	if (BlackOnTurn)
+	{
+		vToSet = &blacks;
+		vToRem = &whites;
+		color = BLACK;
+	}
+	else
+	{
+		vToSet = &whites;
+		vToRem = &blacks;
+		color = WHITE;
+	}
+
+	do
+	{
+		grid[next] = color;
+		(*vToSet).push_back(next);
+		remfromVec(*vToRem, next);
+		next -= dir;
+	} while (grid[next] != color);
 }
 
 /*
@@ -137,18 +194,18 @@ void GameBoard::checkNextSq(short int pos, short int dir, short int enemy, short
 {
 	short int index = pos + dir;
 
-	if (index >= size*size || isBorder(dir, pos) ||index < 0 || grid[index] == me || grid[index] == AVAIL) return;
+	if (index >= size*size || isBorder(dir, pos) || index < 0 || grid[index] == me) return;
 	else
 	{
 		if (grid[index] == NONE)
 		{	/*SEND DIRECTION AND LAST POSITION SO IF HE PLANTS HE CAN GO FROM AVAILABLE POS TO HIS DISC*/
 			grid[index] = AVAIL;
-			available.push_back(index);
+			available.push_back(make_pair(index, dir));
 		}
-		/*else if (grid[index] == AVAIL)
+		else if (grid[index] == AVAIL)
 		{
-
-		}*/
+			available.push_back(make_pair(index, dir));
+		}
 		else	checkNextSq(index, dir, enemy, me);
 	}
 }
@@ -198,8 +255,8 @@ void GameBoard::checkDirections(short int pos)
 void GameBoard::setAvailables()
 {
 	// reset available squares
-	for (unsigned i = 0; i < available.size(); i++)
-		grid[available[i]] = NONE;
+	for (it = available.begin(); it != available.end(); ++it)
+		grid[it->first] = NONE;
 	available.clear();
 
 	vector<short int> *vecptr;

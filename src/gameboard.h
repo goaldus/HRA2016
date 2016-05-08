@@ -41,7 +41,8 @@ class GameBoard {
 	short int AItype;
 	std::vector<short int> whites;
 	std::vector<short int> blacks;
-	std::vector<short int> available;
+	std::vector <std::pair <short int, short int> > available;
+	std::vector <std::pair<short int, short int> >::iterator it;
 
 public:
 	short int size;
@@ -52,7 +53,7 @@ public:
 	short int getAIType();
 	vector<short int> getVec(short int);
 
-	void placeStone(int);
+	void placeStone(short int);
 	void nextTurn();
 	void checkNextSq(short int, short int, short int, short int);
 	void checkDirections(short int);
@@ -63,6 +64,9 @@ public:
 	void remfromVec(std::vector<short int> &, int);
 	void clearVectors();
 	void pushToVector(bool, short int);
+	void changeStones(short int index);
+	void replaceStones(short int index, short int dir);
+	std::vector <std::pair <short int, short int> > GameBoard::getAvail();
 	~GameBoard();
 
 };
