@@ -23,15 +23,14 @@ using namespace std;
 class Save; // forward declaration 
 
 class AI {
-	short int random(GameBoard *);
-	//short int simpleH(GameBoard *, Save *);
+	int random(GameBoard *);
+	int simpleH(GameBoard *, Save *);
 	int genRandom(int, int);
-	//vector <pair<short int, short int> >;
-	double evalPos(short int, GameBoard *);
+	double evalPos(int, GameBoard *);
 
 public:
 	AI();
-	short int run(GameBoard *, Save *);
+	int run(GameBoard *, Save *);
 	~AI();
 	
 };
