@@ -15,8 +15,8 @@
 * @brief Header file for command line main.
 * @author Vilem Jelen, Ondrej Molnar
 */
-
-#pragma once
+#ifndef GAMEBOARD_H
+#define GAMEBOARD_H
 
 #include <vector>
 
@@ -67,4 +67,5 @@ public:
 
 };
 
+#endif // GAMEBOARD_H
 /*** End of file gameboard.h ***/

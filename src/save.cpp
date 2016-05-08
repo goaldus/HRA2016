@@ -43,6 +43,21 @@ Save::Save() {
 }
 
 /*
+@brief Copy constructor
+*/
+Save::Save(const Save &obj) {
+	step = obj.step;
+	arrsize = obj.arrsize;
+	filename = obj.filename;
+	// copy data
+	data = new string[arrsize];
+	*data = *obj.data;
+
+	for (int i = 0; i < arrsize; ++i)
+		data[i] = obj.data[i];
+}
+
+/*
 @brief clears save for new use
 */
 void Save::clear() {
@@ -227,6 +242,13 @@ tuple<GameBoard *, bool> Save::fromFile(GameBoard * gb, string name) {
 		return make_tuple(gb, false);
 }
 
+
+/*
+@brief Destructor
+*/
+Save::~Save() {
+	delete[] data;
+}
 
 
 /*** End of file save.cpp ***/

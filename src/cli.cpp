@@ -22,10 +22,11 @@
 #include <tuple>
 
 #include "gameboard.h"
+#include "save.h"
 #include "interface.h"
 #include "ai.h"
 #include "core.h"
-#include "save.h"
+
 
 
 using namespace std;
@@ -170,7 +171,7 @@ int main() {
 				inface->printBoard(gb);
 				// AI code here
 				if(gb->enemyAI) {
-					gb->placeStone(ai->run(gb));
+					gb->placeStone(ai->run(gb, save));
 					save->addState(gb);
 					gb->setAvailables();
 					inface->printBoard(gb);

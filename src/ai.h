@@ -15,20 +15,24 @@
 * @brief Header file for AI class.
 * @author Vilem Jelen, Ondrej Molnar
 */
-
-#pragma once
+#ifndef AI_H
+#define AI_H
 
 using namespace std;
 
+class Save; // forward declaration 
 
 class AI {
 	short int random(GameBoard *);
+	short int simpleH(GameBoard *, Save *);
 	int genRandom(int, int);
 
 public:
 	AI();
-	short int run(GameBoard *);
+	short int run(GameBoard *, Save *);
+	~AI();
 	
 };
 
+#endif // AI_H
 /*** End of file ai.h ***/

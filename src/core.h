@@ -15,8 +15,9 @@
 * @brief Header file for core class.
 * @author Vilem Jelen, Ondrej Molnar
 */
+#ifndef CORE_H
+#define CORE_H
 
-#pragma once
 
 using namespace std;
 
@@ -29,4 +30,5 @@ public:
 	tuple<GameBoard *, AI *> Core::destroy(GameBoard *, AI *);
 };
 
+#endif // CORE_H
 /*** End of file core.h ***/

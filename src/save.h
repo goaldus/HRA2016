@@ -15,8 +15,8 @@
 * @brief Header file for save class.
 * @author Vilem Jelen, Ondrej Molnar
 */
-
-#pragma once
+#ifndef SAVE_H
+#define SAVE_H
 
 using namespace std;
 
@@ -29,6 +29,7 @@ class Save {
 
 public:
 	Save();
+	Save(const Save &obj); // copy constructor
 	void clear();
 	void setupSave(GameBoard *);
 	void addState(GameBoard *);
@@ -37,6 +38,8 @@ public:
 	tuple<GameBoard *, bool> fromFile(GameBoard *, string);
 	inline bool notAvail(string);
 	GameBoard * loadData(GameBoard *);
+	~Save();
 };
 
+#endif // SAVE_H
 /*** End of file save.h ***/

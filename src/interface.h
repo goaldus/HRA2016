@@ -15,8 +15,8 @@
 * @brief Header file for command line interface.
 * @author Vilem Jelen, Ondrej Molnar
 */
-
-#pragma once
+#ifndef INFACE_H
+#define INFACE_H
 
 using namespace std;
 
@@ -30,4 +30,5 @@ public:
 	void msg(string);
 };
 
+#endif // INFACE_H
 /*** End of file interface.h ***/

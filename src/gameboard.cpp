@@ -62,9 +62,9 @@ GameBoard::GameBoard(short int size, short int AItype) {
 	whites.push_back(offset + size);
 	blacks.push_back(offset);
 	blacks.push_back(offset + size - 1);
-
-
 }
+
+
 
 bool GameBoard::isBorder(short int dir, short int pos)
 {
