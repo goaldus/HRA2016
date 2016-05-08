@@ -49,7 +49,7 @@ short int AI::run(GameBoard * gb, Save * save) {
 			result = random(gb);
 			break;
 		case 2:
-			//result = simpleH(gb, save);
+			result = simpleH(gb, save);
 			break;
 	}
 
@@ -76,13 +76,11 @@ int AI::genRandom(int from, int to) {
 short int AI::random(GameBoard * gb) {
 	vector <pair <short int, short int> > avail = gb->getAvail();
 	// select random index from vector
-	short int index = genRandom(0, avail.size());
+	short int index = genRandom(0, avail.size()-1);
 	// wait 1.2 sec
 	this_thread::sleep_for(chrono::milliseconds(1200));
 
-	it = avail.begin()+index;
-
-	return it->first;
+	return avail[index].first;
 }
 
 /*
@@ -111,19 +109,19 @@ double AI::evalPos(short int index, GameBoard * gb) {
 /*
 @brief Algorithm with simple heuristic 
 */
-/*short int AI::simpleH(GameBoard * gb, Save * save) {
+short int AI::simpleH(GameBoard * gb, Save * save) {
 	bool loadRes;
 	size_t w_count = gb->getVec(WHITE).size();
 	double pos_val = 0.0;
 	int turn_val = 0;
-	vector<short int> avail = gb->getVec(AVAIL);
+	vector <pair <short int, short int> > avail = gb->getAvail();
 	// for storing value of available places
 	vector<double> value;
 	value.reserve(avail.size());
 
 	for (unsigned i = 0; i < avail.size(); ++i) {
-		pos_val = evalPos(avail[i], gb);
-		gb->placeStone(avail[i]);
+		pos_val = evalPos(avail[i].first, gb);
+		gb->placeStone(avail[i].first);
 		save->addState(gb);
 		// number of gained disks
 		turn_val = (int)(gb->getVec(WHITE).size() - w_count);
@@ -140,8 +138,8 @@ double AI::evalPos(short int index, GameBoard * gb) {
 	// wait 1.2 sec
 	this_thread::sleep_for(chrono::milliseconds(1200));
 
-	return avail[best_index];
-}*/
+	return avail[best_index].first;
+}
 
 /*
 @brief AI destructor
