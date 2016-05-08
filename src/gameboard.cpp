@@ -27,14 +27,14 @@
 using namespace std;
 
 //Overloaded Gameboard constructor with input size(val)
-GameBoard::GameBoard(short int size, short int AItype) {
+GameBoard::GameBoard(int size, int AItype) {
 	BlackOnTurn = true;
 	enemyAI = (AItype != 0) ? true : false;
 	this->AItype = AItype;
 	this->size = size;
 	/*Grid*/
 	int arrsize = size*size;
-	grid = new short int[arrsize];
+	grid = new int[arrsize];
 	for (int i = 0; i < arrsize; ++i)
 		grid[i] = NONE;
 	/*Directions*/
@@ -52,7 +52,7 @@ GameBoard::GameBoard(short int size, short int AItype) {
 	blacks.reserve(7 * size);
 	available.reserve(20);
 	/* Initialize disk positions */
-	short int offset = mid * (size - 1);
+	int offset = mid * (size - 1);
 
 	grid[offset - 1] = WHITE;
 	grid[offset] = BLACK;
@@ -67,24 +67,29 @@ GameBoard::GameBoard(short int size, short int AItype) {
 
 
 
-bool GameBoard::isBorder(short int dir, short int pos)
+bool GameBoard::isBorder(int dir, int pos)
 {
 	//LEFT BORDER
-	if (pos % size == size - 1)
-		dir = -dir;
+	if (pos % size == 0) {
+		if (dir == lft) return true;
+		if (dir == lftop) return true;
+		if (dir == lfbot) return true;
+	}
 	//RIGHT BORDER
-	else if (pos % size != 0)
-		return false;
+	else if (pos % size == size - 1)
+	{
+		if (dir == rght) return true;
+		if (dir == rghtop) return true;
+		if (dir == rghbot) return true;
+	}
 
-	if (dir == rghtop) return true;
-	if (dir == rght) return true;
-	if (dir == rghbot) return true;
+return false;
 }
 
 /*
 @brief Returns AIType number
 */
-short int GameBoard::getAIType()
+int GameBoard::getAIType()
 {
 	return AItype;
 }
@@ -92,23 +97,23 @@ short int GameBoard::getAIType()
 /*
 @brief Returns available indexes
 */
-vector<short int> GameBoard::getVec(short int num) {
+vector<int> GameBoard::getVec(int num) {
 	if (num == WHITE)
 		return whites;
 	else if (num == BLACK)
 		return blacks;
 }
 
-vector <pair <short int, short int> > GameBoard::getAvail() 
+vector <pair <int, int> > GameBoard::getAvail() 
 {
 	return available;
 }
 
 struct isEqual
 {
-	isEqual(const short int& a_wanted) : wanted(a_wanted) {}
-	short int wanted;
-	bool operator()(const pair<short int, short int>& element)
+	isEqual(const int& a_wanted) : wanted(a_wanted) {}
+	int wanted;
+	bool operator()(const pair<int, int>& element)
 	{
 		return element.first == wanted;
 	}
@@ -118,7 +123,7 @@ struct isEqual
 /*
 @brief Function places stone to gameboard's square and adds index to vector so I can work only with selected color
 */
-void GameBoard::placeStone(short int index)
+void GameBoard::placeStone(int index)
 {
 	if (BlackOnTurn)
 	{
@@ -130,12 +135,12 @@ void GameBoard::placeStone(short int index)
 		grid[index] = WHITE;
 		whites.push_back(index);
 	}
-	changeStones(index);
 
+	changeStones(index);
 	nextTurn();
 }
 
-void GameBoard::changeStones(short int index)
+void GameBoard::changeStones(int index)
 {
 	sort(available.begin(), available.end());
 	it = find_if(available.begin(), available.end(), isEqual(index));
@@ -150,12 +155,12 @@ void GameBoard::changeStones(short int index)
 /*
 @brief Function replaces stones till his own stone is found, then function ends
 */
-void GameBoard::replaceStones(short int index, short int dir)
+void GameBoard::replaceStones(int index, int dir)
 {
-	short int next = index - dir;
-	vector<short int> *vToSet;
-	vector<short int> *vToRem;
-	short int color;
+	int next = index - dir;
+	vector<int> *vToSet;
+	vector<int> *vToRem;
+	int color;
 
 	if (BlackOnTurn)
 	{
@@ -188,11 +193,11 @@ void GameBoard::nextTurn()
 }
 
 /*
-@brief Checks square and if it is empty than show user that he can plant there
+@brief Checks square and if it is empty then show the user that he can plant there
 */
-void GameBoard::checkNextSq(short int pos, short int dir, short int enemy, short int me)
+void GameBoard::checkNextSq(int pos, int dir, int enemy, int me)
 {
-	short int index = pos + dir;
+	int index = pos + dir;
 
 	if (index >= size*size || isBorder(dir, pos) || index < 0 || grid[index] == me) return;
 	else
@@ -213,12 +218,11 @@ void GameBoard::checkNextSq(short int pos, short int dir, short int enemy, short
 /*
 @brief This function checks possibilities to end and then calls function checkNextSq()
 */
-void GameBoard::checkFirstSq(short int pos, short int dir)
+void GameBoard::checkFirstSq(int pos, int dir)
 {
-	short int index = pos + dir;
-	short int enemy;
-	short int me;
-
+	int index = pos + dir;
+	int enemy;
+	int me;
 	if (BlackOnTurn)
 	{
 		enemy = WHITE;
@@ -230,14 +234,15 @@ void GameBoard::checkFirstSq(short int pos, short int dir)
 		me = WHITE;
 	}	
 
-	if (index >= size*size || index < 0 || isBorder(dir, pos) || grid[index] == me) return; // OUT OF FIELD? OR DO I OWN THIS DISC? THEN GO TO HELL
+	/*First square is taken or the position is invalid*/
+	if (index >= size*size || index < 0 || isBorder(dir, pos) || grid[index] == me || grid[index] == NONE || grid[index] == AVAIL)
+		return;
 	else
-		if (grid[index] == NONE || grid[index] == AVAIL) return; // IS FIRST SQUARE EMPTY OR IS ALREADY SET ON AVAIL? THEN QUIT MAN!
-		else //NOT EMPTY AND NOT MINE SO GO FOR TESTING
 		checkNextSq(index, dir, enemy, me);
+		
 }
 
-void GameBoard::checkDirections(short int pos)
+void GameBoard::checkDirections(int pos)
 {
 	checkFirstSq(pos, top);
 	checkFirstSq(pos, rghtop);
@@ -259,7 +264,7 @@ void GameBoard::setAvailables()
 		grid[it->first] = NONE;
 	available.clear();
 
-	vector<short int> *vecptr;
+	vector<int> *vecptr;
 	if (BlackOnTurn)
 		vecptr = &blacks;
 	else
@@ -291,14 +296,14 @@ GameBoard::~GameBoard() {
 	delete[] grid;
 }
 
-void GameBoard::remfromVec(vector<short int> &vec, int index)
+void GameBoard::remfromVec(vector<int> &vec, int index)
 {
-	vector<short int>::iterator pos = find(vec.begin(), vec.end(), index);
+	vector<int>::iterator pos = find(vec.begin(), vec.end(), index);
 	if (pos != vec.end()) // == myVector.end() means the element was not found
 		vec.erase(pos);
 }
 
-void GameBoard::pushToVector(bool white, short int num)
+void GameBoard::pushToVector(bool white, int num)
 {
 	if (white)
 		whites.push_back(num);
@@ -313,7 +318,20 @@ void GameBoard::clearVectors()
 	available.clear();
 }
 
+bool GameBoard::checkEnd()
+{
+	if ((blacks.size() + whites.size()) == size*size)
+		return true;
+	else
+		return false;
+}
 
-
+bool GameBoard::noTurn()
+{
+	if (available.size() == 0)
+		return true;
+	else
+		return false;
+}
 
 /*** End of file gameboard.cpp ***/

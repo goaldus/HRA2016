@@ -46,14 +46,14 @@ void Interface::printBoard(GameBoard * gb) {
 		cout << endl;
 
 	cout << "\n      ";
-	for (short int i = 0; i < gb->size; ++i) {
+	for (int i = 0; i < gb->size; ++i) {
 		if (i < 9)
 			cout << i + 1 << "   ";
 		else
 			cout << i + 1 << "  ";
 	}
 
-	for (short int k = 0; k < gb->size; ++k) {
+	for (int k = 0; k < gb->size; ++k) {
 		cout << "\n    +";
 		for (int i = 0; i < gb->size; ++i)
 			cout << "---+";
@@ -116,7 +116,7 @@ tuple<string, string, string> Interface::parseCmd(string cmd) {
 	size_t index = 0;
 	string s[3];
 
-	for (short int i = 0; i < 3; ++i) {
+	for (int i = 0; i < 3; ++i) {
 		if ((index = cmd.find(" ")) != string::npos) {
 			s[i] = cmd.substr(0, index);
 			cmd.erase(0, index + 1);

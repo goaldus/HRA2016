@@ -176,6 +176,8 @@ int main() {
 					gb->setAvailables();
 					inface->printBoard(gb);
 				}
+				if (gb->checkEnd())
+					cout << "\n\tKONEC HRY!\n" << "\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici." << endl;
 			}
 			else {
 				inface->msg("Na tuto pozici nelze polozit disk.");
@@ -217,6 +219,14 @@ int main() {
 				else {
 					gb->setAvailables();
 					inface->printBoard(gb);
+					/*if (gb->noTurn())
+					{
+						cout << " PROVADIM" << endl;
+						gb->nextTurn();
+						gb->setAvailables();
+						inface->printBoard(gb);
+						cout << "\n\tZadny tah nebyl mozny, a proto je na tahu druhy hrac" << endl;
+					}*/
 				}
 			}
 			else {

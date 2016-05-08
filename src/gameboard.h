@@ -29,44 +29,46 @@
 using namespace std;
 
 class GameBoard {
-	short int rght;
-	short int lft;
-	short int rghtop;
-	short int lftop;
-	short int top;
-	short int bot;
-	short int lfbot;
-	short int rghbot;
-	short int mid;
-	short int AItype;
-	std::vector<short int> whites;
-	std::vector<short int> blacks;
-	std::vector <std::pair <short int, short int> > available;
-	std::vector <std::pair<short int, short int> >::iterator it;
+	int rght;
+	int lft;
+	int rghtop;
+	int lftop;
+	int top;
+	int bot;
+	int lfbot;
+	int rghbot;
+	int mid;
+	int AItype;
+	std::vector<int> whites;
+	std::vector<int> blacks;
+	std::vector <std::pair <int, int> > available;
+	std::vector <std::pair<int, int> >::iterator it;
 
 public:
-	short int size;
-	short int * grid;
+	int size;
+	int * grid;
 	bool BlackOnTurn;
 	bool enemyAI;
-	GameBoard(short int, short int);
-	short int getAIType();
-	vector<short int> getVec(short int);
+	GameBoard(int, int);
+	int getAIType();
+	vector<int> getVec(int);
 
-	void placeStone(short int);
+	void placeStone(int);
 	void nextTurn();
-	void checkNextSq(short int, short int, short int, short int);
-	void checkDirections(short int);
-	void checkFirstSq(short int, short int);
+	void checkNextSq(int, int, int, int);
+	void checkDirections(int);
+	void checkFirstSq(int, int);
 	void setAvailables();
 	void calcScore(int &, int &);
-	bool isBorder(short int, short int);
-	void remfromVec(std::vector<short int> &, int);
+	bool isBorder(int, int);
+	void remfromVec(std::vector<int> &, int);
 	void clearVectors();
-	void pushToVector(bool, short int);
-	void changeStones(short int index);
-	void replaceStones(short int index, short int dir);
-	std::vector <std::pair <short int, short int> > GameBoard::getAvail();
+	void pushToVector(bool, int);
+	void changeStones(int);
+	void replaceStones(int, int);
+	std::vector <std::pair <int, int> > GameBoard::getAvail();
+	bool checkEnd();
+	bool noTurn();
 	~GameBoard();
 
 };

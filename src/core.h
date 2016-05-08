@@ -26,7 +26,7 @@ class Core {
 
 public:
 	Core();
-	tuple<GameBoard *, AI *> Core::alloc(GameBoard *, AI *, int, short int);
+	tuple<GameBoard *, AI *> Core::alloc(GameBoard *, AI *, int, int);
 	tuple<GameBoard *, AI *> Core::destroy(GameBoard *, AI *);
 };
 

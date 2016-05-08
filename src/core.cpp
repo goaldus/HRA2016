@@ -36,7 +36,7 @@ Core::Core() {
 /*
 @brief allocates memory for other classes
 */
-tuple<GameBoard *, AI *> Core::alloc(GameBoard * gb, AI * ai, int size, short int AItype) {
+tuple<GameBoard *, AI *> Core::alloc(GameBoard * gb, AI * ai, int size, int AItype) {
 	gb = new GameBoard(size, AItype);
 
 	if (gb->enemyAI)
