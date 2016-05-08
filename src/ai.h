@@ -26,7 +26,7 @@ class AI {
 	short int random(GameBoard *);
 	//short int simpleH(GameBoard *, Save *);
 	int genRandom(int, int);
-	std::vector <std::pair<short int, short int> >::iterator it;
+	//vector <pair<short int, short int> >;
 	double evalPos(short int, GameBoard *);
 
 public:

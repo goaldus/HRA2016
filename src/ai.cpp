@@ -80,9 +80,7 @@ short int AI::random(GameBoard * gb) {
 	// wait 1.2 sec
 	this_thread::sleep_for(chrono::milliseconds(1200));
 
-	it = avail.begin()+index;
-
-	return it->first;
+	return avail[index].first;
 }
 
 /*
