@@ -171,6 +171,8 @@ int main() {
 				inface->printBoard(gb);
 				if (gb->checkEnd())
 					cout << "\n\tKONEC HRY!\n" << "\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici." << endl;
+				if (gb->noTurn())
+					continue;
 				// AI code here
 				if(gb->enemyAI) {
 					gb->placeStone(ai->run(gb, save));
@@ -223,15 +225,16 @@ int main() {
 				}
 				else {
 					gb->setAvailables();
-					inface->printBoard(gb);
-					/*if (gb->noTurn())
+					if (gb->noTurn())
 					{
-						cout << " PROVADIM" << endl;
 						gb->nextTurn();
 						gb->setAvailables();
-						inface->printBoard(gb);
-						cout << "\n\tZadny tah nebyl mozny, a proto je na tahu druhy hrac" << endl;
-					}*/
+						if (gb->noTurn())
+							continue;
+					}
+					inface->printBoard(gb);
+
+
 				}
 			}
 			else {
