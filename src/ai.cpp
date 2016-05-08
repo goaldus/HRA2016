@@ -77,8 +77,8 @@ int AI::random(GameBoard * gb) {
 	vector <pair <int, int> > avail = gb->getAvail();
 	// select random index from vector
 	int index = genRandom(0, avail.size()-1);
-	// wait 1.2 sec
-	this_thread::sleep_for(chrono::milliseconds(1200));
+	// wait 1 sec
+	this_thread::sleep_for(chrono::milliseconds(1000));
 
 	return avail[index].first;
 }
@@ -135,8 +135,8 @@ int AI::simpleH(GameBoard * gb, Save * save) {
 	// index of max_value in vector
 	int best_index = distance(value.begin(), max_value);
 
-	// wait 1.2 sec
-	this_thread::sleep_for(chrono::milliseconds(1200));
+	// wait 1 sec
+	this_thread::sleep_for(chrono::milliseconds(1000));
 
 	return avail[best_index].first;
 }
