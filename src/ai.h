@@ -24,9 +24,10 @@ class Save; // forward declaration
 
 class AI {
 	short int random(GameBoard *);
-	short int simpleH(GameBoard *, Save *);
+	//short int simpleH(GameBoard *, Save *);
 	int genRandom(int, int);
 	std::vector <std::pair<short int, short int> >::iterator it;
+	double evalPos(short int, GameBoard *);
 
 public:
 	AI();
