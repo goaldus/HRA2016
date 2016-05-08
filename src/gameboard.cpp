@@ -1,7 +1,7 @@
 /*************************************************************
 * Project name: HRA2016
 * File: gameboard.cpp
-* Last change: 04.05.2016 17:38
+* Last change: 09.05.2016 01:13
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
 *			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
@@ -91,7 +91,10 @@ GameBoard::GameBoard(const GameBoard &obj) {
 }
 
 
-
+/*
+@brief Checks if square is border, prevents from setting invalid squares to available placements
+@return true if square is border, false otherwise
+*/
 bool GameBoard::isBorder(int dir, int pos)
 {
 	//LEFT BORDER
@@ -113,6 +116,7 @@ return false;
 
 /*
 @brief Returns AIType number
+@return AI Type number
 */
 int GameBoard::getAIType()
 {
@@ -120,20 +124,27 @@ int GameBoard::getAIType()
 }
 
 /*
-@brief Returns available indexes
+@brief Sends vector of white disks or black disks to AI
+@return vector of disk indexes
 */
 vector<int> GameBoard::getVec(int num) {
 	if (num == WHITE)
 		return whites;
-	else if (num == BLACK)
+	else
 		return blacks;
 }
 
+/*
+@brief Public function to send vector of available placements from which AI can choose
+*/
 vector <pair <int, int> > GameBoard::getAvail() 
 {
 	return available;
 }
 
+/*
+@brief Not member function but is neccessary to help iterator to find first index in pair
+*/
 struct isEqual
 {
 	isEqual(const int& a_wanted) : wanted(a_wanted) {}
@@ -165,6 +176,10 @@ void GameBoard::placeStone(int index)
 	nextTurn();
 }
 
+/*
+@brief Calls function to replace stones to every possible direction (according to rules). Then removes from vector pair
+	   containing index and direction
+*/
 void GameBoard::changeStones(int index)
 {
 	sort(available.begin(), available.end());
@@ -218,7 +233,7 @@ void GameBoard::nextTurn()
 }
 
 /*
-@brief Checks square and if it is empty then show the user that he can plant there
+@brief Checks square and if it is empty then show the user that he can plant there. Recursive function.
 */
 void GameBoard::checkNextSq(int pos, int dir, int enemy, int me)
 {
@@ -241,7 +256,7 @@ void GameBoard::checkNextSq(int pos, int dir, int enemy, int me)
 }
 
 /*
-@brief This function checks possibilities to end and then calls function checkNextSq()
+@brief This function checks first square from original position and if possible then calls function checkNextSq()
 */
 void GameBoard::checkFirstSq(int pos, int dir)
 {
@@ -267,6 +282,9 @@ void GameBoard::checkFirstSq(int pos, int dir)
 		
 }
 
+/*
+@brief Private function checks every direction to see possible places (where user can place a disk)
+*/
 void GameBoard::checkDirections(int pos)
 {
 	checkFirstSq(pos, top);
@@ -345,7 +363,7 @@ void GameBoard::clearVectors()
 
 bool GameBoard::checkEnd()
 {
-	if (((blacks.size() + whites.size()) == size*size) || available.size() == 0)
+	if (((blacks.size() + whites.size()) == size*size) || noTurn())
 		return true;
 	else
 		return false;

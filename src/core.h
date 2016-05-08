@@ -1,7 +1,7 @@
 /*************************************************************
 * Project name: HRA2016
 * File: core.h
-* Last change: 04.05.2016 17:38
+* Last change: 09.05.2016 01:13
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
 *			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
@@ -26,8 +26,8 @@ class Core {
 
 public:
 	Core();
-	tuple<GameBoard *, AI *> Core::alloc(GameBoard *, AI *, int, int);
-	tuple<GameBoard *, AI *> Core::destroy(GameBoard *, AI *);
+	tuple<GameBoard *, AI *> alloc(GameBoard *, AI *, int, int);
+	tuple<GameBoard *, AI *> destroy(GameBoard *, AI *);
 };
 
 #endif // CORE_H

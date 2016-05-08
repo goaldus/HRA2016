@@ -1,7 +1,7 @@
 /*************************************************************
 * Project name: HRA2016
 * File: cli.cpp
-* Last change: 04.05.2016 17:38
+* Last change: 09.05.2016 01:13
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
 *			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
@@ -86,7 +86,7 @@ int main() {
 		tie(command, arg1, arg2) = inface->parseCmd(input);
 
 		if (command == "exit") {
-			cout << "\nKoncim . . . ";
+			cout << "\nKoncim . . . \n";
 			break;
 		}
 		else if (command == "help") {
@@ -163,27 +163,37 @@ int main() {
 			}
 			//Index of single square
 			int index = coord1 * gb->size + coord2;
-			// empty square, puts stone and changes turn
-			if (gb->grid[index] == AVAIL) {
+			// If square is empty place the disk and move turn to the next player
+			if (gb->grid[index] == AVAIL) 
+			{
 				gb->placeStone(index);
 				save->addState(gb);
 				gb->setAvailables();
 				inface->printBoard(gb);
-				if (gb->checkEnd()) {
-					cout << "\n\tKONEC HRY!\n";
-					inface->msg("\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici.");
+
+				//Check if game is over
+				if (gb->checkEnd()) 
+				{
+					cout << "\n\tKONEC HRY!";
+					inface->msg("Ovsem muzete zacit novou a nebo si nahrat ulozenou pozici.");
 				}
+
+				//Check if there is no turn
 				if (gb->noTurn())
 					continue;
+
 				// AI code here
-				if(gb->enemyAI) {
+				if(gb->enemyAI) 
+				{
 					gb->placeStone(ai->run(gb, save));
 					gb->setAvailables();
 					inface->printBoard(gb);
 				}
-				if (gb->checkEnd()) {
+				//Double check to ensure end after AI plays
+				if (gb->checkEnd()) 
+				{
 					cout << "\n\tKONEC HRY!\n";
-					inface->msg("\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici.");
+					cout << "\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici.\n";
 				}
 			}
 			else {
@@ -231,6 +241,7 @@ int main() {
 				}
 				else {
 					gb->setAvailables();
+					/*Checking if there are any possible moves*/
 					if (gb->noTurn())
 					{
 						gb->nextTurn();
@@ -292,6 +303,7 @@ int main() {
 	delete core;
 	delete inface;
 	delete save;
+
 	return 0;
 
 }

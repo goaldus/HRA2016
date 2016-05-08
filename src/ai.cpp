@@ -1,7 +1,7 @@
 /*************************************************************
 * Project name: HRA2016
 * File: ai.cpp
-* Last change: 04.05.2016 17:38
+* Last change: 09.05.2016 01:13
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
 *			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz

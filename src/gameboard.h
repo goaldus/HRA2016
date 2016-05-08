@@ -1,7 +1,7 @@
 /*************************************************************
 * Project name: HRA2016
 * File: gameboard.h
-* Last change: 04.05.2016 17:38
+* Last change: 09.05.2016 01:13
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
 *			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
@@ -43,31 +43,31 @@ class GameBoard {
 	std::vector<int> blacks;
 	std::vector <std::pair <int, int> > available;
 	std::vector <std::pair<int, int> >::iterator it;
+	void changeStones(int);
+	bool isBorder(int, int);
+	void replaceStones(int, int);
+	void checkFirstSq(int, int);
+	void checkNextSq(int, int, int, int);
+	void checkDirections(int);
 
 public:
 	int size;
 	int * grid;
 	bool BlackOnTurn;
 	bool enemyAI;
+
 	GameBoard(int, int);
 	GameBoard(const GameBoard &obj);
 	int getAIType();
 	vector<int> getVec(int);
-
 	void placeStone(int);
 	void nextTurn();
-	void checkNextSq(int, int, int, int);
-	void checkDirections(int);
-	void checkFirstSq(int, int);
 	void setAvailables();
 	void calcScore(int &, int &);
-	bool isBorder(int, int);
 	void remfromVec(std::vector<int> &, int);
 	void clearVectors();
 	void pushToVector(bool, int);
-	void changeStones(int);
-	void replaceStones(int, int);
-	std::vector <std::pair <int, int> > GameBoard::getAvail();
+	std::vector <std::pair <int, int> > getAvail();
 	bool checkEnd();
 	bool noTurn();
 	~GameBoard();

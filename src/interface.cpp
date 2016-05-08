@@ -1,7 +1,7 @@
 /*************************************************************
 * Project name: HRA2016
 * File: inteface.cpp
-* Last change: 04.05.2016 17:38
+* Last change: 09.05.2016 01:13
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
 *			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
@@ -97,15 +97,15 @@ Interface::Interface()
 void Interface::printHelp()
 {
 	cout << "\n  new [easy|hard] [6|8|10|12] - vytvori novou hru\n"
-		<< "\tvolitelne parametry jsou obtiznost AI a velikost herniho pole\n"
+		<< "\tvolitelne parametry jsou obtiznost AI a velikost herniho pole,\n"
 		<< "\tbez parametru je velikost pole 8 a protihracem clovek\n"
-		<< "\n  [put|p] x y                 - polozi disk na souradnice x, y\n"
-		<< "\n  open                        - otevre hru v novem okne\n"
-		<< "\n  save [nazev_hry]            - ulozi hru s volitelnym nazvem\n"
-		<< "\n  load nazev_hry              - nacte hru \"nazev_hry\"\n"
-		<< "\n  n | next                    - posune se dopredu v historii\n"
-		<< "\n  b | back                    - posune se zpet v historii\n"
-		<< "\n  help                        - zobrazi napovedu\n"
+		<< "\n  [put|p] x y                 - polozi disk na souradnice x, y"
+		<< "\n  open                        - otevre hru v novem okne"
+		<< "\n  save [nazev_hry]            - ulozi hru s volitelnym nazvem"
+		<< "\n  load nazev_hry              - nacte hru \"nazev_hry\""
+		<< "\n  n | next                    - posune se dopredu v historii"
+		<< "\n  b | back                    - posune se zpet v historii"
+		<< "\n  help                        - zobrazi napovedu"
 		<< "\n  exit                        - ukonci program\n\n\n\n\n\n\n\n\n\n";
 }
 
