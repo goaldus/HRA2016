@@ -80,15 +80,34 @@ short int AI::random(GameBoard * gb) {
 	this_thread::sleep_for(chrono::milliseconds(1200));
 
 	return avail[index];
+}
 
+/*
+@brief Evaluate position on Gameboard
+*/
+double AI::evalPos(short int index, GameBoard * gb) {
+	int x = index / gb->size;
+	int y = index % gb->size;
+	int max = gb->size - 1;
+
+	if ((x == 0 && (y == 0 || y == max)) || (x == max && (y == 0 || y == max))) {
+		return 1.5;
+	}
+	else if ((x == 0 && (y == 1 || y == max-1)) || (x == 1 && (y == 0 || y == max)) || 
+		(x == max && (y == 1 || y == max-1)) || (x == max-1 && (y == 0 || y == max))) {
+		return 0.4;
+	}
+	else if (((x == 0 || x == max) && (y >= 2 && y < max - 1)) || ((y == 0 || y == max) && (x >= 2 && x < max - 1))) {
+		return 0.7;
+	}
+	else
+		return 1.0;
 }
 
 /*
 @brief Algorithm with simple heuristic 
 */
 short int AI::simpleH(GameBoard * gb, Save * save) {
-	// copy object
-	//Save * sim = new Save(*save);
 	bool loadRes;
 	size_t w_count = gb->getVec(WHITE).size();
 	double pos_val = 0.0;
@@ -99,8 +118,7 @@ short int AI::simpleH(GameBoard * gb, Save * save) {
 	value.reserve(avail.size());
 
 	for (unsigned i = 0; i < avail.size(); ++i) {
-		// vypocitam souradnice avail[i] a jejich hodnotu = pos_val (bude metoda AI)
-		pos_val = 1.0; // PH
+		pos_val = evalPos(avail[i], gb);
 		gb->placeStone(avail[i]);
 		save->addState(gb);
 		// number of rotated disks
@@ -109,9 +127,6 @@ short int AI::simpleH(GameBoard * gb, Save * save) {
 		// return to previous state
 		tie(gb, loadRes) = save->loadState(gb, false);
 	}
-
-	// delete simulation
-	// delete sim;
 
 	// max value in vector
 	auto max_value = max_element(value.begin(), value.end());

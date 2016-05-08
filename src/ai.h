@@ -26,6 +26,7 @@ class AI {
 	short int random(GameBoard *);
 	short int simpleH(GameBoard *, Save *);
 	int genRandom(int, int);
+	double evalPos(short int, GameBoard *);
 
 public:
 	AI();
