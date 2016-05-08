@@ -169,6 +169,8 @@ int main() {
 				save->addState(gb);
 				gb->setAvailables();
 				inface->printBoard(gb);
+				if (gb->checkEnd())
+					cout << "\n\tKONEC HRY!\n" << "\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici." << endl;
 				// AI code here
 				if(gb->enemyAI) {
 					gb->placeStone(ai->run(gb, save));
@@ -211,6 +213,10 @@ int main() {
 				tie(gb, ai) = core->destroy(gb, ai);
 				// create new game and load data from file=arg1
 				tie(gb, loadResult) = save->fromFile(gb, arg1);
+				// create new ai
+				if (gb->enemyAI)
+					ai = new AI();
+
 				if (!loadResult) {
 					inface->msg("Nepodarilo se nacist hru.");
 					continue;

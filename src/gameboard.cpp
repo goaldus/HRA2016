@@ -320,7 +320,7 @@ void GameBoard::clearVectors()
 
 bool GameBoard::checkEnd()
 {
-	if ((blacks.size() + whites.size()) == size*size)
+	if (((blacks.size() + whites.size()) == size*size) || available.size() == 0)
 		return true;
 	else
 		return false;
