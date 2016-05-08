@@ -172,7 +172,6 @@ int main() {
 				// AI code here
 				if(gb->enemyAI) {
 					gb->placeStone(ai->run(gb, save));
-					save->addState(gb);
 					gb->setAvailables();
 					inface->printBoard(gb);
 				}
