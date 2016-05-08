@@ -65,6 +65,31 @@ GameBoard::GameBoard(int size, int AItype) {
 	blacks.push_back(offset + size - 1);
 }
 
+/*
+@brief Copy constructor
+*/
+GameBoard::GameBoard(const GameBoard &obj) {
+	BlackOnTurn = obj.BlackOnTurn;
+	enemyAI = obj.enemyAI;
+	AItype = obj.AItype;
+	size = obj.size;
+	// copy grid
+	int arrsize = size*size;
+	grid = new int[arrsize];
+	*grid = *obj.grid;
+	for (int i = 0; i < arrsize; ++i) {
+		grid[i] = obj.grid[i];
+		if (grid[i] == WHITE)
+			whites.push_back(i);
+		else if (grid[i] == BLACK)
+			blacks.push_back(i);
+	}
+
+	whites.reserve(7 * size);
+	blacks.reserve(7 * size);
+	available.reserve(20);
+}
+
 
 
 bool GameBoard::isBorder(int dir, int pos)

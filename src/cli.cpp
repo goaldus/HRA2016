@@ -169,8 +169,10 @@ int main() {
 				save->addState(gb);
 				gb->setAvailables();
 				inface->printBoard(gb);
-				if (gb->checkEnd())
-					cout << "\n\tKONEC HRY!\n" << "\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici." << endl;
+				if (gb->checkEnd()) {
+					cout << "\n\tKONEC HRY!\n";
+					inface->msg("\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici.");
+				}
 				if (gb->noTurn())
 					continue;
 				// AI code here
@@ -179,8 +181,10 @@ int main() {
 					gb->setAvailables();
 					inface->printBoard(gb);
 				}
-				if (gb->checkEnd())
-					cout << "\n\tKONEC HRY!\n" << "\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici." << endl;
+				if (gb->checkEnd()) {
+					cout << "\n\tKONEC HRY!\n";
+					inface->msg("\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici.");
+				}
 			}
 			else {
 				inface->msg("Na tuto pozici nelze polozit disk.");
@@ -190,6 +194,8 @@ int main() {
 		/******		open		******/
 		else if (command == "open") {
 			// should open game in new terminal window
+			inface->msg("Zatim nefunguje.");
+			continue;
 		}
 		/******		save		******/
 		else if (command == "save" || command == "s") {

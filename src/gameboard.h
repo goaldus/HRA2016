@@ -50,6 +50,7 @@ public:
 	bool BlackOnTurn;
 	bool enemyAI;
 	GameBoard(int, int);
+	GameBoard(const GameBoard &obj);
 	int getAIType();
 	vector<int> getVec(int);
 

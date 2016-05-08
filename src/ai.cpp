@@ -110,25 +110,32 @@ double AI::evalPos(int index, GameBoard * gb) {
 @brief Algorithm with simple heuristic 
 */
 int AI::simpleH(GameBoard * gb, Save * save) {
-	bool loadRes;
+	bool loadRes = true;
+	Save * sim = new Save(*save);
+	GameBoard * simgb = new GameBoard(*gb);
 	size_t w_count = gb->getVec(WHITE).size();
 	double pos_val = 0.0;
-	int turn_val = 0;
+	int turn_val = 1;
 	vector <pair <int, int> > avail = gb->getAvail();
+	//GameBoard * simgb = gb;
 	// for storing value of available places
 	vector<double> value;
 	value.reserve(avail.size());
 
 	for (unsigned i = 0; i < avail.size(); ++i) {
-		pos_val = evalPos(avail[i].first, gb);
-		gb->placeStone(avail[i].first);
-		save->addState(gb);
+		pos_val = evalPos(avail[i].first, simgb);
+		simgb->placeStone(avail[i].first);
+		sim->addState(simgb);
 		// number of gained disks
-		turn_val = (int)(gb->getVec(WHITE).size() - w_count);
+		turn_val = (int)(simgb->getVec(WHITE).size() - w_count);
 		value.push_back(pos_val * turn_val);
 		// return to previous state
-		tie(gb, loadRes) = save->loadState(gb, false);
+		tie(simgb, loadRes) = sim->loadState(simgb, false);
 	}
+
+	// delete simulations
+	delete sim;
+	delete simgb;
 
 	// max value in vector
 	auto max_value = max_element(value.begin(), value.end());
