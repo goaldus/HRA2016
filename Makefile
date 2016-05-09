@@ -21,6 +21,7 @@ cli:
 
 gui:
 	@ cd src && qmake -o Makefile && make
+	cp ./src/HRA2016 ./
 
 clean:
 	rm -f HRA2016-cli
