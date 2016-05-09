@@ -163,7 +163,7 @@ int main() {
 			}
 			//Index of single square
 			int index = coord1 * gb->size + coord2;
-			// If square is empty place the disk and move turn to the next player
+			// If square is empty place the disk and move turn to the next player (AI move)
 			if (gb->grid[index] == AVAIL) 
 			{
 				gb->placeStone(index);
@@ -272,6 +272,12 @@ int main() {
 			}
 			gb->setAvailables();
 			inface->printBoard(gb);
+			//Check if game is over
+			if (gb->checkEnd())
+			{
+				cout << "\n\tKONEC HRY!";
+				cout << "\n\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici." << endl;
+			}
 		}
 		/******		back		******/
 		else if (command == "back" || command == "b") {
