@@ -12,8 +12,7 @@ CC = g++
 CFLAGS = -Wall -Wextra -O2 -std=c++0x -s -pedantic
 LOGIN =  xjelen09-xmolna05
 CLI = src/ai.cpp src/cli.cpp src/core.cpp src/gameboard.cpp src/interface.cpp src/save.cpp
-GUI = src/HRA2016.pro src/HRA.pro.user
-FILES = Makefile README.txt src/ai.cpp src/cli.cpp src/core.cpp src/gameboard.cpp src/interface.cpp src/save.cpp examples/
+FILES = Makefile README.txt src/ai.cpp src/cli.cpp src/core.cpp src/gameboard.cpp src/interface.cpp src/save.cpp examples/ doc/
 
 all: cli copysaves gui
 
@@ -21,7 +20,7 @@ cli:
 	   $(CC) $(CFLAGS) $(CLI) -o HRA2016-cli
 
 gui:
-	$(CC) $(CFLAGS) $(GUI) -o HRA2016
+	@ cd src && qmake -o Makefile && make
 
 clean:
 	rm -f HRA2016-cli
@@ -29,20 +28,25 @@ clean:
 	rm -rf $(LOGIN).zip
 	rm src/Makefile -rf
 	rm saves -rf
+	rm src/*.o
+	rm src/HRA2016
 
 pack:
 	zip -r $(LOGIN) $(FILES)
 
 run: all
 	./HRA2016-cli
+	./HRA2016
 
 doxygen:
 	-mkdir doc
 	doxygen src/Doxyfile
 
 copysaves:
+	
 	-mkdir -p saves
 	cp examples/* saves
+	
 
 
 

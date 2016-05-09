@@ -3,7 +3,7 @@ Projekt do pøedmìtu ICP: HRA2016
 Autoøi: Vilém Jelen (xjelen09), Ondøej Molnár (xmolna05)
 ------------------------------------------
 Popis:	
-	Implementace hry Reversi (Othello) pro pøíkazovou øádku i s grafickým rozhraním. 
+	Implementace hry Reversi (Othello) pro pøíkazovou øádku grafické rozhraní, bohužel nefunguje.
 	Složka examples obsahuje ukázkové uložené hry. Zdrojové soubory jsou v src.	
 ------------------------------------------
 Pøeklad:	
