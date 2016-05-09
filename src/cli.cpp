@@ -235,10 +235,6 @@ int main() {
 					continue;
 				}
 				else {
-					/*// create new ai
-					if (gb->enemyAI)
-						ai = new AI();*/
-
 					gb->setAvailables();
 					/*Checking if there are any possible moves*/
 					if (gb->noTurn())
