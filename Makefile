@@ -11,7 +11,7 @@ LOGIN =  xjelen09-xmolna05
 CLI = src/ai.cpp src/cli.cpp src/core.cpp src/gameboard.cpp src/interface.cpp src/save.cpp
 FILES = Makefile README.txt src/ai.cpp src/cli.cpp src/core.cpp src/gameboard.cpp src/interface.cpp src/save.cpp
 
-all: cli
+all: cli copysaves
 
 cli:
 	   $(CC) $(CFLAGS) $(CLI) -o HRA2016-cli
@@ -21,6 +21,7 @@ clean:
 	rm doc/* -rf
 	rm -rf $(LOGIN).zip
 	rm src/Makefile -rf
+	rm saves -rf
 
 pack:
 	zip -r $(LOGIN) $(FILES)
@@ -32,6 +33,9 @@ doxygen:
 	-mkdir doc
 	doxygen src/Doxyfile
 
+copysaves:
+	-mkdir -p saves
+	cp examples/* saves
 
 
 
