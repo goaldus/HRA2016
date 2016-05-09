@@ -28,6 +28,8 @@
 #endif
 
 #include "gameboard.h"
+#include "ai.h"
+#include "core.h"
 #include "save.h"
 
 using namespace std;
@@ -209,14 +211,16 @@ bool Save::toFile(string name) {
 /*
 @brief Load game from file
 */
-tuple<GameBoard *, bool> Save::fromFile(GameBoard * gb, string name) {
-	// clear save
-	clear();
-	
-	filename += name;
+tuple<GameBoard *, AI *, bool> Save::fromFile(Core * core, GameBoard * gb, AI * ai, string name) {
+	filename = "saves\\" + name;
 
 	ifstream f(filename.data());
 	if (f.is_open()) {
+		// clear save
+		clear();
+		// delete actual game if it exists
+		tie(gb, ai) = core->destroy(gb, ai);
+
 		string line = "";
 		getline(f, line);
 		int size = atoi(line.substr(0, 2).data());
@@ -227,8 +231,10 @@ tuple<GameBoard *, bool> Save::fromFile(GameBoard * gb, string name) {
 		data[step] = line;
 		// get AItype
 		int val = atoi(line.substr(2).data());
-		// alloc new gameboard
-		gb = new GameBoard(size, val);
+
+		// alloc new game
+		tie(gb, ai) = core->alloc(gb, ai, size, val);
+
 		// load rest of file into data
 		while (getline(f, line)) {
 			data[++step] = line;
@@ -236,10 +242,10 @@ tuple<GameBoard *, bool> Save::fromFile(GameBoard * gb, string name) {
 
 		gb = loadData(gb);
 
-		return make_tuple(gb, true);
+		return make_tuple(gb, ai, true);
 	}
 	else 
-		return make_tuple(gb, false);
+		return make_tuple(gb, ai, false);
 }
 
 

@@ -20,6 +20,9 @@
 
 using namespace std;
 
+// forward declarations
+class Core;
+class AI;
 
 class Save {
 	string filename;
@@ -35,7 +38,7 @@ public:
 	void addState(GameBoard *);
 	tuple<GameBoard *, bool> loadState(GameBoard *, bool);
 	bool toFile(string);
-	tuple<GameBoard *, bool> fromFile(GameBoard *, string);
+	tuple<GameBoard *, AI *, bool> fromFile(Core *, GameBoard *, AI *, string);
 	inline bool notAvail(string);
 	GameBoard * loadData(GameBoard *);
 	~Save();

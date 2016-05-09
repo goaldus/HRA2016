@@ -227,19 +227,18 @@ int main() {
 		/******		load		******/
 		else if (command == "load" || command == "l") {
 			if (!arg1.empty()) {
-				// delete actual game if it exists
-				tie(gb, ai) = core->destroy(gb, ai);
 				// create new game and load data from file=arg1
-				tie(gb, loadResult) = save->fromFile(gb, arg1);
-				// create new ai
-				if (gb->enemyAI)
-					ai = new AI();
+				tie(gb, ai, loadResult) = save->fromFile(core, gb, ai, arg1);
 
 				if (!loadResult) {
 					inface->msg("Nepodarilo se nacist hru.");
 					continue;
 				}
 				else {
+					/*// create new ai
+					if (gb->enemyAI)
+						ai = new AI();*/
+
 					gb->setAvailables();
 					/*Checking if there are any possible moves*/
 					if (gb->noTurn())
