@@ -40,7 +40,11 @@ using namespace std;
 Save::Save() {
 	step = 0;
 	arrsize = 0;
+#ifdef _WIN32
 	filename = "saves\\";
+#else 
+	filename = "saves/";
+#endif
 	data = NULL;
 }
 
@@ -67,7 +71,11 @@ void Save::clear() {
 	if (data != NULL) {
 		step = 0;
 		arrsize = 0;
+#ifdef _WIN32
 		filename = "saves\\";
+#else 
+		filename = "saves/";
+#endif
 		delete[] data;
 	}
 }
@@ -174,7 +182,11 @@ inline bool Save::notAvail(string name) {
 @brief Save game to file.
 */
 bool Save::toFile(string name) {
+#ifdef _WIN32
 	filename = "saves\\";
+#else 
+	filename = "saves/";
+#endif
 	// use standard name
 	if (name.empty()) {
 		int num_name = 1;
@@ -212,7 +224,11 @@ bool Save::toFile(string name) {
 @brief Load game from file
 */
 tuple<GameBoard *, AI *, bool> Save::fromFile(Core * core, GameBoard * gb, AI * ai, string name) {
+#ifdef _WIN32
 	filename = "saves\\" + name;
+#else 
+	filename = "saves/" + name;
+#endif
 
 	ifstream f(filename.data());
 	if (f.is_open()) {
