@@ -9,7 +9,7 @@ CC = g++
 CFLAGS = -Wall -Wextra -O2 -std=c++0x -s -pedantic
 LOGIN =  xjelen09-xmolna05
 CLI = src/ai.cpp src/cli.cpp src/core.cpp src/gameboard.cpp src/interface.cpp src/save.cpp
-FILES = Makefile README.txt src/ai.cpp src/cli.cpp src/core.cpp src/gameboard.cpp src/interface.cpp src/save.cpp
+FILES = Makefile README.txt src/ai.cpp src/cli.cpp src/core.cpp src/gameboard.cpp src/interface.cpp src/save.cpp examples/
 
 all: cli copysaves
 
