@@ -31,15 +31,17 @@ class Core {
 public:
 	//! Takes GameBoard class, AI class and allocates memory for them.
 	/*!
-	\param pointer on GameBoard class
-	\param pointer on AI class
+	\param gb pointer on GameBoard class
+	\param ai pointer on AI class
+	\param size integer size for new GameBoard
+	\param AItype integer type of AI for new GameBoard and new AI
 	\return tuple of pointers to GameBoard and AI
 	*/
 	tuple<GameBoard *, AI *> alloc(GameBoard *, AI *, int, int);
 	//! Takes GameBoard class, AI class and deletes them.
 	/*!
-	\param pointer on GameBoard class.
-	\param pointer on AI class.
+	\param gb pointer on GameBoard class.
+	\param ai pointer on AI class.
 	\return pointer to GameBoard and pointer to AI
 	*/
 	tuple<GameBoard *, AI *> destroy(GameBoard *, AI *);
