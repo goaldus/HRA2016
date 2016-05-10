@@ -21,12 +21,27 @@
 
 using namespace std;
 
-
+//! A Core class 
+/*!
+This class is used for safely creating Gameboard and AI objects and
+deleting them when needed. For example with creation of a new game.
+*/
 class Core {
 
 public:
-	Core();
+	//! Takes GameBoard class, AI class and allocates memory for them.
+	/*!
+	\param pointer on GameBoard class
+	\param pointer on AI class
+	\return tuple of pointers to GameBoard and AI
+	*/
 	tuple<GameBoard *, AI *> alloc(GameBoard *, AI *, int, int);
+	//! Takes GameBoard class, AI class and deletes them.
+	/*!
+	\param pointer on GameBoard class.
+	\param pointer on AI class.
+	\return pointer to GameBoard and pointer to AI
+	*/
 	tuple<GameBoard *, AI *> destroy(GameBoard *, AI *);
 };
 

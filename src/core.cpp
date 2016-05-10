@@ -26,12 +26,6 @@
 
 using namespace std;
 
-/*
-@brief default constructor
-*/
-Core::Core() {
-	
-}
 
 /*
 @brief allocates memory for other classes
