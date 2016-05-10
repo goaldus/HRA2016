@@ -7,6 +7,8 @@
 #include <QTextStream>
 #include <QToolButton>
 #include <QGridLayout>
+#include <QAbstractButton>
+#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,24 +45,24 @@ void MainWindow::on_actionUlo_it_jako_triggered()
 
 void MainWindow::on_actionUkon_it_triggered()
 {
-    QMessageBox::StandardButton reply;
-     reply = QMessageBox::question(this, "Konec", "Opravdu chcete ukončit hru?",
-                                    QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes)
-      {
+
+    QMessageBox msgBox;
+    msgBox.setText(tr("Opravdu chcete skončit?"));
+    QAbstractButton* pButtonYes = msgBox.addButton(tr("Ano"), QMessageBox::YesRole);
+    msgBox.addButton(tr("Ne"), QMessageBox::NoRole);
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton()==pButtonYes) {
         close();
-      }
-      else
+    }
+    else
         return;
 }
 
 void MainWindow::on_actionZobrazit_n_pov_du_triggered()
 {
-    QDir tmpCurrDir = QDir::current();
-    tmpCurrDir.cdUp();
-    QString rootDir = tmpCurrDir.currentPath();
-
-    QFile file1(rootDir + "/README.txt");
+    QFile file1("README.txt");
     if(!file1.open(QIODevice::ReadOnly | QIODevice::Text)){
         QMessageBox msgBox;
         msgBox.critical(this, "Chyba", "Soubor neexistuje!");
