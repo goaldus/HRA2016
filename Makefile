@@ -25,7 +25,7 @@ gui:
 	rm src/HRA2016
 
 clean:
-	rm -f HRA2016-cli
+	rm -f hra2016-cli
 	rm -f HRA2016
 	rm doc/* -rf
 	rm -rf $(LOGIN).zip
