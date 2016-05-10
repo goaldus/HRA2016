@@ -1,41 +1,44 @@
-Projekt do pøedmìtu ICP: HRA2016
+Projekt do pÅ™edmÄ›tu ICP: HRA2016
 ------------------------------------------
-Autoøi: Vilém Jelen (xjelen09), Ondøej Molnár (xmolna05)
+AutoÅ™i: VilÃ©m Jelen (xjelen09), OndÅ™ej MolnÃ¡r (xmolna05)
 ------------------------------------------
 Popis:	
-	Implementace hry Reversi (Othello) pro pøíkazovou øádku grafické rozhraní, bohuel nefunguje.
-	Sloka examples obsahuje ukázkové uloené hry. Zdrojové soubory jsou v src.	
+	Implementace hry Reversi (Othello) pro pÅ™Ã­kazovou Å™Ã¡dku. 
+	GrafickÃ© rozhranÃ­ bohuÅ¾el nefunguje, je pouze rozpracovÃ¡no. 
+	SloÅ¾ka examples obsahuje ukÃ¡zkovÃ© uloÅ¾enÃ© hry. ZdrojovÃ© soubory jsou v src.	
 ------------------------------------------
-Pøeklad:	
-	pøíkazem make, vıstupem jsou spustitelné soubory hra2016-cli a hra2016
+PÅ™eklad:	
+	pÅ™Ã­kazem make, vÃ½stupem jsou spustitelnÃ© soubory hra2016-cli a hra2016
 	make doxygen vygeneruje dokumentaci
+	make pack zabalÃ­ vÅ¡echny dÅ¯leÅ¾itÃ© soubory do archivu pro snadnou distribuci hry
 ------------------------------------------
-Spuštìní:
- 	hra2016-cli nemá ádné parametry zadávané pøi spuštìní (pouze ./hra2016-cli)
+SpuÅ¡tÄ›nÃ­:
+ 	hra2016-cli nemÃ¡ Å¾Ã¡dnÃ© parametry zadÃ¡vanÃ© pÅ™i spuÅ¡tÄ›nÃ­ (pouze ./hra2016-cli)
+ 	hra2016 taktÃ©Å¾ (./hra2016)
 ------------------------------------------
-Ovládání CLI verze:
+OvlÃ¡dÃ¡nÃ­ CLI verze:
 	new [easy|hard] [6|8|10|12] 		- vytvori novou hru		
-		- volitelne monosti jsou vıbìr AI obtínosti a velikosti herní desky		
-		- bez parametrù se pouije velikost 8 a protihráèem je èlovìk
+		- volitelne moÅ¾nosti jsou vÃ½bÄ›r AI obtÃ­Å¾nosti a velikosti hernÃ­ desky		
+		- bez parametrÅ¯ se pouÅ¾ije velikost 8 a protihrÃ¡Äem je ÄlovÄ›k
 	[put|p] x y                 		- polozi disk na souradnice x, y
-		- nejménì nároèné pokládání lze psát napøíklad takto: 4 5 (poloí na souøadnice 4 a 5)
-		- osa x je vertikální, y horizontální 
+		- nejmÃ©nÄ› nÃ¡roÄnÃ© poklÃ¡dÃ¡nÃ­ lze psÃ¡t napÅ™Ã­klad takto: 4 5 (poloÅ¾Ã­ na souÅ™adnice 4 a 5)
+		- osa x je vertikÃ¡lnÃ­, y horizontÃ¡lnÃ­ 
 	open                        		- otevre hru v novem okne
-		- kvuli komplikacim zatím neimplementovano
+		- kvuli komplikacim zatÃ­m neimplementovano
 	save [nazev_hry]            		- ulozi hru s volitelnym nazvem
-		- pokud není zadán název hry, vygeneruje se automatické jméno 
+		- pokud nenÃ­ zadÃ¡n nÃ¡zev hry, vygeneruje se automatickÃ© jmÃ©no 
 	load nazev_hry              		- nacte hru "nazev_hry"
 	
-		- zadávejte pouze název hry, cesta k souboru je povaována za neplatnı název
-	n | next                   		- posune se dopøedu v historii právì hrané hry		
-	b | back                   		- posune se zpìt v historii právì hrané hry	
-	help                       		- zobrazí tuto nápovìdu bìhem hry
+		- zadÃ¡vejte pouze nÃ¡zev hry, cesta k souboru je povaÅ¾ovÃ¡na za neplatnÃ½ nÃ¡zev
+	n | next                   		- posune se dopÅ™edu v historii prÃ¡vÄ› hranÃ© hry		
+	b | back                   		- posune se zpÄ›t v historii prÃ¡vÄ› hranÃ© hry	
+	help                       		- zobrazÃ­ tuto nÃ¡povÄ›du bÄ›hem hry
 
-	exit                        		- ukonèí program
+	exit                        		- ukonÄÃ­ program
 -------------------------------------------
-Poznámky:
-	Uloené hry neobsahují tahy umìlé inteligence.
-	Umìlá inteligence nikdy nezaèíná hru první.
+PoznÃ¡mky:
+	UloÅ¾enÃ© hry neobsahujÃ­ tahy umÄ›lÃ© inteligence.
+	UmÄ›lÃ¡ inteligence nikdy nezaÄÃ­nÃ¡ hru prvnÃ­.
 	
 
 
