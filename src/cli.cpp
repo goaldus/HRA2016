@@ -67,6 +67,9 @@ bool is_digits(const string &str)
 
 }
 
+/*
+@brief Main function for cli version of the game.
+*/
 int main() {
 
 	#ifdef _WIN32
