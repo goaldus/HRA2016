@@ -30,12 +30,6 @@
 
 using namespace std;
 
-/*
-@brief default constructor
-*/
-AI::AI() {
-
-}
 
 /*
 @brief Runs selected AI
@@ -148,11 +142,5 @@ int AI::simpleH(GameBoard * gb, Save * save) {
 	return avail[best_index].first;
 }
 
-/*
-@brief AI destructor
-*/
-AI::~AI() {
-
-}
 
 /*** End of file ai.cpp ***/
