@@ -28,6 +28,7 @@
 
 using namespace std;
 
+
 class GameBoard {
 	int rght;
 	int lft;
