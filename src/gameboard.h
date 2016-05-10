@@ -67,12 +67,34 @@ public:
 	\param AItype int of enemy player
 	*/
 	GameBoard(int, int);
+	//! A copy constructor.
+	/*!
+	Clones GB into new GB.
+	\param obj old GameBoard
+	*/
 	GameBoard(const GameBoard &obj);
+	//! Returns type of AI in actual game.
+	/*!
+	\return int type of enemy player
+	*/
 	int getAIType();
+	//! Return one of vectors used in GB.
+	/*!
+	Initializes values for GameBoard class.
+	\param num int for vector choosing
+	\return vector int
+	*/
 	vector<int> getVec(int);
+	//! Place disk on board.
+	/*!
+	\param index int position in GB grid
+	*/
 	void placeStone(int);
+	//! Changes turn to next player
 	void nextTurn();
+	//! Function sets possible places to indicate square availability to user
 	void setAvailables();
+	//! Returns score for both players.
 	void calcScore(int &, int &);
 	void remfromVec(std::vector<int> &, int);
 	void clearVectors();
