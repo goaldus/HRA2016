@@ -20,13 +20,31 @@
 
 using namespace std;
 
+//! CLI interface class
+/*!
+This class is interface for user. Contains behaviour like adding arguments, printing gameboard and setting an environment.
+*/
 class Interface 
 {
 public:
 	Interface();
+	//! Prints gameboard to user in CLI
+	/*!
+	\param gb pointer on GameBoard class
+	*/
 	void printBoard(GameBoard *);
+	//! Prints help to user in CLI
 	void printHelp();
+	//! Prints gameboard to user in CLI
+	/*!
+	\param cmd user command
+	\return tuple of strings which are parsed from command for next work
+	*/
 	tuple<string, string, string> parseCmd(string cmd);
+	//! Prints message to user
+	/*!
+	\param msg string which is printed like information message but formatted
+	*/
 	void msg(string);
 };
 

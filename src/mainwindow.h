@@ -4,7 +4,7 @@
 * Last change: 09.05.2016 01:13
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
-*		Ondrej Molnar		xmolna05@stud.fit.vutbr.cz
+*			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
 *
 * Description: Reversi game (othello).
 *
