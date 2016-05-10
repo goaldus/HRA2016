@@ -97,10 +97,28 @@ public:
 	//! Returns score for both players.
 	void calcScore(int &, int &);
 	void remfromVec(std::vector<int> &, int);
+	//! Clears all vectors
 	void clearVectors();
+	//! Pushes to vector an index of square
+	/*!
+	\param white bool if I want to sent value to white vector
+	\param num index of square
+	*/
 	void pushToVector(bool, int);
+	//! Vector is sent to function in AI
+	/*!
+	\return vector of pair containing index of square and user's direction he accessed this square
+	*/
 	std::vector <std::pair <int, int> > getAvail();
+	//! Checks the end of the game
+	/*!
+	\return bool if game is over or not
+	*/
 	bool checkEnd();
+	//! Checks if there is any turn in the game
+	/*!
+	\return true if there is not turn
+	*/
 	bool noTurn();
 	//! A destructor
 	/*!
