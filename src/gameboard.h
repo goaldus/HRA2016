@@ -28,7 +28,11 @@
 
 using namespace std;
 
-
+//! A GameBoard class 
+/*!
+This class is representing board and used for all operations
+with disks and the board itself.
+*/
 class GameBoard {
 	int rght;
 	int lft;
@@ -56,7 +60,12 @@ public:
 	int * grid;
 	bool BlackOnTurn;
 	bool enemyAI;
-
+	//! A constructor.
+	/*!
+	Initializes values for GameBoard class.
+	\param size int of the GB
+	\param AItype int of enemy player
+	*/
 	GameBoard(int, int);
 	GameBoard(const GameBoard &obj);
 	int getAIType();
@@ -71,6 +80,10 @@ public:
 	std::vector <std::pair <int, int> > getAvail();
 	bool checkEnd();
 	bool noTurn();
+	//! A destructor
+	/*!
+	Deletes grid data.
+	*/
 	~GameBoard();
 
 };
