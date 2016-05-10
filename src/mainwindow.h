@@ -1,3 +1,21 @@
+/*************************************************************
+* Project name: HRA2016
+* File: mainwindow.h
+* Last change: 09.05.2016 01:13
+*
+* Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
+*			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
+*
+* Description: Reversi game (othello).
+*
+***********************************************************/
+/**
+* @file mainwindow.h
+*
+* @brief Header file for gui MainWindow class
+* @author Vilem Jelen, Ondrej Molnar
+*/
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -31,3 +49,5 @@ private:
 };
 
 #endif // MAINWINDOW_H
+
+/*** End of file mainwindow.h ***/

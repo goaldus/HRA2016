@@ -1,3 +1,21 @@
+﻿/*************************************************************
+* Project name: HRA2016
+* File: mainwindow.cpp
+* Last change: 10.05.2016 22:20
+*
+* Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
+*			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
+*
+* Description: Reversi game (othello).
+*
+***********************************************************/
+/**
+* @file mainwindow.cpp
+*
+* @brief Main window for gui application class
+* @author Vilem Jelen, Ondrej Molnar
+*/
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
@@ -95,3 +113,5 @@ void MainWindow::on_actionNa_st_triggered()
     QString filename = QFileDialog::getOpenFileName(
                 this, "Nahrát soubor", QDir::current().currentPath(), "Všechny soubory (*.*)");
 }
+
+/*** End of file mainwindow.cpp ***/
