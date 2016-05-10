@@ -17,7 +17,7 @@ FILES = Makefile README.txt src/ examples/ doc/
 all: cli copysaves gui
 
 cli:
-	   $(CC) $(CFLAGS) $(CLI) -o HRA2016-cli
+	   $(CC) $(CFLAGS) $(CLI) -o hra2016-cli
 
 gui:
 	@ cd src && qmake -o Makefile && make
@@ -37,7 +37,7 @@ pack:
 	zip -r $(LOGIN) $(FILES)
 
 run: all
-	./HRA2016-cli
+	./hra2016-cli
 	./HRA2016
 
 doxygen:
