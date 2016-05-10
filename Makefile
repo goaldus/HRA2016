@@ -41,7 +41,7 @@ run: all
 	./hra2016
 
 doxygen:
-	-mkdir doc
+	-mkdir -p doc
 	doxygen src/Doxyfile
 
 copysaves:
