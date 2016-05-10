@@ -31,7 +31,7 @@ clean:
 	rm -rf $(LOGIN).zip
 	rm src/Makefile -rf
 	rm saves -rf
-	rm src/*.o
+	rm src/*.o -f
 
 pack:
 	zip -r $(LOGIN) $(FILES)
