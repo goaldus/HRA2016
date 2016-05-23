@@ -34,6 +34,10 @@ private:
 protected:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent * event);
+private slots:
+    void on_saveBtn_clicked();
+    void on_nextBtn_clicked();
+    void on_backBtn_clicked();
 };
 
 #endif // GAMEUI_H

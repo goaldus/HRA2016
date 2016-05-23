@@ -37,6 +37,7 @@ void gameUI::keyPressEvent(QKeyEvent *event) {
         close();
 }
 
+// put disk on mouse click
 void gameUI::mousePressEvent(QMouseEvent *event) {
     // do nothing if its out of gameboard
     if (event->x() < 10 || event->x() > 410 || event->y() < 10 || event->y() > 410)
@@ -79,9 +80,11 @@ void gameUI::mousePressEvent(QMouseEvent *event) {
     }
 }
 
-
+// draw gameboard, score, enemy type and turn
 void gameUI::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
+    // use antialiasing
+    painter.setRenderHint(QPainter::Antialiasing);
 
     // pen and brush for blue player
     QBrush player1(QColor(0, 153, 255));
@@ -123,7 +126,6 @@ void gameUI::paintEvent(QPaintEvent *event) {
     }
 
 
-
     // draw disks and availables based on gb->grid[]
     int index = 0;
     for (int k = 0; k < gb->size; ++k) {
@@ -134,13 +136,13 @@ void gameUI::paintEvent(QPaintEvent *event) {
                     grid_rect.setRect(14 + k * size, 14 + j * size, size-8, size-8);
                     // draw player1
                     if (gb->grid[index] == WHITE) {
-                        painter.setPen(player1_pen);
-                        painter.setBrush(player1);
+                        painter.setPen(player2_pen);
+                        painter.setBrush(player2);
                     }
                     // draw player2
                     else {
-                        painter.setPen(player2_pen);
-                        painter.setBrush(player2);
+                        painter.setPen(player1_pen);
+                        painter.setBrush(player1);
                     }
                     painter.drawEllipse(grid_rect);
                 }
@@ -151,12 +153,81 @@ void gameUI::paintEvent(QPaintEvent *event) {
         }
     }
 
-
     // draw enemy type
+    painter.setFont(QFont("Brandon Grotesque", 12));
+    QPen enemy(Qt::black);
+    painter.setPen(enemy);
+    string enemytext;
+    if (gb->getAIType() == 0) enemytext = "Protihráč: Člověk";
+    if (gb->getAIType() == 1) enemytext = "Protihráč: Easy AI";
+    if (gb->getAIType() == 2) enemytext = "Protihráč: Hard AI";
+    painter.drawText(440, 40, enemytext.data());
 
 
     // draw who is on turn
+    grid_rect.setRect(475, 160, 60, 60);
+    if (gb->BlackOnTurn) {
+        painter.setPen(player1_pen);
+        painter.setBrush(player1);
+    }
+    else {
+        painter.setPen(player2_pen);
+        painter.setBrush(player2);
+    }
+    painter.drawEllipse(grid_rect);
+
 
     // draw score
+    int b_score, w_score;
+    gb->calcScore(b_score, w_score);
+    painter.setFont(QFont("Brandon Grotesque", 15, QFont::Bold));
+    // blue score
+    painter.setPen(player1_pen);
+    painter.drawText(450, 110, to_string(b_score).data());
+    // red score
+    player1_pen.setColor(QColor(255, 51, 51));
+    painter.setPen(player1_pen);
+    painter.drawText(545, 110, to_string(w_score).data());
 
+}
+
+// save game
+void gameUI::on_saveBtn_clicked() {
+    QMessageBox msgBox;
+    // save to file with standard name
+    if (save->toFile("")) {
+        msgBox.setText("Hra byla uspesne ulozena.\t");
+        msgBox.exec();
+    }
+}
+
+// next btn
+void gameUI::on_nextBtn_clicked() {
+    QMessageBox msgBox;
+    // one step further in game history
+    tie(gb, loadResult) = save->loadState(gb, true);
+    if (!loadResult) {
+        msgBox.setText(" Nelze jít o tah dopředu.\t");
+        msgBox.exec();
+    }
+    gb->setAvailables();
+    repaint();
+    //Check if game is over
+    if (gb->checkEnd()) {
+        msgBox.setText("\tKONEC HRY!\n\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici.\t");
+        msgBox.exec();
+    }
+}
+
+// back btn
+void gameUI::on_backBtn_clicked() {
+    QMessageBox msgBox;
+    // one step back in game history
+    tie(gb, loadResult) = save->loadState(gb, false);
+    if (!loadResult) {
+        msgBox.setText(" Nelze jít o tah zpět.\t");
+        msgBox.exec();
+    }
+    gb->setAvailables();
+    repaint();
 }
