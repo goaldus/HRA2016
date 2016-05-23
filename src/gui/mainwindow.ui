@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Reversi (Othello)</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../Users/Vilém/Pictures/Aperture_Science_Logo_by_Zabuza318.jpg</normaloff>../../Users/Vilém/Pictures/Aperture_Science_Logo_by_Zabuza318.jpg</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>

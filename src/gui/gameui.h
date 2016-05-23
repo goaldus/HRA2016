@@ -32,7 +32,8 @@ private:
 
 
 protected:
-    void paintEvent(QPaintEvent *e);
+    void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent * event);
 };
 
 #endif // GAMEUI_H
