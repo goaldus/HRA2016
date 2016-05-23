@@ -19,13 +19,15 @@ gameUI::gameUI(QWidget *parent, int sizeIndex, int enemyIndex) :
     save->setupSave(gb);
     // set available places
     gb->setAvailables();
-    // repaint board
-    update();
 }
 
 gameUI::~gameUI()
 {
     delete ui;
+    // delete objects
+    tie(gb, ai) = core->destroy(gb, ai);
+    delete core;
+    delete save;
 }
 
 // close game window on escape key
@@ -37,34 +39,30 @@ void gameUI::keyPressEvent(QKeyEvent *event) {
 void gameUI::paintEvent(QPaintEvent *e) {
     QPainter painter(this);
 
-    QPen pointpen(Qt::black);
+    QPen pen(Qt::blue);
+    pen.setJoinStyle(Qt::RoundJoin);
+    pen.setWidth(2);
 
-    pointpen.setWidth(6);
+    painter.setPen(pen);
 
-    QPen linepen(Qt::red);
+    // size of one square
+    int size = 400/gb->size;
 
-    linepen.setWidth(2);
+    // main frame around board
+    QRect rec(10, 10, gb->size*size, gb->size*size);
+    painter.drawRect(rec);
 
-    QPoint p1;
+    // draw vertical and horizontal lines
+    for (int i = 1; i < gb->size; ++i) {
+        painter.drawLine(10 + i*size, 10, 10 + i*size, 10 + gb->size*size);
+        painter.drawLine(10, 10 + i*size, 10 + gb->size*size, 10 + i*size);
+    }
 
-    p1.setX(10);
-    p1.setY(10);
+    // draw enemy type
 
-    QPoint p2;
 
-    p2.setX(100);
-    p2.setY(300);
+    // draw who is on turn
 
-    painter.setPen(linepen);
-
-    painter.drawLine(p1, p2);
-
-    painter.setPen(pointpen);
-
-    painter.drawPoint(p1);
-    painter.drawPoint(p2);
-
-    //QRect rect
-
+    // draw score
 
 }
