@@ -246,7 +246,7 @@ void gameUI::paintEvent(QPaintEvent *) {
 void gameUI::on_saveBtn_clicked() {
     // save to file with standard name
     if (save->toFile("")) {
-        msgB.setText(" Hra byla uspesne ulozena.\t");
+        msgB.setText(" Hra byla úspěšně uložena.\t");
         msgB.exec();
     }
 }

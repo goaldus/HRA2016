@@ -39,7 +39,7 @@ Ovládání GUI verze:
 -------------------------------------------
 Poznámky:
 	Umělá inteligence nikdy nezačíná hru první.
-	Veškerá grafika je kreslena vektorově, pouze ikona programu je není.
+	Veškerá grafika je kreslena vektorově, pouze ikona programu není.
 	CLI verze umožňuje zadání vlastního jména při ukládání hry.
 	
 
