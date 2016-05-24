@@ -1,10 +1,9 @@
-Projekt do předmětu ICP: HRA2016
+﻿Projekt do předmětu ICP: hra2016
 ------------------------------------------
 Autoři: Vilém Jelen (xjelen09), Ondřej Molnár (xmolna05)
 ------------------------------------------
 Popis:	
-	Implementace hry Reversi (Othello) pro příkazovou řádku. 
-	Grafické rozhraní bohužel nefunguje, je pouze rozpracováno. 
+	Implementace hry Reversi (Othello) pro příkazovou řádku (hra2016-cli) a s grafickým rozhraním (hra2016). 
 	Složka examples obsahuje ukázkové uložené hry. Zdrojové soubory jsou v src.	
 ------------------------------------------
 Překlad:	
@@ -23,8 +22,6 @@ Ovládání CLI verze:
 	[put|p] x y                 		- polozi disk na souradnice x, y
 		- nejméně náročné pokládání lze psát například takto: 4 5 (položí na souřadnice 4 a 5)
 		- osa x je vertikální, y horizontální 
-	open                        		- otevre hru v novem okne
-		- kvuli komplikacim zatím neimplementovano
 	save [nazev_hry]            		- ulozi hru s volitelnym nazvem
 		- pokud není zadán název hry, vygeneruje se automatické jméno 
 	load nazev_hry              		- nacte hru "nazev_hry"
@@ -36,9 +33,14 @@ Ovládání CLI verze:
 
 	exit                        		- ukončí program
 -------------------------------------------
+Ovládání GUI verze:
+	Po spuštění lze pomocí tlačítka "Nápověda" nebo stisknutím F1 zobrazit nápovědu.
+	Pro načtení uložené hry není třeba používat tlačítko, stačí po dokončení psaní jména hry stisknout enter.
+-------------------------------------------
 Poznámky:
-	Uložené hry neobsahují tahy umělé inteligence.
 	Umělá inteligence nikdy nezačíná hru první.
+	Veškerá grafika je kreslena vektorově, pouze ikona programu je není.
+	CLI verze umožňuje zadání vlastního jména při ukládání hry.
 	
 
 
