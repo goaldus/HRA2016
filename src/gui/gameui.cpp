@@ -16,7 +16,7 @@ gameUI::gameUI(QWidget *parent, int sizeIndex, int enemyIndex, bool load, QStrin
         tie(gb, ai, loadResult) = save->fromFile(core, gb, ai, filename.toStdString());
 
         if (!loadResult) {
-            QMessageBox msgBox;
+            QMessageBox msgBox(this);
             msgBox.setText("Nepodařilo se načíst hru.\t");
             msgBox.exec();
         }
@@ -78,7 +78,7 @@ void gameUI::mousePressEvent(QMouseEvent *event) {
 
     int index = y*gb->size + x;
 
-    QMessageBox msgBox;
+    QMessageBox msgBox(this);
 
     if (gb->grid[index] == AVAIL) {
         gb->placeStone(index);
@@ -226,35 +226,35 @@ void gameUI::paintEvent(QPaintEvent *) {
 
 // save game
 void gameUI::on_saveBtn_clicked() {
-    QMessageBox msgBox;
+    QMessageBox msgBox(this);
     // save to file with standard name
     if (save->toFile("")) {
-        msgBox.setText("Hra byla uspesne ulozena.\t");
+        msgBox.setText("Hra byla úspěšně uložena.\t");
         msgBox.exec();
     }
 }
 
 // next btn
 void gameUI::on_nextBtn_clicked() {
-    QMessageBox msgBox;
+    QMessageBox msgBox(this);
     // one step further in game history
     tie(gb, loadResult) = save->loadState(gb, true);
     if (!loadResult) {
-        msgBox.setText(" Nelze jít o tah dopředu.\t");
+        msgBox.setText("Nelze jít o tah dopředu.\t");
         msgBox.exec();
     }
     gb->setAvailables();
     repaint();
     //Check if game is over
     if (gb->checkEnd()) {
-        msgBox.setText("\tKONEC HRY!\n\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici.\t");
+        msgBox.setText("\tKONEC HRY!\n\tOvšem můžete začít novou a nebo si nahrát uloženou pozici.\t");
         msgBox.exec();
     }
 }
 
 // back btn
 void gameUI::on_backBtn_clicked() {
-    QMessageBox msgBox;
+    QMessageBox msgBox(this);
     // one step back in game history
     tie(gb, loadResult) = save->loadState(gb, false);
     if (!loadResult) {
