@@ -1,8 +1,25 @@
+/*************************************************************
+* Project name: hra2016
+* File: gameui.cpp
+* Last change: 24.05.2016 17:55
+*
+* Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
+*			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
+*
+* Description: Reversi game (othello).
+*
+***********************************************************/
+/**
+* @file gameui.cpp
+*
+* @brief Window for game ui.
+* @author Vilem Jelen, Ondrej Molnar
+*/
+
 #include "gameui.h"
 #include "ui_gameui.h"
 #include <QKeyEvent>
-#include <QMessageBox>
-//#include <tuple>
+
 
 gameUI::gameUI(QWidget *parent, int sizeIndex, int enemyIndex, bool load, QString filename) :
     QMainWindow(parent),
@@ -262,3 +279,5 @@ void gameUI::on_backBtn_clicked() {
     gb->setAvailables();
     repaint();
 }
+
+/*** End of file gameui.cpp ***/

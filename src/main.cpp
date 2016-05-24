@@ -1,7 +1,7 @@
 /*************************************************************
-* Project name: HRA2016
+* Project name: hra2016
 * File: main.cpp
-* Last change: 10.05.2016 22:20
+* Last change: 24.05.2016 17:54
 *
 * Authors:	Vilem Jelen		xjelen09@stud.fit.vutbr.cz
 *			Ondrej Molnar	xmolna05@stud.fit.vutbr.cz
