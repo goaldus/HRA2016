@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="reversi.qrc">
-    <normaloff>:/reversi_logo.png</normaloff>:/reversi_logo.png</iconset>
+    <normaloff>:/reversi.ico</normaloff>:/reversi.ico</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>

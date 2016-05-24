@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>reversi_logo.png</file>
+        <file>reversi.ico</file>
     </qresource>
 </RCC>
