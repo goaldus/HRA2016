@@ -32,3 +32,15 @@ void MainWindow::on_newBtn_clicked()
     boardUi = new gameUI(this, ui->sizeCB->currentIndex(), ui->enemyCB->currentIndex());
     boardUi->show();
 }
+
+void MainWindow::on_loadBtn_clicked()
+{
+    boardUi = new gameUI(this, 0, 0, true, ui->loadArg->text());
+    boardUi->show();
+}
+
+void MainWindow::on_loadArg_returnPressed()
+{
+    boardUi = new gameUI(this, 0, 0, true, ui->loadArg->text());
+    boardUi->show();
+}

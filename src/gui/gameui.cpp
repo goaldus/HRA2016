@@ -2,24 +2,51 @@
 #include "ui_gameui.h"
 #include <QKeyEvent>
 #include <QMessageBox>
+//#include <tuple>
 
-gameUI::gameUI(QWidget *parent, int sizeIndex, int enemyIndex) :
+gameUI::gameUI(QWidget *parent, int sizeIndex, int enemyIndex, bool load, QString filename) :
     QMainWindow(parent),
     ui(new Ui::gameUI)
 {
     ui->setupUi(this);
-    // figure out what the size and AI should be
-    int size = 8;
-    if (sizeIndex == 0) size = 6;
-    if (sizeIndex == 2) size = 10;
-    if (sizeIndex == 3) size = 12;
 
-    // create new gameboard
-    tie(gb, ai) = core->alloc(gb, ai, size, enemyIndex);
-    // init save data
-    save->setupSave(gb);
-    // set available places
-    gb->setAvailables();
+    // load saved game
+    if (load) {
+        // create new game and load data from file
+        tie(gb, ai, loadResult) = save->fromFile(core, gb, ai, filename.toStdString());
+
+        if (!loadResult) {
+            QMessageBox msgBox;
+            msgBox.setText("Nepodařilo se načíst hru.\t");
+            msgBox.exec();
+        }
+        else {
+            gb->setAvailables();
+            /*Checking if there are any possible moves*/
+            if (gb->noTurn()) {
+                gb->nextTurn();
+                gb->setAvailables();
+                if (gb->noTurn())
+                    return;
+            }
+            repaint();
+        }
+    }
+    // new game
+    else {
+        // figure out what the size and AI should be
+        int size = 8;
+        if (sizeIndex == 0) size = 6;
+        if (sizeIndex == 2) size = 10;
+        if (sizeIndex == 3) size = 12;
+
+        // create new gameboard
+        tie(gb, ai) = core->alloc(gb, ai, size, enemyIndex);
+        // init save data
+        save->setupSave(gb);
+        // set available places
+        gb->setAvailables();
+    }
 }
 
 gameUI::~gameUI()
@@ -49,7 +76,7 @@ void gameUI::mousePressEvent(QMouseEvent *event) {
     int x = (event->x() - 10)/size;
     int y = (event->y() - 10)/size;
 
-    int index = x*gb->size + y;
+    int index = y*gb->size + x;
 
     QMessageBox msgBox;
 
@@ -69,6 +96,7 @@ void gameUI::mousePressEvent(QMouseEvent *event) {
         // + AI code here
         if(gb->enemyAI && !gb->noTurn()) {
             gb->placeStone(ai->run(gb, save));
+            save->addState(gb);
             gb->setAvailables();
             repaint();
         }
@@ -81,7 +109,13 @@ void gameUI::mousePressEvent(QMouseEvent *event) {
 }
 
 // draw gameboard, score, enemy type and turn
-void gameUI::paintEvent(QPaintEvent *event) {
+void gameUI::paintEvent(QPaintEvent *) {
+    // error in game creation
+    if (gb == NULL) {
+        this->close();
+        return;
+    }
+
     QPainter painter(this);
     // use antialiasing
     painter.setRenderHint(QPainter::Antialiasing);
@@ -130,7 +164,7 @@ void gameUI::paintEvent(QPaintEvent *event) {
     int index = 0;
     for (int k = 0; k < gb->size; ++k) {
         for (int j = 0; j < gb->size; ++j) {
-            index = k*gb->size + j;
+            index = j*gb->size + k;
             if (gb->grid[index] != NONE)
                 if (gb->grid[index] != AVAIL) {
                     grid_rect.setRect(14 + k * size, 14 + j * size, size-8, size-8);
@@ -188,7 +222,6 @@ void gameUI::paintEvent(QPaintEvent *event) {
     player1_pen.setColor(QColor(255, 51, 51));
     painter.setPen(player1_pen);
     painter.drawText(545, 110, to_string(w_score).data());
-
 }
 
 // save game

@@ -189,6 +189,7 @@ int main() {
 				if(gb->enemyAI) 
 				{
 					gb->placeStone(ai->run(gb, save));
+					save->addState(gb);
 					gb->setAvailables();
 					inface->printBoard(gb);
 				}
@@ -277,6 +278,7 @@ int main() {
 				cout << "\n\tKONEC HRY!";
 				cout << "\n\tOvsem muzete zacit novou a nebo si nahrat ulozenou pozici." << endl;
 			}
+
 		}
 		/******		back		******/
 		else if (command == "back" || command == "b") {
@@ -292,6 +294,7 @@ int main() {
 			}
 			gb->setAvailables();
 			inface->printBoard(gb);
+
 		}
 		/******		unknown	command		******/
 		else {

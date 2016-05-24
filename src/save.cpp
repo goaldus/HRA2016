@@ -127,7 +127,7 @@ GameBoard * Save::loadData(GameBoard * gb) {
 	// set player on turn
 	if (step % 2 == 0)
 		gb->BlackOnTurn = false;
-	else
+	else 
 		gb->BlackOnTurn = true;
 
 	for (int i = 0; i < arrsize; ++i) {
@@ -151,16 +151,28 @@ GameBoard * Save::loadData(GameBoard * gb) {
 tuple<GameBoard *, bool> Save::loadState(GameBoard * gb, bool next) {
 	
 	if (next) {
-		step++;
+		if (gb->enemyAI)
+			step += 2;
+		else
+			step++;
 		if (data[step].empty()) {
-			step--;
+			if (gb->enemyAI)
+				step -= 2;
+			else
+				step--;
 			return make_tuple(gb, false);
 		}
 	}
 	else { // load previous state
-		step--;
+		if (gb->enemyAI)
+			step -= 2;
+		else
+			step--;
 		if (step < 1) {
-			step++;
+			if (gb->enemyAI)
+				step += 2;
+			else
+				step++;
 			return make_tuple(gb, false);
 		}
 	}

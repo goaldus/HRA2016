@@ -23,6 +23,10 @@ private slots:
 
     void on_newBtn_clicked();
 
+    void on_loadBtn_clicked();
+
+    void on_loadArg_returnPressed();
+
 private:
     Ui::MainWindow *ui;
     gameUI * boardUi;

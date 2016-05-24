@@ -17,22 +17,22 @@ class gameUI : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit gameUI(QWidget *parent = 0, int sizeIndex = 1, int enemyIndex = 1);
+    explicit gameUI(QWidget *parent = 0, int sizeIndex = 1, int enemyIndex = 1, bool load = false, QString filename = "");
     void keyPressEvent(QKeyEvent *);
     ~gameUI();
 
 private:
     Ui::gameUI *ui;
     // variables used in cli main
-    GameBoard * gb;
+    GameBoard * gb = NULL;
     Core * core = new Core();
     Save * save = new Save();
-    AI * ai;
+    AI * ai = NULL;
     bool loadResult;
 
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent * event);
 private slots:
     void on_saveBtn_clicked();
