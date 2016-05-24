@@ -29,3 +29,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     gameui.ui
+
+RESOURCES += \
+    reversi.qrc

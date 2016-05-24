@@ -27,6 +27,8 @@ private slots:
 
     void on_loadArg_returnPressed();
 
+    void on_helpBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     gameUI * boardUi;

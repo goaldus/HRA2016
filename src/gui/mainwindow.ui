@@ -32,8 +32,8 @@
    <string>Reversi (Othello)</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../Users/Vilém/Pictures/Aperture_Science_Logo_by_Zabuza318.jpg</normaloff>../../Users/Vilém/Pictures/Aperture_Science_Logo_by_Zabuza318.jpg</iconset>
+   <iconset resource="reversi.qrc">
+    <normaloff>:/reversi_logo.png</normaloff>:/reversi_logo.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -260,6 +260,8 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="reversi.qrc"/>
+ </resources>
  <connections/>
 </ui>
