@@ -17,7 +17,7 @@ FILES = Makefile README.txt src/ examples/ doc/
 all: cli copysaves gui
 
 cli:
-	   $(CC) $(CFLAGS) $(CLI) -o hra2016-cli
+	$(CC) $(CFLAGS) $(CLI) -o hra2016-cli
 
 gui:
 	@ cd src && qmake -o Makefile && make
@@ -45,6 +45,5 @@ doxygen:
 	doxygen src/Doxyfile
 
 copysaves:
-
 	-mkdir -p saves
 	cp examples/* saves

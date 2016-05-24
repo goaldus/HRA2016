@@ -183,7 +183,7 @@ void gameUI::paintEvent(QPaintEvent *) {
     for (int k = 0; k < gb->size; ++k) {
         for (int j = 0; j < gb->size; ++j) {
             index = j*gb->size + k;
-            if (gb->grid[index] != NONE)
+            if (gb->grid[index] != NONE){
                 if (gb->grid[index] != AVAIL) {
                     grid_rect.setRect(14 + k * size, 14 + j * size, size-8, size-8);
                     // draw player1
@@ -202,6 +202,7 @@ void gameUI::paintEvent(QPaintEvent *) {
                     grid_rect.setRect(12 + k * size, 12 + j * size, size-4, size-4);;
                     painter.fillRect(grid_rect, avail_brush);
                 }
+            }
         }
     }
 
