@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Reversi (Othello)</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="reversi.qrc">
+    <normaloff>:/reversi.ico</normaloff>:/reversi.ico</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
@@ -107,6 +111,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="reversi.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGui>
+#include <QMessageBox>
 #include "gameboard.h"
 #include "save.h"
 #include "ai.h"
@@ -29,6 +30,7 @@ private:
     Save * save = new Save();
     AI * ai = NULL;
     bool loadResult;
+    QMessageBox msgB;
 
 
 protected:
