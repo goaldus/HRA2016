@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['mainwindow',['MainWindow',['../classMainWindow.html',1,'']]],
-  ['mainwindow_2ecpp',['mainwindow.cpp',['../mainwindow_8cpp.html',1,'']]],
-  ['mainwindow_2eh',['mainwindow.h',['../mainwindow_8h.html',1,'']]],
-  ['msg',['msg',['../classInterface.html#aaaa7e066199f32e02645de502cc1623f',1,'Interface']]]
+  ['loaddata',['loadData',['../classSave.html#acff04b27b3ceceb7cf739c6869002d56',1,'Save']]],
+  ['loadstate',['loadState',['../classSave.html#a100d6f297d15e06b570ac769d65a8b23',1,'Save']]]
 ];
